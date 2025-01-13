@@ -1,0 +1,14 @@
+//
+//  LetsGoNavigationItem.swift
+//  App_Team23
+//
+//  Created by Batch - 1 on 10/01/25.
+//
+
+import UIKit
+
+class LetsGoNavigationItem: UINavigationItem {
+
+    
+    
+}
