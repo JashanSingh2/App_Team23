@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+
+struct DataModel {
+    let text: String = "Hello, World!"
+}
+
