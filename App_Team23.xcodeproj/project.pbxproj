@@ -10,22 +10,9 @@
 		C40CA4D32D3128D000ADD31C /* App_Team23.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App_Team23.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		C40CA4E52D3128D100ADD31C /* Exceptions for "App_Team23" folder in "App_Team23" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = C40CA4D22D3128D000ADD31C /* App_Team23 */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C40CA4D52D3128D000ADD31C /* App_Team23 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				C40CA4E52D3128D100ADD31C /* Exceptions for "App_Team23" folder in "App_Team23" target */,
-			);
 			path = App_Team23;
 			sourceTree = "<group>";
 		};
