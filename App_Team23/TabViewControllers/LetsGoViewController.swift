@@ -9,14 +9,20 @@ import UIKit
 
 class LetsGoViewController: UIViewController {
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let searchController = UISearchController()
+        searchController.searchBar.placeholder = "Where are you going?"
+        searchController.searchBar.layer.cornerCurve = .circular
         
-        //Mark:- adding search bar at bottom of NavigationItem
-//        let searchBar = UISearchBar()
-//        searchBar.placeholder = "Search..."
-//        navigationItem.searchBarPlacement = .inline
+        navigationItem.searchController = searchController
+        
+        
+        
+        
         
     }
     

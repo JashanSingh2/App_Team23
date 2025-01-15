@@ -4,6 +4,8 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,8 +18,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOD-Ki-oh7">
-                                <rect key="frame" x="0.0" y="155" width="393" height="614"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-YV-eI8">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aBh-87-dNs">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="rpN-Pp-T96">
+                                                <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="GoI-ah-hDp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </collectionViewCellContentView>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
                                 <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="seJ-YV-eI8" secondAttribute="trailing" id="Fnk-ck-dgk"/>
+                                    <constraint firstItem="seJ-YV-eI8" firstAttribute="top" secondItem="EOD-Ki-oh7" secondAttribute="top" id="VgL-MY-0MY"/>
+                                    <constraint firstAttribute="bottom" secondItem="seJ-YV-eI8" secondAttribute="bottom" id="X0i-8E-POM"/>
+                                    <constraint firstItem="seJ-YV-eI8" firstAttribute="leading" secondItem="EOD-Ki-oh7" secondAttribute="leading" id="yeW-4A-IXL"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
@@ -29,7 +59,7 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="EOD-Ki-oh7" secondAttribute="bottom" id="vjJ-ru-zB3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Let'sGo" id="404-n3-9gB">
+                    <navigationItem key="navigationItem" title="Let'sGo" largeTitleDisplayMode="always" id="404-n3-9gB">
                         <barButtonItem key="rightBarButtonItem" image="qrcode" catalog="system" id="AXU-zD-YpM"/>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -58,12 +88,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1BQ-kS-xGA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.64122137404578" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="248" y="4"/>
         </scene>
     </scenes>
     <resources>
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="house.fill" catalog="system" width="128" height="104"/>
         <image name="qrcode" catalog="system" width="128" height="114"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
