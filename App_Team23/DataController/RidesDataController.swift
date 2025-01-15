@@ -12,8 +12,8 @@ struct RidesDataController {
     private var allServiceProviders: [ServiceProvider] = [
     ]
     
-    private var availableRides: [Ride] = [
-        Ride(source: Schedule(address: "", dateAndTime: <#T##Date#>), destination: <#T##Schedule#>, fare: <#T##Double#>, date: <#T##Date#>, seatsAvailable: <#T##Int#>, serviceProvider: <#T##ServiceProvider#>)
+    private var availableRides: [RidesAvailable] = [
+        
     ]
     
     
