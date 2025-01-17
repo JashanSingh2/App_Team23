@@ -10,7 +10,7 @@ import Foundation
 
 struct ServiceProvider{
     var name: String
-    var busNumber: String
+    var vehicleNumber: String
     var rideType: RideType
     var maxSeats: Int
     var fare: Double

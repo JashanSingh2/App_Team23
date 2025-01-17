@@ -22,7 +22,7 @@
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-YV-eI8">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aBh-87-dNs">
                                             <size key="itemSize" width="128" height="128"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -59,24 +59,59 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="EOD-Ki-oh7" secondAttribute="bottom" id="vjJ-ru-zB3"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Let'sGo" image="house" catalog="system" selectedImage="house.fill" id="7Qx-d5-2un"/>
                     <navigationItem key="navigationItem" title="Let'sGo" largeTitleDisplayMode="always" id="404-n3-9gB">
                         <barButtonItem key="rightBarButtonItem" image="qrcode" catalog="system" id="AXU-zD-YpM"/>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="letsGoCollectionView" destination="seJ-YV-eI8" id="Wav-f9-9oU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1063.3587786259541" y="3.5211267605633805"/>
         </scene>
-        <!--Let'sGo-->
+        <!--Suggested Rides View Controller-->
+        <scene sceneID="SPF-F6-EmN">
+            <objects>
+                <viewController id="n6T-bT-gU8" customClass="SuggestedRidesViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Zcf-Kf-2f6">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRq-Jh-J3m">
+                                <rect key="frame" x="156.66666666666666" y="405.66666666666669" width="80" height="40.666666666666686"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="zHe-kR-pFn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jRq-Jh-J3m" firstAttribute="centerX" secondItem="Zcf-Kf-2f6" secondAttribute="centerX" id="3mc-oM-fWO"/>
+                            <constraint firstItem="jRq-Jh-J3m" firstAttribute="centerY" secondItem="Zcf-Kf-2f6" secondAttribute="centerY" id="Tg4-Az-8zw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="testLabel" destination="jRq-Jh-J3m" id="jYq-mL-avE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5pE-HN-YiH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1961" y="4"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="wKh-50-8bv">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ccY-U9-8yn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Let'sGo" image="house" catalog="system" selectedImage="house.fill" id="bZZ-Id-o5n"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="smA-Ru-WT0">
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jRd-Cc-dad">

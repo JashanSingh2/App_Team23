@@ -12,7 +12,7 @@ struct RidesAvailable{
     var source: Schedule
     var destination: Schedule
     var fare: Double
-    var date: Date
+    var date: String
     var seatsAvailable: Int
     var serviceProvider: ServiceProvider
     var rating: Double

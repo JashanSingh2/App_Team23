@@ -11,7 +11,7 @@ struct RideHistory{
     var source: Schedule
     var destination: Schedule
     var serviceProvider: ServiceProvider
-    let date: Date
+    let date: String
     var Rating: Double?
     var review: String?
     let rideType: RideType
