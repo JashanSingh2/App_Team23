@@ -14,26 +14,19 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     @IBOutlet var letsGoCollectionView: UICollectionView!
     
-    let suggestedRides = HomeScreenSuggestedRidesCollectionViewCell()
     
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        suggestedRides.borderStack?.layer.cornerRadius = 10
-        suggestedRides.borderStack?.layer.borderWidth = 1
-        suggestedRides.borderStack?.layer.borderColor = UIColor.black.cgColor
-        
         //Adding search bar
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "Where are you going?"
-        searchController.searchBar.layer.cornerCurve = .circular
+        
+        
         
         navigationItem.searchController = searchController
-        
-        
         //Adding xib files to collection view
         let firstNib = UINib(nibName: "PreviousRides", bundle: nil)
         let secondNib = UINib(nibName: "SuggestedRides", bundle: nil)
@@ -73,17 +66,17 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         switch indexPath.section {
             case 0:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
-                //cell.updatePreviousRideCell(with: indexPath)
+                cell.updatePreviousRideCell(with: indexPath)
                 cell.layer.cornerRadius = 14
                 return cell
             case 1:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! HomeScreenSuggestedRidesCollectionViewCell
-                //cell.updateSuggestedRideCell(with: indexPath)
+                cell.updateSuggestedRideCell(with: indexPath)
                 cell.layer.cornerRadius = 14
                 return cell
             default:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
-                //cell.updatePreviousRideCell(with: indexPath)
+                cell.updatePreviousRideCell(with: indexPath)
                 cell.layer.cornerRadius = 14
                 return cell
         }
@@ -97,7 +90,10 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             
             header.button.setTitle("See All", for: .normal)
             header.button.tag = indexPath.section
-            header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
+            if indexPath.section == 1 {
+                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
+            }
+            
             header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
             
             header.button.semanticContentAttribute = .forceRightToLeft
@@ -155,7 +151,9 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
-    
+    @IBAction func unwindToLetsGo(_ unwindSegue: UIStoryboardSegue) {
+        
+    }
     
     
     
@@ -169,3 +167,6 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
+
+
+

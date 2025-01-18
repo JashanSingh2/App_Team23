@@ -28,7 +28,9 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     
     func updateSuggestedRideCell(with indexPath: IndexPath){
-        
+        borderStack.layer.borderColor = UIColor.black.cgColor
+        borderStack.layer.borderWidth = 1.0
+        borderStack.layer.cornerRadius = 5.0
     }
     
 }
