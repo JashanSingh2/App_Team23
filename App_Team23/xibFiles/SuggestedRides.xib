@@ -65,8 +65,8 @@
                                             <stackView autoresizesSubviews="NO" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cKa-CX-XNg">
                                                 <rect key="frame" x="0.0" y="0.0" width="170" height="24"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wkg-PW-jGe">
-                                                        <rect key="frame" x="0.0" y="-0.33333333333333215" width="27" height="25"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="carseat.right.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wkg-PW-jGe">
+                                                        <rect key="frame" x="0.0" y="0.33333333333333215" width="27" height="23.333333333333336"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="27" id="Geg-f1-qt8"/>
@@ -164,7 +164,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="bus.fill" catalog="system" width="128" height="122"/>
+        <image name="carseat.right.fill" catalog="system" width="128" height="109"/>
         <image name="indianrupeesign" catalog="system" width="105" height="128"/>
     </resources>
 </document>

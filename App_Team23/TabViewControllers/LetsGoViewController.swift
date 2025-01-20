@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LetsGoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class LetsGoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchControllerDelegate {
     
     
 
@@ -17,13 +17,14 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     
+    let searchController = UISearchController()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //Adding search bar
-        let searchController = UISearchController()
-        searchController.searchBar.placeholder = "Where are you going?"
         
+        searchController.searchBar.placeholder = "Where are you going?"
         
         
         navigationItem.searchController = searchController
@@ -42,9 +43,20 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         letsGoCollectionView.delegate = self
         letsGoCollectionView.dataSource = self
         
+        searchController.delegate = self
+        
         
         }
     
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+        performSegue(withIdentifier: "searchBar", sender: self)
+        //self.searchController.searchBar.isEnabled = false
+    }
+    
+//    func didPresentSearchController(_ searchController: UISearchController) {
+//        
+//    }
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -155,17 +167,33 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
-    
-    
-    
-    
+
     
     @objc func sectionButtonTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
-        viewController.sectionNumber = sender.tag
+        //viewController.sectionNumber = sender.tag
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    
+//    @objc func searchbarTapped(_ sender: UISearchController){
+//        performSegue(withIdentifier: "searchBar", sender: self)
+//        
+//    }
+    
+    
+    
+    
+    
+//    @IBAction func searchBarPressed(_ sender: UISearchController){
+//        performSegue(withIdentifier: "searchBar", sender: self)
+//    }
+    
+    
+    
+    
+    
 }
 
 

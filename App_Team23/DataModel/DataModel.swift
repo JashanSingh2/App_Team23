@@ -27,7 +27,7 @@ struct RideType{
 
 struct Schedule{
     var address: String
-    var dateAndTime: DateAndTime
+    var time: String
 }
 
 struct DateAndTime{

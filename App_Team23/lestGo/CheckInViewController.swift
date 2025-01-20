@@ -10,6 +10,11 @@ import UIKit
 class CheckInViewController: UIViewController {
 
     
+    
+    @IBOutlet weak var outerViewOfTicket: UIView!
+    
+    
+    
     @IBOutlet weak var QRTicketImage: UIImageView!
     
     
@@ -51,6 +56,10 @@ class CheckInViewController: UIViewController {
         fareStackView.layer.borderColor = view.backgroundColor?.cgColor
         fareStackView.layer.borderWidth = 1
         fareStackView.layer.cornerRadius = 5
+        
+        
+        outerViewOfTicket.layer.cornerRadius = 10
+        
         
         // Do any additional setup after loading the view.
     }
