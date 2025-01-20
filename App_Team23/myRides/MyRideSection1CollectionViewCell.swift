@@ -21,4 +21,20 @@ class MyRideSection1CollectionViewCell: UICollectionViewCell {
         rideFareLabel.text = "70"
         vehicleLogoImage.image = UIImage(systemName: "bus.fill")
     }
+    
+    func updateSection2Data(with IndexPath: IndexPath){
+        sourceLocationLabel.text = "Pari Chowk"
+        destinationLocationLabel.text = "Akshardham"
+        sourceTimeLabel.text = "09:00 AM"
+        rideFareLabel.text = "100"
+        vehicleLogoImage.image = UIImage(systemName: "car.fill")
+    }
+    
+    func updateSection3Data(with indexPath: IndexPath){
+        sourceLocationLabel.text = "Source \(indexPath.row + 1)"
+        destinationLocationLabel.text = "Destination \(indexPath.row + 1)"
+        sourceTimeLabel.text = "Source Time \(indexPath.row + 1)"
+        rideFareLabel.text = "Ride Fare \(indexPath.row + 1)"
+        vehicleLogoImage.image = UIImage(systemName: "car.fill")
+    }
 }

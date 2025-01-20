@@ -17,15 +17,11 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         
         let firstNib = UINib(nibName: "MyRideSection1Cell", bundle: nil)
-        let secondNib = UINib(nibName: "MyRideSection2Cell", bundle: nil)
-        let thirdNib = UINib(nibName: "MyRideSection3Cell", bundle: nil)
-        
         collectionView.register(firstNib, forCellWithReuseIdentifier: "First")
-        collectionView.register(secondNib, forCellWithReuseIdentifier: "Second")
-        collectionView.register(thirdNib, forCellWithReuseIdentifier: "Third")
         
-        let nib = UINib(nibName: "MyRideSection3Cell", bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: "Fourth")
+        
+        let nib = UINib(nibName: "PreviousSectionCell", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: "PreviousSectionCell")
         
         collectionView.register(SectionHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeaderCollectionReusableView")
         
@@ -55,8 +51,8 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if segmentedControl.selectedSegmentIndex == 1 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Third", for: indexPath) as! MyRideSection3CollectionViewCell
-        cell.updateSection3Data(with: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreviousSectionCell", for: indexPath) as! PreviousSectionCollectionViewCell
+            cell.updatePreviousData(with: indexPath)
         cell.layer.cornerRadius = 14.0
             return cell
         }
@@ -67,20 +63,17 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
             cell.updateSection1Data(with: indexPath)
             cell.layer.cornerRadius = 14.0
-//            cell.layer.shadowColor = UIColor.black.cgColor
-//            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-//            cell.layer.shadowOpacity = 0.2
-//
+
                 return cell
             
         case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! MyRideSection2CollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
             cell.updateSection2Data(with: indexPath)
             cell.layer.cornerRadius = 14.0
                 return cell
            
         case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Third", for: indexPath) as! MyRideSection3CollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
             cell.updateSection3Data(with: indexPath)
             cell.layer.cornerRadius = 14.0
                 return cell
@@ -116,11 +109,11 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             switch sectionIndex {
             case 0:
-                section = self.generateSection1Layout()
+                section = self.generateUpcomingRideLayout()
             case 1:
-                section = self.generateSection2Layout()
+                section = self.generateUpcomingRideLayout()
             case 2:
-                section = self.generateSection3Layout()
+                section = self.generateUpcomingRideLayout()
             default :
                 print("Default")
                 return nil
@@ -134,35 +127,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         return layout
     }
     
-    func generateSection1Layout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1/2))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(220))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
-        
-        group.interItemSpacing = .fixed(10)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        return section
-    }
-    
-    func generateSection2Layout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1/2))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(220))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 2)
-        
-        group.interItemSpacing = .fixed(10)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        return section
-    }
-    
-    func generateSection3Layout() -> NSCollectionLayoutSection {
+    func generateUpcomingRideLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1/2))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
