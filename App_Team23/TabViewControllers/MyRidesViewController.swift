@@ -11,6 +11,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
    
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,9 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.register(secondNib, forCellWithReuseIdentifier: "Second")
         collectionView.register(thirdNib, forCellWithReuseIdentifier: "Third")
         
+        let nib = UINib(nibName: "MyRideSection3Cell", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: "Fourth")
+        
         collectionView.register(SectionHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeaderCollectionReusableView")
         
         collectionView.setCollectionViewLayout(generateLayout(), animated: true)
@@ -32,14 +36,30 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if segmentedControl.selectedSegmentIndex == 1 {
+            return 10
+        }
+        
         return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if segmentedControl.selectedSegmentIndex == 1 {
+            return 1
+        }
+        
         return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if segmentedControl.selectedSegmentIndex == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Third", for: indexPath) as! MyRideSection3CollectionViewCell
+        cell.updateSection3Data(with: indexPath)
+        cell.layer.cornerRadius = 14.0
+            return cell
+        }
         
         switch indexPath.section {
             
@@ -88,6 +108,11 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func generateLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in let section : NSCollectionLayoutSection
+            
+            if self.segmentedControl.selectedSegmentIndex == 1 {
+                section = self.generatePreviousRideLayout()
+                return section
+            }
             
             switch sectionIndex {
             case 0:
@@ -150,5 +175,22 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         section.orthogonalScrollingBehavior = .groupPaging
         return section
     }
+    
+    func generatePreviousRideLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        group.interItemSpacing = .fixed(10)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+        let section = NSCollectionLayoutSection(group: group)
+        return section
+    }
+    @IBAction func previousAndUpcomingControlTapped(_ sender: Any) {
+        collectionView.reloadData()
+    }
+    
     
 }

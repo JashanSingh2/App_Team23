@@ -17,10 +17,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MdU-s2-onP">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="155" width="393" height="614"/>
                                 <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HQR-zb-kfY">
+                                        <rect key="frame" x="20" y="20" width="353" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="39" id="OUE-Ao-ckA"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="Upcoming"/>
+                                            <segment title="Previous"/>
+                                        </segments>
+                                        <color key="selectedSegmentTintColor" red="0.88627451660000001" green="0.87058818339999999" blue="0.74117648599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <connections>
+                                            <action selector="previousAndUpcomingControlTapped:" destination="Y6W-OH-hqX" eventType="valueChanged" id="Db7-xA-TXs"/>
+                                        </connections>
+                                    </segmentedControl>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8Bv-MJ-1yx">
-                                        <rect key="frame" x="0.0" y="80" width="393" height="586"/>
+                                        <rect key="frame" x="0.0" y="80" width="393" height="534"/>
                                         <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="T0o-f3-iqe">
                                             <size key="itemSize" width="128" height="128"/>
@@ -39,17 +53,6 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HQR-zb-kfY">
-                                        <rect key="frame" x="20" y="20" width="353" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="39" id="OUE-Ao-ckA"/>
-                                        </constraints>
-                                        <segments>
-                                            <segment title="Upcoming"/>
-                                            <segment title="Previous"/>
-                                        </segments>
-                                        <color key="selectedSegmentTintColor" red="0.88627451660000001" green="0.87058818339999999" blue="0.74117648599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </segmentedControl>
                                 </subviews>
                                 <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -76,6 +79,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="8Bv-MJ-1yx" id="3Tn-zW-VwX"/>
+                        <outlet property="segmentedControl" destination="HQR-zb-kfY" id="yf6-tg-rj0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
