@@ -33,7 +33,5 @@ class SectionHeaderCollectionReusableView: UICollectionReusableView {
             headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             headerLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
             ])
-        
-        
     }
 }
