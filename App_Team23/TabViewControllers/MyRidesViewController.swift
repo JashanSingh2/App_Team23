@@ -13,6 +13,12 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
+    var sectionHeaderNames:[String] = [
+        "Today",
+        "Tommorow",
+        "Later"
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,7 +96,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionHeaderCollectionReusableView", for: indexPath) as! SectionHeaderCollectionReusableView
-            header.headerLabel.text = "Today"
+            header.headerLabel.text = sectionHeaderNames[indexPath.section]
             header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
             
             return header
