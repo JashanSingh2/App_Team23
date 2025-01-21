@@ -168,6 +168,12 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
 
+    @objc func allPreviousRidesButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "MyRidesViewController") as! MyRidesViewController
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     
     @objc func sectionButtonTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
