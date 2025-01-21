@@ -688,7 +688,7 @@ or need support, feel free to reach out via email.</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="raO-iB-prP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2418" y="269"/>
+            <point key="canvasLocation" x="-2413" y="270"/>
         </scene>
     </scenes>
     <resources>
