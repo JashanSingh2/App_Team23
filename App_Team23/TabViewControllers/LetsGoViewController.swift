@@ -172,9 +172,14 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
 
     @objc func allPreviousRidesButtonTapped(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
+        let storyboard = UIStoryboard(name: "MyRides", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "MyRidesViewController") as! MyRidesViewController
-        navigationController?.pushViewController(viewController, animated: true)
+        //viewController.segmentedControl.selectedSegmentIndex = 1
+        tabBarController?.selectedIndex = 1
+        
+        //navigationController?.pushViewController(viewController, animated: true)
+        //navigationController?.popToViewController(viewController, animated: true)
+        
     }
     
     
