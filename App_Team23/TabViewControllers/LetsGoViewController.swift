@@ -175,6 +175,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         let storyboard = UIStoryboard(name: "MyRides", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "MyRidesViewController") as! MyRidesViewController
         //viewController.segmentedControl.selectedSegmentIndex = 1
+        viewController.preSelectedSegmentIndex = 1
         tabBarController?.selectedIndex = 1
         
         //navigationController?.pushViewController(viewController, animated: true)
