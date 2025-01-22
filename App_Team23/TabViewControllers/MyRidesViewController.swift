@@ -202,7 +202,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     @objc func ResheduleButtonTapped(_ button : UIButton) {
         let storyBoard = UIStoryboard(name: "MyRides", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "ResheduleRides") as! ResheduleViewController
-        viewController.sectionNumber = button.tag
+        //viewController.sectionNumber = button.tag
         navigationController?.pushViewController(viewController, animated: true)
     }
     

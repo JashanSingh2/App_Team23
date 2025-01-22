@@ -11,14 +11,15 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
     
 
     @IBOutlet weak var resheduleViewController: UICollectionView!
-    var sectionNumber: Int = 0
+//    var sectionNumber: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         
+        
         let nibFirst = UINib(nibName: "ResheduleSectionCell", bundle: nil)
-        resheduleViewController.register(nibFirst, forCellWithReuseIdentifier: "ResheduleSectionCell")
+        resheduleViewController.register(nibFirst, forCellWithReuseIdentifier: "ResheduleCell")
         
         resheduleViewController.setCollectionViewLayout(generateLayout(), animated: true)
         
@@ -32,11 +33,11 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ResheduleSectionCell", for: indexPath) as! ResheduleCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ResheduleCell", for: indexPath) as! ResheduleCollectionViewCell
         
         cell.updateReshedulaRideData(with: indexPath)
         cell.layer.cornerRadius = 14.0
@@ -51,26 +52,22 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func generateLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in let section : NSCollectionLayoutSection
+         
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
-            section = self.generateResheduleRideLayout()
+            group.interItemSpacing = .fixed(10)
+            group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+            section = NSCollectionLayoutSection(group: group)
             
             return section
         }
         return layout
     }
-    func generateResheduleRideLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
-        group.interItemSpacing = .fixed(10)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
-        let section = NSCollectionLayoutSection(group: group)
-        return section
-    }
+    
     
 
     /*

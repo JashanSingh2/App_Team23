@@ -124,7 +124,7 @@
                             <constraint firstItem="SsF-gf-OX5" firstAttribute="top" secondItem="9N9-qv-YqM" secondAttribute="top" id="wou-Fd-IJS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Rides For you" id="XBw-hW-Z92"/>
+                    <navigationItem key="navigationItem" title="Rides For you" largeTitleDisplayMode="never" id="XBw-hW-Z92"/>
                     <connections>
                         <outlet property="resheduleViewController" destination="SsF-gf-OX5" id="S0g-Dl-eVn"/>
                     </connections>
@@ -163,8 +163,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CJC-UL-RRA">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.88627451660000001" green="0.87058818339999999" blue="0.74117648599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <color key="barTintColor" red="0.88627451660000001" green="0.87058818339999999" blue="0.74117648599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="tintColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
