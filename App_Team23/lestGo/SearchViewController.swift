@@ -10,6 +10,11 @@ import MapKit
 
 
 class SearchViewController: UIViewController {
+    
+    
+    
+    
+    
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -18,13 +23,13 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var modalBottomConstraint: NSLayoutConstraint!
     
     private var modalFullyOpenHeight: CGFloat {
-            return 0 // Modal fully expanded (e.g., full screen)
+            return 0
         }
         private var modalPartiallyOpenHeight: CGFloat {
-            return view.bounds.height * 0.3 // Modal partially open (e.g., 30% of screen height)
+            return view.bounds.height * 0.3
         }
         private var modalHiddenHeight: CGFloat {
-            return view.bounds.height * 0.65 // Modal fully hidden off-screen
+            return view.bounds.height * 0.7
         }
     
     
