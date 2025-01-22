@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +11,7 @@
         <!--MyRides-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="MyRidesViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyRidesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="MyRidesViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,21 +86,49 @@
             </objects>
             <point key="canvasLocation" x="1063.3587786259541" y="3.5211267605633805"/>
         </scene>
-        <!--Reshedule View Controller-->
+        <!--Rides For you-->
         <scene sceneID="3Fk-m1-9CS">
             <objects>
-                <viewController storyboardIdentifier="MyRidesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BH9-oX-iVN" customClass="ResheduleViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BH9-oX-iVN" customClass="ResheduleViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C3H-Qt-ciu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SsF-gf-OX5">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QYp-dT-byh">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="JJa-Q6-fbi">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1Uv-mC-ODC">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="9N9-qv-YqM"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="9N9-qv-YqM" firstAttribute="trailing" secondItem="SsF-gf-OX5" secondAttribute="trailing" id="7KP-Cd-Gv4"/>
+                            <constraint firstItem="SsF-gf-OX5" firstAttribute="leading" secondItem="9N9-qv-YqM" secondAttribute="leading" id="LIe-hb-p8g"/>
+                            <constraint firstItem="9N9-qv-YqM" firstAttribute="bottom" secondItem="SsF-gf-OX5" secondAttribute="bottom" id="jWS-xs-GnS"/>
+                            <constraint firstItem="SsF-gf-OX5" firstAttribute="top" secondItem="9N9-qv-YqM" secondAttribute="top" id="wou-Fd-IJS"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="XBw-hW-Z92"/>
+                    <navigationItem key="navigationItem" title="Rides For you" id="XBw-hW-Z92"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5RK-iC-7x7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063" y="701"/>
+            <point key="canvasLocation" x="1063" y="692"/>
         </scene>
         <!--MyRides-->
         <scene sceneID="SwA-4W-W0c">
@@ -149,8 +176,5 @@
     <resources>
         <image name="bus" catalog="system" width="128" height="122"/>
         <image name="bus.fill" catalog="system" width="128" height="122"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
