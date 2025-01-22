@@ -89,7 +89,7 @@
         <!--Rides For you-->
         <scene sceneID="3Fk-m1-9CS">
             <objects>
-                <viewController id="BH9-oX-iVN" customClass="ResheduleViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ResheduleRides" id="BH9-oX-iVN" customClass="ResheduleViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C3H-Qt-ciu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -125,6 +125,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Rides For you" id="XBw-hW-Z92"/>
+                    <connections>
+                        <outlet property="resheduleViewController" destination="SsF-gf-OX5" id="S0g-Dl-eVn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5RK-iC-7x7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -170,7 +173,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXp-uT-Nzn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="135" y="701"/>
+            <point key="canvasLocation" x="135" y="692"/>
         </scene>
     </scenes>
     <resources>

@@ -145,6 +145,7 @@
             <color key="backgroundColor" red="0.97647058959999999" green="0.85882353779999998" blue="0.5176470876" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <connections>
                 <outlet property="destinationLocationLabel" destination="kNC-HU-AFX" id="eM4-ng-b7b"/>
+                <outlet property="resheduleButton" destination="lML-bT-O9b" id="Lqj-Nv-dZM"/>
                 <outlet property="rideFareLabel" destination="Xhf-Y7-CH9" id="ekO-1o-fe1"/>
                 <outlet property="sourceLocationLabel" destination="9fF-sP-iP1" id="Lly-g5-cXy"/>
                 <outlet property="sourceTimeLabel" destination="7Mt-2W-yvT" id="0Sg-XC-PX8"/>

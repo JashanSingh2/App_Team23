@@ -63,6 +63,8 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 5
+            
+            
             cell.layer.shadowOffset = CGSize(width: 2, height: 2)
             cell.layer.masksToBounds = false
             return cell
@@ -77,6 +79,10 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 5
+            
+            cell.resheduleButton.tag = indexPath.row
+            cell.resheduleButton.addTarget(self, action: #selector(ResheduleButtonTapped(_:)), for: .touchUpInside)
+            
             cell.layer.shadowOffset = CGSize(width: 2, height: 2)
             cell.layer.masksToBounds = false
 
@@ -134,7 +140,12 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in let section : NSCollectionLayoutSection
             
             if self.segmentedControl.selectedSegmentIndex == 1 {
+                
+                
                 section = self.generatePreviousRideLayout()
+                
+                
+                
                 return section
             }
             
@@ -186,6 +197,13 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     @IBAction func previousAndUpcomingControlTapped(_ sender: Any) {
         collectionView.reloadData()
+    }
+    
+    @objc func ResheduleButtonTapped(_ button : UIButton) {
+        let storyBoard = UIStoryboard(name: "MyRides", bundle: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "ResheduleRides") as! ResheduleViewController
+        viewController.sectionNumber = button.tag
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     

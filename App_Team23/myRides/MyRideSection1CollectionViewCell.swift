@@ -13,6 +13,7 @@ class MyRideSection1CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var sourceTimeLabel: UILabel!
     @IBOutlet weak var rideFareLabel: UILabel!
     @IBOutlet weak var vehicleLogoImage: UIImageView!
+    @IBOutlet weak var resheduleButton: UIButton!
     
     func updateSection1Data(with indexPath: IndexPath){
         sourceLocationLabel.text = "Mayur Vihar"
