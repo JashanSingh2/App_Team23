@@ -102,6 +102,9 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             
             header.button.setTitle("See All", for: .normal)
             header.button.tag = indexPath.section
+            if indexPath.section == 0 {
+                header.button.addTarget(self, action: #selector(allPreviousRidesButtonTapped(_:)), for: .touchUpInside)
+            }
             if indexPath.section == 1 {
                 header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
             }
@@ -168,6 +171,12 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
 
+    @objc func allPreviousRidesButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "MyRidesViewController") as! MyRidesViewController
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     
     @objc func sectionButtonTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)

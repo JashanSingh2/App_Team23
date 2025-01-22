@@ -10,47 +10,163 @@ import MapKit
 
 
 class SearchViewController: UIViewController {
+    
+    
+    
+    
+    
 
     @IBOutlet weak var mapView: MKMapView!
     
-    @IBOutlet var modalVCView: UIView!
+    @IBOutlet var modalView: UIView!
+    
+    @IBOutlet weak var modalBottomConstraint: NSLayoutConstraint!
+    
+    private var modalFullyOpenHeight: CGFloat {
+            return 0
+        }
+        private var modalPartiallyOpenHeight: CGFloat {
+            return view.bounds.height * 0.3
+        }
+        private var modalHiddenHeight: CGFloat {
+            return view.bounds.height * 0.7
+        }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //mapView.showsUserLocation = true
-        
-        //modalVCView.isHidden = true
-        
-        let modalVC = ModelContentViewController()
-        modalVC.modalPresentationStyle = .pageSheet
-        
-        if let sheet = modalVC.sheetPresentationController {
-            sheet.detents = [.medium(),.large()]
-            
-        }
-        //modalVC.view.backgroundColor = .white
-        modalVC.view.addSubview(modalVCView)
-        //modalVC.modalOuterView.isHidden = false
-        
-        present(modalVC, animated: true)
-        
-        
-        
-        
-        
-        //mapView.layer.
-        // Do any additional setup after loading the view.
+        setupModalView()
+        setupPanGesture()
+        defaultModalPosition()
     }
     
 
-    /*
-    // MARK: - Navigation
+            func setupModalView() {
+                modalBottomConstraint.constant = modalPartiallyOpenHeight // Start in partially open state
+                modalView.layer.cornerRadius = 20
+                modalView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+                modalView.clipsToBounds = true
+    //            scrollView.delegate = self
+            }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+            // MARK: - Pan Gesture Setup
+            func setupPanGesture() {
+                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+                view.addGestureRecognizer(panGesture)
+            }
+
+            // MARK: - Gesture Handling
+        // MARK: - Gesture Handling
+        @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+            let translation = gesture.translation(in: view)
+            let velocity = gesture.velocity(in: view).y
+
+            switch gesture.state {
+            case .changed:
+                // Move the modal position based on the pan gesture translation
+                if modalBottomConstraint.constant != modalFullyOpenHeight && modalBottomConstraint.constant != modalHiddenHeight {
+                    let newOffset = modalBottomConstraint.constant + translation.y
+                    modalBottomConstraint.constant = max(modalFullyOpenHeight, min(modalHiddenHeight, newOffset))
+                    gesture.setTranslation(.zero, in: view)
+
+                    // Dynamically adjust the tint opacity based on the modal position
+
+                } else if modalBottomConstraint.constant == modalHiddenHeight {
+                    // Ensure tint overlay is visible when modal is hidden and moving back up
+                    
+                }
+
+            case .ended:
+                // Snap to the nearest state (Hidden, Default, or Full Screen)
+                if modalBottomConstraint.constant == modalFullyOpenHeight {
+                    if velocity > 100 || translation.y > 50 {
+                        defaultModalPosition()
+                    } else {
+                        openModal()
+                        
+                    }
+                } else if modalBottomConstraint.constant == modalHiddenHeight {
+                    if velocity < -100 || translation.y < -50 {
+                        defaultModalPosition()
+                    } else {
+                        hideModal()
+                    }
+                } else {
+                    if velocity < -100 || translation.y < -50 {
+                        openModal()
+                    } else if velocity > 100 || translation.y > 50 {
+                        hideModal()
+                    } else {
+                        defaultModalPosition()
+                    }
+                }
+            default:
+                break
+            }
+        }
+        
+
+
+            // MARK: - Modal Positioning
+            func openModal() {
+                animateModal(to: modalFullyOpenHeight)
+                
+            }
+
+            func defaultModalPosition() {
+                animateModal(to: modalPartiallyOpenHeight)
+            }
+
+            func hideModal() {
+                animateModal(to: modalHiddenHeight)
+            }
+
+            private func animateModal(to offset: CGFloat) {
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+                    self.modalBottomConstraint.constant = offset
+                    self.updateCollectionViewTopConstraint(for: offset)
+                    self.view.layoutIfNeeded()
+                })
+            }
+        private func updateCollectionViewTopConstraint(for modalPosition: CGFloat) {
+            // Get the safe area inset
+            let safeAreaTop = view.safeAreaInsets.top
+        }
+            
+            
 
 }
+
+extension SearchViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if modalBottomConstraint.constant > modalFullyOpenHeight {
+            scrollView.contentOffset = .zero
+        }
+    }
+}
+
+extension SearchViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//            if let scrollView = otherGestureRecognizer.view as? UIScrollView, scrollView == self.scrollView {
+//                return scrollView.contentOffset.y <= 0
+//            }
+        return false
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    
+    
+    
+    
+    
+}
+
+
+
