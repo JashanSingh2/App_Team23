@@ -60,7 +60,11 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return RidesDataController.shared.numberOfSectionsInLetsGo()
+        print("Letsgo section")
+        print(RidesDataController.shared.numberOfSectionsInLetsGo())
+//        return RidesDataController.shared.numberOfSectionsInLetsGo()
+        return 1
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -97,7 +101,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let header = letsGoCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LetsGoCollectionReusableView", for: indexPath) as! LetsGoCollectionReusableView
-            header.headerLabel.text = RidesDataController.shared.sectionHeadersInLetsGo(at: indexPath.section)
+            //header.headerLabel.text = RidesDataController.shared.sectionHeadersInLetsGo(at: indexPath.section)
             header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
             
             header.button.setTitle("See All", for: .normal)

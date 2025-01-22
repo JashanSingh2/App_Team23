@@ -9,11 +9,11 @@ import UIKit
 import MapKit
 
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+
     
     
-    
-    
+    @IBOutlet weak var suggestionsTableView: UITableView!
     
 
     @IBOutlet weak var mapView: MKMapView!
@@ -132,7 +132,33 @@ class SearchViewController: UIViewController {
             // Get the safe area inset
             let safeAreaTop = view.safeAreaInsets.top
         }
-            
+         
+    
+   
+    
+    
+    //table view setup
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        print("no of rows")
+//        if RidesDataController.shared.numberOfRidesInHistory() < 5 {
+//            print("inside no of rows")
+//            return RidesDataController.shared.numberOfRidesInHistory()
+//        }
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! rideSearchTableViewCell
+        //let address = RidesDataController.shared.rideHistoryAddress(At: indexPath.row)
+        //cell.updateCell(With: address)
+        
+        return cell
+    }
             
 
 }
