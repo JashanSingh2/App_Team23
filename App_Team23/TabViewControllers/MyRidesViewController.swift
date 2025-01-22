@@ -59,7 +59,12 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         if segmentedControl.selectedSegmentIndex == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreviousSectionCell", for: indexPath) as! PreviousSectionCollectionViewCell
             cell.updatePreviousData(with: indexPath)
-        cell.layer.cornerRadius = 14.0
+            cell.layer.cornerRadius = 14.0
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 5
+            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.masksToBounds = false
             return cell
         }
         
@@ -69,6 +74,11 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
             cell.updateSection1Data(with: indexPath)
             cell.layer.cornerRadius = 14.0
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 5
+            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.masksToBounds = false
 
                 return cell
             
@@ -76,18 +86,33 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
             cell.updateSection2Data(with: indexPath)
             cell.layer.cornerRadius = 14.0
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 5
+            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.masksToBounds = false
                 return cell
            
         case 2:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
             cell.updateSection3Data(with: indexPath)
             cell.layer.cornerRadius = 14.0
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 5
+            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.masksToBounds = false
                 return cell
             
         default :
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
             cell.updateSection1Data(with: indexPath)
             cell.layer.cornerRadius = 14.0
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 5
+            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.masksToBounds = false
                 return cell
         }
     }
