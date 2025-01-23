@@ -14,7 +14,7 @@ struct RideHistory{
     let date: String
     var Rating: Double?
     var review: String?
-    let fare: Double
+    let fare: Int
 }
 
 
