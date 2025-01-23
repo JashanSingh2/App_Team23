@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeatSectionCell" id="iK3-pw-Mkd" customClass="SeatSectionCollectionViewCell" customModule="App_Team23" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qBa-Yw-Vsn">
+                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xPY-NQ-mUl">
+                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="filled" title="1">
+                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleSubhead"/>
+                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </buttonConfiguration>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="xPY-NQ-mUl" secondAttribute="bottom" id="QTf-Jb-yj5"/>
+                    <constraint firstItem="xPY-NQ-mUl" firstAttribute="leading" secondItem="qBa-Yw-Vsn" secondAttribute="leading" id="UFJ-SZ-yrw"/>
+                    <constraint firstAttribute="trailing" secondItem="xPY-NQ-mUl" secondAttribute="trailing" id="r2D-ji-hED"/>
+                    <constraint firstItem="xPY-NQ-mUl" firstAttribute="top" secondItem="qBa-Yw-Vsn" secondAttribute="top" id="rd4-eN-xWb"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <connections>
+                <outlet property="seatButton" destination="xPY-NQ-mUl" id="OlI-xI-TrE"/>
+            </connections>
+            <point key="canvasLocation" x="201.52671755725191" y="-25.35211267605634"/>
+        </collectionViewCell>
+    </objects>
+</document>
