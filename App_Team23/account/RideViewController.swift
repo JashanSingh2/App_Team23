@@ -25,11 +25,12 @@ class RideViewController: UIViewController {
         self.title = "Ride Preferences"
         
         // Optionally, customize navigation bar appearance
-        self.navigationController?.navigationBar.barTintColor = UIColor.blue
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        self.navigationController?.navigationBar.barTintColor = UIColor.blue
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
         // Add custom Save button to the navigation bar
         let saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(savePreferences))
+        saveButton.tintColor = .systemBlue
         self.navigationItem.rightBarButtonItem = saveButton
         
         // Restore saved preferences from UserDefaults

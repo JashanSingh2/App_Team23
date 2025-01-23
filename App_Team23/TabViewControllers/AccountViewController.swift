@@ -20,6 +20,14 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let bellIcon = UIImage(systemName: "bell") // Regular bell icon
+                // Create a UIBarButtonItem with the bell icon
+        let bellBarButtonItem = UIBarButtonItem(image: bellIcon, style: .plain, target: self, action: #selector(bellIconTapped))
+                // Set the tint color of the button to system blue
+        bellBarButtonItem.tintColor = .systemBlue
+                // Add the bar button item to the navigation bar (right side)
+        navigationItem.rightBarButtonItem = bellBarButtonItem
+        
         // Set the delegate and dataSource
         tableView.delegate = self
         tableView.dataSource = self
@@ -33,6 +41,13 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Observe notifications for name updates
         NotificationCenter.default.addObserver(self, selector: #selector(updateName(_:)), name: Notification.Name("NameUpdated"), object: nil)
     }
+    
+    
+    // bell icon
+    @objc func bellIconTapped() {
+            print("Bell icon tapped!")
+            // Add the functionality you want here
+        }
     
     // MARK: - Handle Notifications
     @objc func updateName(_ notification: Notification) {
