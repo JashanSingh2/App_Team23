@@ -11,7 +11,7 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var sourceAddressLabel: UILabel!
     
-    @IBOutlet weak var destinationAddressLayout: UILabel!
+    @IBOutlet weak var destinationAddressLabel: UILabel!
     
     @IBOutlet weak var pickUpTimeLabel: UILabel!
     
@@ -27,10 +27,27 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var borderStack: UIStackView!
     
     
-    func updateSuggestedRideCell(with indexPath: IndexPath){
+    func updateSuggestedRideCell(with rideSuggestion: RidesAvailable){
         borderStack.layer.borderColor = UIColor.black.cgColor
         borderStack.layer.borderWidth = 1.0
         borderStack.layer.cornerRadius = 5.0
+        
+        sourceAddressLabel.text = rideSuggestion.source.address
+        destinationAddressLabel.text = rideSuggestion.destination.address
+        
+        pickUpTimeLabel.text = rideSuggestion.source.time
+        dropOffTimeLabel.text = rideSuggestion.destination.time
+        
+        if rideSuggestion.serviceProvider.rideType.vehicleType == .bus{
+            busORcarImageView.image = UIImage(systemName: "bus.fill")
+        }else {
+            busORcarImageView.image = UIImage(systemName: "car.fill")
+        }
+        
+        seatsAvailableLabel.text = "\(rideSuggestion.seatsAvailable) Seats Available"
+        fareLabel.text = "\(rideSuggestion.fare)"
+        
+        
     }
     
 }

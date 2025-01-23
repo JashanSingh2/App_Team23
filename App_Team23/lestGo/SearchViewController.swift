@@ -29,7 +29,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return view.bounds.height * 0.3
         }
         private var modalHiddenHeight: CGFloat {
-            return view.bounds.height * 0.7
+            return view.bounds.height * 0.6
         }
     
     
@@ -38,6 +38,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         setupModalView()
         setupPanGesture()
         defaultModalPosition()
+        
+        suggestionsTableView.delegate = self
+        suggestionsTableView.dataSource = self
+        
     }
     
 
@@ -144,21 +148,25 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print("no of rows")
-//        if RidesDataController.shared.numberOfRidesInHistory() < 5 {
-//            print("inside no of rows")
-//            return RidesDataController.shared.numberOfRidesInHistory()
-//        }
+        if RidesDataController.shared.numberOfRidesInHistory() < 5 {
+            return RidesDataController.shared.numberOfRidesInHistory()
+        }
         return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! rideSearchTableViewCell
-        //let address = RidesDataController.shared.rideHistoryAddress(At: indexPath.row)
-        //cell.updateCell(With: address)
+        let address = RidesDataController.shared.rideHistoryAddress(At: indexPath.row)
+        cell.updateCell(With: address)
         
         return cell
     }
+    
+    
+    
+    
+    
+    
             
 
 }
@@ -186,6 +194,7 @@ extension SearchViewController: UIGestureRecognizerDelegate {
     override var shouldAutorotate: Bool {
         return false
     }
+    
     
     
     

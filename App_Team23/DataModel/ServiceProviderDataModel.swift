@@ -13,7 +13,7 @@ struct ServiceProvider{
     var vehicleNumber: String
     var rideType: RideType
     var maxSeats: Int
-    var fare: Double
+    var fare: Int
     var route: [Schedule]
 }
 
