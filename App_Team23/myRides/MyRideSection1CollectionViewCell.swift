@@ -14,6 +14,11 @@ class MyRideSection1CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var rideFareLabel: UILabel!
     @IBOutlet weak var vehicleLogoImage: UIImageView!
     @IBOutlet weak var resheduleButton: UIButton!
+    @IBOutlet weak var chevronButton: UIButton!
+    
+//    override class func awakeFromNib() {
+//        <#code#>
+//    }
     
     func updateSection1Data(with indexPath: IndexPath){
         sourceLocationLabel.text = "Mayur Vihar"
