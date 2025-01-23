@@ -16,8 +16,10 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     var sectionHeaderNames:[String] = [
         "Today",
         "Tommorow",
-        "Later"
+        "Next Shedules"
     ]
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +87,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             cell.layer.shadowOffset = CGSize(width: 2, height: 2)
             cell.layer.masksToBounds = false
-
+            
                 return cell
             
         case 1:
@@ -135,6 +137,14 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         print("Supplementary view not found")
         return UICollectionReusableView()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        performSegue(withIdentifier: "myRidesToUpcomingRides", sender: self)
+    }
+    
+    
+    
     
     func generateLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in let section : NSCollectionLayoutSection
@@ -199,6 +209,12 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.reloadData()
     }
     
+    
+    @objc func collectionCellTapped(_ cell: UICollectionViewCell){
+        performSegue(withIdentifier: "myRidesToUpcomingRides", sender: self)
+    }
+    
+    
     @objc func ResheduleButtonTapped(_ button : UIButton) {
         let storyBoard = UIStoryboard(name: "MyRides", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "ResheduleRides") as! ResheduleViewController
@@ -206,5 +222,11 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         navigationController?.pushViewController(viewController, animated: true)
     }
     
+//    @objc func ChevronButtonTapped(_ button : UIButton) {
+//        let storyBoard = UIStoryboard(name: "MyRides", bundle: nil)
+//        let viewController = storyBoard.instantiateViewController(withIdentifier: "yourUpcomingRide") as! YourUpcomingRideViewController
+//        navigationController?.pushViewController(viewController, animated: true)
+//    }
+//    
     
 }

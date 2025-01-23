@@ -129,7 +129,6 @@
                     <constraint firstAttribute="trailing" secondItem="Jrj-3I-IbS" secondAttribute="trailing" constant="16" id="i66-N2-BqP"/>
                     <constraint firstAttribute="bottom" secondItem="8l7-6h-I1M" secondAttribute="bottom" constant="11" id="ubU-N7-qWA"/>
                     <constraint firstItem="gfv-de-VvP" firstAttribute="leading" secondItem="7pk-VB-gcV" secondAttribute="leading" constant="16" id="zYc-O0-f5k"/>
-                    <constraint firstItem="Jrj-3I-IbS" firstAttribute="leading" secondItem="gfv-de-VvP" secondAttribute="trailing" constant="56.329999999999998" id="zxJ-AN-FBX"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="backgroundColor" red="0.97647058959999999" green="0.85882353779999998" blue="0.5176470876" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
