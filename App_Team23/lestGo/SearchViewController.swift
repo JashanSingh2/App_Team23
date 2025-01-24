@@ -9,11 +9,11 @@ import UIKit
 import MapKit
 
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+
     
     
-    
-    
+    @IBOutlet weak var suggestionsTableView: UITableView!
     
 
     @IBOutlet weak var mapView: MKMapView!
@@ -22,6 +22,14 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var modalBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var pickUpSearchBar: UISearchBar!
+    
+    @IBOutlet weak var dropOffSearchBar: UISearchBar!
+    
+    
+    @IBOutlet weak var searchRideButton: UIButton!
+    
+    
     private var modalFullyOpenHeight: CGFloat {
             return 0
         }
@@ -29,15 +37,37 @@ class SearchViewController: UIViewController {
             return view.bounds.height * 0.3
         }
         private var modalHiddenHeight: CGFloat {
-            return view.bounds.height * 0.7
+            return view.bounds.height * 0.6
         }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        searchRideButton.isEnabled = false
+        
         setupModalView()
         setupPanGesture()
         defaultModalPosition()
+        
+        suggestionsTableView.delegate = self
+        suggestionsTableView.dataSource = self
+        
+        pickUpSearchBar.searchTextField.addTarget(self, action: #selector(searchBarTapped(_:)), for: .allEvents)
+        dropOffSearchBar.searchTextField.addTarget(self, action: #selector(searchBarTapped(_:)), for: .allEvents)
+        
+        
+        
+        
+        pickUpSearchBar.searchTextField.addTarget(self, action: #selector(pickUpTextFieldChanged(_:)), for: .editingChanged)
+        dropOffSearchBar.searchTextField.addTarget(self, action: #selector(pickUpTextFieldChanged(_:)), for: .editingChanged)
+        
+        
+        
+        
+        
+        
     }
     
 
@@ -132,7 +162,65 @@ class SearchViewController: UIViewController {
             // Get the safe area inset
             let safeAreaTop = view.safeAreaInsets.top
         }
-            
+         
+    
+   
+    
+    
+    //table view setup
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if RidesDataController.shared.numberOfRidesInHistory() < 5 {
+            return RidesDataController.shared.numberOfRidesInHistory()
+        }
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! rideSearchTableViewCell
+        let address = RidesDataController.shared.rideHistoryAddress(At: indexPath.row)
+        cell.updateCell(With: address)
+        
+        return cell
+    }
+    
+    @objc func pickUpTextFieldChanged(_ sender: UITextField){
+        
+        if !pickUpSearchBar.text!.isEmpty && !dropOffSearchBar.text!.isEmpty {
+            searchRideButton.isEnabled = true
+        }
+        openModal()
+
+    }
+    
+    @objc func searchBarTapped(_ sender: UITextField){
+        
+        openModal()
+        
+    }
+    
+    @IBAction func searchButtonTapped() {
+        performSegue(withIdentifier: "SearchToAvailableRides", sender: self)
+        
+    }
+    
+    
+    
+    
+    
+    
+    @IBAction func unwindToSearch(segue: UIStoryboardSegue) {
+        
+    }
+    
+    
+    
+    
+    
             
 
 }
@@ -160,6 +248,10 @@ extension SearchViewController: UIGestureRecognizerDelegate {
     override var shouldAutorotate: Bool {
         return false
     }
+    
+    
+    
+    
     
     
     

@@ -11,7 +11,7 @@ import Foundation
 struct RidesAvailable{
     var source: Schedule
     var destination: Schedule
-    var fare: Double
+    var fare: Int
     var date: String
     var seatsAvailable: Int
     var serviceProvider: ServiceProvider

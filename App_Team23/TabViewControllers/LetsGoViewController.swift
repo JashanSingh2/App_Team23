@@ -48,6 +48,10 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         }
     
+    override func viewWillAppear(_ animated: Bool) {
+        letsGoCollectionView.reloadData()
+    }
+    
     
     func willPresentSearchController(_ searchController: UISearchController) {
         performSegue(withIdentifier: "searchBar", sender: self)
@@ -60,13 +64,15 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        print("Letsgo section")
+//        print(RidesDataController.shared.numberOfSectionsInLetsGo())
         return RidesDataController.shared.numberOfSectionsInLetsGo()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
             case 0:
-                return 3
+                return RidesDataController.shared.numberOfBusRidesInHistory()
             case 1:
                 return 4
             default:
@@ -78,17 +84,22 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         switch indexPath.section {
             case 0:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
-                cell.updatePreviousRideCell(with: indexPath)
+                let RideHistory = RidesDataController.shared.rideHistoryOfBus(At: indexPath.row)
+                cell.updatePreviousRideCell(with: RideHistory)
+                print(RideHistory.date)
                 cell.layer.cornerRadius = 14
                 return cell
             case 1:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! HomeScreenSuggestedRidesCollectionViewCell
-                cell.updateSuggestedRideCell(with: indexPath)
+                let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
+                cell.updateSuggestedRideCell(with: rideSuggestion)
                 cell.layer.cornerRadius = 14
                 return cell
             default:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
-                cell.updatePreviousRideCell(with: indexPath)
+                let RideHistory = RidesDataController.shared.rideHistoryOfBus(At: indexPath.item)
+                print(RideHistory.date)
+                cell.updatePreviousRideCell(with: RideHistory)
                 cell.layer.cornerRadius = 14
                 return cell
         }
@@ -101,13 +112,14 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
             
             header.button.setTitle("See All", for: .normal)
-            header.button.tag = indexPath.section
+            //header.button.tag = indexPath.section
             if indexPath.section == 0 {
                 header.button.addTarget(self, action: #selector(allPreviousRidesButtonTapped(_:)), for: .touchUpInside)
             }
-            if indexPath.section == 1 {
-                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
-            }
+//            }else if indexPath.section == 1 {
+//                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
+//            }
+           
             
             header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
             
@@ -137,13 +149,13 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func generatePreviousRidesLayout()-> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(185), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(380), heightDimension: .absolute(175))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(185), heightDimension: .absolute(175))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
         group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 0)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         return section

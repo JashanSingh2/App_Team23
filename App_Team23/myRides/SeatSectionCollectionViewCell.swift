@@ -12,7 +12,7 @@ class SeatSectionCollectionViewCell: UICollectionViewCell {
     
     
     func updateSeatButton(with indexPath: IndexPath){
-        seatButton.setTitle("\((indexPath.row+1) * (indexPath.section+1))", for: .normal)
+        seatButton.setTitle("\((indexPath.row + 1) + (indexPath.section * 4))", for: .normal)
         
     }
     
