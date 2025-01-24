@@ -112,13 +112,14 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
             
             header.button.setTitle("See All", for: .normal)
-            header.button.tag = indexPath.section
+            //header.button.tag = indexPath.section
             if indexPath.section == 0 {
                 header.button.addTarget(self, action: #selector(allPreviousRidesButtonTapped(_:)), for: .touchUpInside)
             }
-            if indexPath.section == 1 {
-                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
-            }
+//            }else if indexPath.section == 1 {
+//                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
+//            }
+           
             
             header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
             
