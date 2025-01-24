@@ -61,7 +61,7 @@ class RideViewController: UIViewController {
         workTimingsLabel.becomeFirstResponder()
     }
 
-    // Save Preferences Action
+  
     @objc func savePreferences() {
         let homeAddress = homeAddressTextField.text ?? ""
         let destinationAddress = destinationAddressTextField.text ?? ""
@@ -72,15 +72,16 @@ class RideViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         } else {
-            // Saving preferences locally using UserDefaults
             let defaults = UserDefaults.standard
             defaults.set(homeAddress, forKey: "homeAddress")
             defaults.set(destinationAddress, forKey: "destinationAddress")
             defaults.set(workTimings, forKey: "workTimings")
 
-            // Show confirmation alert
             let alert = UIAlertController(title: "Preferences Saved", message: "Your ride preferences have been saved.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                // Navigate back to the previous view controller
+                self.navigationController?.popViewController(animated: true)
+            }))
             present(alert, animated: true, completion: nil)
         }
     }
