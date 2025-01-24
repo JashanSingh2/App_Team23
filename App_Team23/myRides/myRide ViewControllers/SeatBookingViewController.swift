@@ -9,13 +9,27 @@ import UIKit
 
 class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
     @IBOutlet weak var routeView: UIView!
+    
     @IBOutlet weak var seatCollectionView: UICollectionView!
     
+    @IBOutlet weak var collectionViewOuterView: UIView!
+    
+    
+    @IBOutlet weak var bookButton: UIButton!
+    
+    var isButtonSelected = false
+    
+    var selectedSeats: [UIButton] = []
+    let maxSeatsAllowed = 3
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bookButton.isEnabled = false
         
         routeView.layer.cornerRadius = 10
+        
+        collectionViewOuterView.layer.cornerRadius = 8
         
         let nib = UINib(nibName: "SeatSectionCell", bundle: nil)
         seatCollectionView.register(nib, forCellWithReuseIdentifier: "SeatSectionCell")
@@ -28,17 +42,21 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 4
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SeatSectionCell", for: indexPath) as! SeatSectionCollectionViewCell
         
         cell.updateSeatButton(with: indexPath)
+        cell.seatButton.addTarget(self, action: #selector(seatButtonTapped(_:)), for: .touchUpInside)
+        
         return cell
     }
     
@@ -46,12 +64,18 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let section : NSCollectionLayoutSection
             
-            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(30), heightDimension: .absolute(30))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/4), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(30))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(45))
             
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 10)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 4)
+            
+            
+            group.interItemSpacing = .fixed(10)
+            
+            group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
+            
             section = NSCollectionLayoutSection(group: group)
             
             return section
@@ -70,5 +94,66 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
+    
+
+    
+    
+    
+//    @objc func seatSelected(_ sender: UIButton){
+//        if sender.isSelected == true{
+//            sender.configuration?.baseBackgroundColor = .white
+//            sender.configuration?.baseForegroundColor = .black
+//            sender.isSelected = false
+//            bookButton.isEnabled = false
+//            
+//        }else{
+//            sender.configuration?.baseBackgroundColor = .systemGreen
+//            sender.configuration?.baseForegroundColor = .white
+//            sender.isSelected = true
+//            
+//            bookButton.isEnabled = true
+//            
+//        }
+//    }
+    
+    
+    @objc func seatButtonTapped(_ sender: UIButton) {
+            if selectedSeats.contains(sender) {
+                // Deselect the seat
+                deselectSeat(sender)
+            } else {
+                // Select the seat if within the limit
+                if selectedSeats.count < maxSeatsAllowed {
+                    selectSeat(sender)
+                } else if selectedSeats.count == maxSeatsAllowed {
+                    //bookButton.isEnabled = true
+                    // Alert user if they exceed the limit
+                    //showAlert()
+                }
+                
+
+            }
+        
+        if selectedSeats.count == maxSeatsAllowed {
+                    bookButton.isEnabled = true
+        } else {
+                bookButton.isEnabled = false
+        }
+        }
+
+    @objc func selectSeat(_ seat: UIButton) {
+        seat.configuration?.baseBackgroundColor = .systemGreen
+        seat.configuration?.baseForegroundColor = .white
+        selectedSeats.append(seat)
+       }
+    
+    @objc func deselectSeat(_ seat: UIButton) {
+        seat.configuration?.baseBackgroundColor = .white
+        seat.configuration?.baseForegroundColor = .black
+        if let index = selectedSeats.firstIndex(of: seat) {
+            selectedSeats.remove(at: index)
+        }
+    }
+
 
 }

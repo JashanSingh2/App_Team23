@@ -29,20 +29,20 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7Zv-Mt-Jsl">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="v5Q-jT-VDg">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="-4" translatesAutoresizingMaskIntoConstraints="NO" id="v5Q-jT-VDg">
                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="50"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2NT-7W-h7I">
-                                                                <rect key="frame" x="2.3333333333333313" y="2.3333333333333313" width="15.666666666666664" height="14.000000000000004"/>
+                                                                <rect key="frame" x="2.3333333333333313" y="2.3333333333333313" width="15.666666666666664" height="14.666666666666668"/>
                                                                 <color key="tintColor" red="0.109803915" green="0.109803915" blue="0.1176470518" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <imageReference key="image" image="circle" catalog="system" symbolScale="small"/>
                                                             </imageView>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="EaB-RQ-ThR">
-                                                                <rect key="frame" x="0.0" y="15.666666666666666" width="20" height="18.666666666666679"/>
+                                                                <rect key="frame" x="0.0" y="15.333333333333332" width="20" height="19.333333333333332"/>
                                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="heavy"/>
                                                             </imageView>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="clX-6s-J4b">
-                                                                <rect key="frame" x="2.3333333333333313" y="33.666666666666671" width="15.666666666666664" height="14"/>
+                                                                <rect key="frame" x="2.3333333333333313" y="33" width="15.666666666666664" height="14.666666666666664"/>
                                                                 <color key="tintColor" red="0.109803915" green="0.109803915" blue="0.1176470518" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <imageReference key="image" image="circle.fill" catalog="system" symbolScale="small"/>
                                                             </imageView>
@@ -262,11 +262,12 @@
             <connections>
                 <outlet property="acNonAcImageView" destination="fC5-KA-UN0" id="s1T-e3-k0D"/>
                 <outlet property="acNonAcLabel" destination="sfU-vc-1Xl" id="l7k-5c-ekC"/>
-                <outlet property="availableSeatsLabel" destination="jsU-vV-F9c" id="1uA-vw-5sC"/>
+                <outlet property="cellContentview" destination="cXG-wH-y9Q" id="R1t-SK-6lN"/>
                 <outlet property="destinationAddressLabel" destination="G1j-dn-96c" id="4tI-xI-u15"/>
                 <outlet property="dropoffTimeLabel" destination="NjW-cL-h1f" id="GJo-K1-UFG"/>
                 <outlet property="fareLabel" destination="FCD-bn-xt4" id="HZe-F0-1Bd"/>
                 <outlet property="pickupTimeLabel" destination="Rm2-cA-bqL" id="OW4-os-uhC"/>
+                <outlet property="seatsAvailableLabel" destination="8nx-ZS-iZt" id="xqv-y7-BnY"/>
                 <outlet property="seatsAvailableStackView" destination="nhs-1X-hUB" id="Ktn-ur-WaO"/>
                 <outlet property="serviceProviderNameLabel" destination="qBL-Vl-EHh" id="XDE-w6-9Gm"/>
                 <outlet property="serviceProviderRatingLabel" destination="KoW-Zd-zxJ" id="D2K-LJ-ePO"/>

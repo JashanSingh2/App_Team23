@@ -22,6 +22,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var modalBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var pickUpSearchBar: UISearchBar!
+    
+    @IBOutlet weak var dropOffSearchBar: UISearchBar!
+    
+    
+    @IBOutlet weak var searchRideButton: UIButton!
+    
+    
     private var modalFullyOpenHeight: CGFloat {
             return 0
         }
@@ -35,12 +43,30 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        searchRideButton.isEnabled = false
+        
         setupModalView()
         setupPanGesture()
         defaultModalPosition()
         
         suggestionsTableView.delegate = self
         suggestionsTableView.dataSource = self
+        
+        pickUpSearchBar.searchTextField.addTarget(self, action: #selector(searchBarTapped(_:)), for: .allEvents)
+        dropOffSearchBar.searchTextField.addTarget(self, action: #selector(searchBarTapped(_:)), for: .allEvents)
+        
+        
+        
+        
+        pickUpSearchBar.searchTextField.addTarget(self, action: #selector(pickUpTextFieldChanged(_:)), for: .editingChanged)
+        dropOffSearchBar.searchTextField.addTarget(self, action: #selector(pickUpTextFieldChanged(_:)), for: .editingChanged)
+        
+        
+        
+        
+        
         
     }
     
@@ -162,6 +188,34 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
+    @objc func pickUpTextFieldChanged(_ sender: UITextField){
+        
+        if !pickUpSearchBar.text!.isEmpty && !dropOffSearchBar.text!.isEmpty {
+            searchRideButton.isEnabled = true
+        }
+        openModal()
+
+    }
+    
+    @objc func searchBarTapped(_ sender: UITextField){
+        
+        openModal()
+        
+    }
+    
+    @IBAction func searchButtonTapped() {
+        performSegue(withIdentifier: "SearchToAvailableRides", sender: self)
+        
+    }
+    
+    
+    
+    
+    
+    
+    @IBAction func unwindToSearch(segue: UIStoryboardSegue) {
+        
+    }
     
     
     
@@ -194,6 +248,9 @@ extension SearchViewController: UIGestureRecognizerDelegate {
     override var shouldAutorotate: Bool {
         return false
     }
+    
+    
+    
     
     
     
