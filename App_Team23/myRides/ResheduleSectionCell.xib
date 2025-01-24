@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ResheduleSectionCell" id="UFA-6z-jRO" customClass="ResheduleCollectionViewCell" customModule="App_Team23" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="354" height="81"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="w3z-NW-Kuy">
+                <rect key="frame" x="0.0" y="0.0" width="354" height="81"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aUo-oA-hbl">
+                        <rect key="frame" x="20" y="0.0" width="314" height="81"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Zao-w0-b5A">
+                                <rect key="frame" x="0.0" y="0.0" width="180" height="81"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="phb-kN-7B1">
+                                        <rect key="frame" x="0.0" y="0.0" width="180" height="60.666666666666664"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sCY-3k-dBq">
+                                        <rect key="frame" x="0.0" y="60.666666666666664" width="180" height="20.333333333333336"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="5JP-gQ-lhS"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="FmR-yf-tcU">
+                                <rect key="frame" x="180" y="0.0" width="34" height="81"/>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sV6-wF-51i">
+                                <rect key="frame" x="214" y="0.0" width="100" height="81"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="XOm-9c-jj6"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="FmR-yf-tcU" firstAttribute="top" secondItem="aUo-oA-hbl" secondAttribute="top" id="7wu-sf-1vU"/>
+                            <constraint firstItem="sV6-wF-51i" firstAttribute="leading" secondItem="FmR-yf-tcU" secondAttribute="trailing" id="JXe-cR-8Wa"/>
+                            <constraint firstAttribute="bottom" secondItem="sV6-wF-51i" secondAttribute="bottom" id="PTW-LA-m1l"/>
+                            <constraint firstItem="Zao-w0-b5A" firstAttribute="top" secondItem="aUo-oA-hbl" secondAttribute="top" id="RYS-Tp-gUl"/>
+                            <constraint firstAttribute="bottom" secondItem="Zao-w0-b5A" secondAttribute="bottom" id="UIP-yc-kfW"/>
+                            <constraint firstItem="Zao-w0-b5A" firstAttribute="leading" secondItem="aUo-oA-hbl" secondAttribute="leading" id="WJG-zK-Auf"/>
+                            <constraint firstItem="sV6-wF-51i" firstAttribute="top" secondItem="aUo-oA-hbl" secondAttribute="top" id="rIM-QT-ew9"/>
+                            <constraint firstAttribute="bottom" secondItem="FmR-yf-tcU" secondAttribute="bottom" id="uBh-nJ-VRi"/>
+                            <constraint firstAttribute="trailing" secondItem="sV6-wF-51i" secondAttribute="trailing" id="yza-C0-yCc"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="aUo-oA-hbl" firstAttribute="leading" secondItem="w3z-NW-Kuy" secondAttribute="leading" constant="20" id="1vO-Nm-1TF"/>
+                    <constraint firstAttribute="bottom" secondItem="aUo-oA-hbl" secondAttribute="bottom" id="8Gn-tA-yjY"/>
+                    <constraint firstAttribute="trailing" secondItem="aUo-oA-hbl" secondAttribute="trailing" constant="20" id="CLJ-Pn-RDF"/>
+                    <constraint firstItem="aUo-oA-hbl" firstAttribute="top" secondItem="w3z-NW-Kuy" secondAttribute="top" id="uYb-to-Lqp"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="backgroundColor" red="0.97647058959999999" green="0.85882353779999998" blue="0.5176470876" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <size key="customSize" width="354" height="81"/>
+            <point key="canvasLocation" x="-180.15267175572518" y="-89.08450704225352"/>
+        </collectionViewCell>
+    </objects>
+</document>

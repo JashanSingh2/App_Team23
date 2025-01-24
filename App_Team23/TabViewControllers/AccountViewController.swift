@@ -1,28 +1,29 @@
 
 
 
+
 import UIKit
 
 class AccountViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    // Outlets for table view
     @IBOutlet weak var tableView: UITableView!
-    
-    // Label to display full name
     @IBOutlet weak var accountNameLabel: UILabel!
     
+  
     var fullName: String? = "John Doe" // Default name
     
-    // Define the settings and support arrays
+    @IBOutlet weak var profileImageView: UIImageView!
     let settings = ["Ride Preference", "Login & Security", "Rating & Feedback"]
     let support = ["Mail Us"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set the delegate and dataSource
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // Load the saved name from UserDefaults
+        loadSavedName()
         
         // Set the initial name in the label
         accountNameLabel.text = fullName
@@ -32,6 +33,50 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Observe notifications for name updates
         NotificationCenter.default.addObserver(self, selector: #selector(updateName(_:)), name: Notification.Name("NameUpdated"), object: nil)
+        
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateProfileImage(_:)), name: Notification.Name("ProfileImageUpdated"), object: nil)
+           
+           // Load saved name and image
+           loadSavedName()
+           loadSavedProfileImage()
+        
+        // Image circular shaped
+        // Make the profile image circular with a black border
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        profileImageView.clipsToBounds = true
+        profileImageView.layer.borderWidth = 1
+        profileImageView.layer.borderColor = UIColor.black.cgColor
+        profileImageView.contentMode = .scaleAspectFill
+        
+        
+        // seprator line
+        
+        
+        // Bell icon
+        
+        let bellIcon = UIImage(systemName: "bell") // Regular bell icon
+                // Create a UIBarButtonItem with the bell icon
+        let bellBarButtonItem = UIBarButtonItem(image: bellIcon, style: .plain, target: self, action: #selector(bellIconTapped))
+                // Set the tint color of the button to system blue
+        bellBarButtonItem.tintColor = .systemBlue
+                // Add the bar button item to the navigation bar (right side)
+        navigationItem.rightBarButtonItem = bellBarButtonItem
+        
+    }
+    
+    @objc func bellIconTapped() {
+            print("Bell icon tapped!")
+            // Add the functionality you want here
+        }
+    
+    // MARK: - Load Saved Name
+    func loadSavedName() {
+        // Retrieve the name from UserDefaults
+        if let savedFullName = UserDefaults.standard.string(forKey: "fullName") {
+            fullName = savedFullName
+        }
     }
     
     // MARK: - Handle Notifications
@@ -39,8 +84,12 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let userInfo = notification.userInfo,
            let firstName = userInfo["firstName"] as? String,
            let lastName = userInfo["lastName"] as? String {
+            // Update the full name
             fullName = "\(firstName) \(lastName)"
             accountNameLabel.text = fullName
+            
+            // Save the updated name in UserDefaults
+            UserDefaults.standard.set(fullName, forKey: "fullName")
         }
     }
     
@@ -57,60 +106,88 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    // MARK: - Section Headers
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "SETTINGS"  // Title for Settings section
+            return "SETTINGS"
         } else {
-            return "SUPPORT"   // Title for Support section
+            return "SUPPORT"
         }
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Handle row selection
         if indexPath.section == 0 {
-            if indexPath.row == 0 { // Ride Preference tapped
-                // Navigate to Ride Preference view controller
+            if indexPath.row == 0 {
                 let ridePreferenceVC = storyboard?.instantiateViewController(withIdentifier: "RideViewController") as! RideViewController
                 self.navigationController?.pushViewController(ridePreferenceVC, animated: true)
-            } else if indexPath.row == 1 { // Login & Security tapped
-                // Navigate to Login & Security view controller
+            } else if indexPath.row == 1 {
                 let loginSecurityVC = storyboard?.instantiateViewController(withIdentifier: "LoginSecurityViewController") as! LoginSecurityViewController
                 self.navigationController?.pushViewController(loginSecurityVC, animated: true)
-            } else if indexPath.row == 2 { // Rating & Feedback tapped
-                // Navigate to Rating & Feedback view controller
+            } else if indexPath.row == 2 {
                 let ratingFeedbackVC = storyboard?.instantiateViewController(withIdentifier: "RatingFeedbackViewController") as! RatingFeedbackViewController
                 self.navigationController?.pushViewController(ratingFeedbackVC, animated: true)
             }
         } else if indexPath.section == 1 {
-            if indexPath.row == 0 { // Mail Us tapped
-                // Navigate to Mail Us view controller
+            if indexPath.row == 0 {
                 let mailUsVC = storyboard?.instantiateViewController(withIdentifier: "MailUsViewController") as! MailUsViewController
                 self.navigationController?.pushViewController(mailUsVC, animated: true)
             }
         }
-        
-      
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath)
+//        if indexPath.section == 0 {
+//            cell.textLabel?.text = settings[indexPath.row]
+//        } else {
+//            cell.textLabel?.text = support[indexPath.row]
+//        }
+//        cell.accessoryType = .disclosureIndicator
+//        return cell
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath)
         
-        // Configure cell content
+        // Configure the text for the cell
         if indexPath.section == 0 {
             cell.textLabel?.text = settings[indexPath.row]
         } else {
             cell.textLabel?.text = support[indexPath.row]
         }
         
-        // Add disclosure indicator (chevron right) for each row
+        // Configure the image for the cell
+        let iconName: String
+        if indexPath.section == 0 {
+            // Icons for the settings section
+            switch indexPath.row {
+            case 0:
+                iconName = "car" // Ride Preference
+            case 1:
+                iconName = "lock.shield" // Login & Security
+            case 2:
+                iconName = "star" // Rating & Feedback
+            default:
+                iconName = "gear"
+            }
+        } else {
+            // Icons for the support section
+            iconName = "envelope" // Mail Us
+        }
+        
+        // Assign the image to the cell
+        cell.imageView?.image = UIImage(systemName: iconName)
+        cell.imageView?.tintColor = .black // Optional: Change icon color
+
+        // Set accessory type for the cell
         cell.accessoryType = .disclosureIndicator
         
         return cell
     }
+
     
-    // MARK: - Log Out Button (Added as Footer)
+    
+    // MARK: - Log Out Button
     func addLogOutButton() {
         let logOutButton = UIButton(type: .system)
         logOutButton.setTitle("Log Out", for: .normal)
@@ -135,9 +212,30 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
         tableView.tableFooterView = containerView
     }
-
+    
     @objc func logOutButtonTapped() {
         print("Log Out button tapped")
-        // Implement log out functionality here
     }
+    
+    @objc func updateProfileImage(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let imageData = userInfo["imageData"] as? Data,
+           let updatedImage = UIImage(data: imageData) {
+            profileImageView.image = updatedImage
+            
+            // Save image to UserDefaults
+            UserDefaults.standard.set(imageData, forKey: "profileImageData")
+        }
+    }
+
+    func loadSavedProfileImage() {
+        if let imageData = UserDefaults.standard.data(forKey: "profileImageData"),
+           let savedImage = UIImage(data: imageData) {
+            profileImageView.image = savedImage
+        } else {
+            profileImageView.image = UIImage(systemName: "person.circle")
+        }
+    }
+
 }
+

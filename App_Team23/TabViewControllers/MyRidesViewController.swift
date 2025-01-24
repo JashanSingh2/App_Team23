@@ -13,6 +13,8 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
+    var preSelectedSegmentIndex:Int = 0
+    
     var sectionHeaderNames:[String] = [
         "Today",
         "Tommorow",
@@ -35,6 +37,9 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        segmentedControl.selectedSegmentIndex = preSelectedSegmentIndex
+        segmentedControl.sendActions(for: .valueChanged)
         
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
