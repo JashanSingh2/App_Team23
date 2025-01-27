@@ -255,6 +255,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
                 //return YourUpcomingRideViewController(coder: coder, rideHistory: RidesDataController.shared.upcomingRides(At: rideSelected.row, for: later))
             }
         }
+        YourUpcomingRideViewController.sender = segmentedControl.selectedSegmentIndex
         YourUpcomingRideViewController.rideHistory = rideHistory
         return nil
     }

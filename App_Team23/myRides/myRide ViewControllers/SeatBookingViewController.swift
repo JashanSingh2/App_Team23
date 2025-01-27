@@ -117,6 +117,19 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
 //    }
     
     
+    @IBAction func bookNowButtonTapped() {
+        let storyboard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "confirmVC") as! SeatBookingViewController
+        navigationController?.pushViewController(viewController, animated: true)
+//        let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
+//        let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
+//        //viewController.sectionNumber = sender.tag
+//        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    
+    
+    
     @objc func seatButtonTapped(_ sender: UIButton) {
             if selectedSeats.contains(sender) {
                 // Deselect the seat

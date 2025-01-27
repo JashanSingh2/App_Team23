@@ -349,6 +349,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Your Ride" id="7cc-tH-TM5"/>
                     <connections>
+                        <outlet property="cancelRideButton" destination="lD3-3Z-cdm" id="agc-x9-GZY"/>
                         <outlet property="cardView" destination="Eoi-UT-GSr" id="uvg-M4-gVC"/>
                         <outlet property="destinationLocationLabel" destination="Eqa-gO-KcS" id="9LG-3c-e5B"/>
                         <outlet property="fareStack" destination="kyb-5P-QvA" id="Q1e-QO-lm7"/>

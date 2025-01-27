@@ -24,7 +24,10 @@ class YourUpcomingRideViewController: UIViewController {
     @IBOutlet weak var cardView: UIView!
     
     
+    @IBOutlet weak var cancelRideButton: UIButton!
+    
     static var rideHistory: RideHistory?
+    static var sender: Int?
     
 //    init?(coder: NSCoder, rideHistory: RideHistory) {
 //        //print(rideHistory)
@@ -42,6 +45,10 @@ class YourUpcomingRideViewController: UIViewController {
         super.viewDidLoad()
         
         cardView.layer.cornerRadius = 10
+        
+        if YourUpcomingRideViewController.sender == 1{
+            self.cancelRideButton.isHidden = true
+        }
         
         UpdateCard()
         // Do any additional setup after loading the view.
