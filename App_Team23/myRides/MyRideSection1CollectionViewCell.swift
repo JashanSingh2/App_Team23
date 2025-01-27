@@ -20,27 +20,39 @@ class MyRideSection1CollectionViewCell: UICollectionViewCell {
 //        <#code#>
 //    }
     
-    func updateSection1Data(with indexPath: IndexPath){
-        sourceLocationLabel.text = "Mayur Vihar"
-        destinationLocationLabel.text = "Sector 52"
-        sourceTimeLabel.text = "10:30 AM"
-        rideFareLabel.text = "70"
-        vehicleLogoImage.image = UIImage(systemName: "bus.fill")
+    func updateSection1Data(with rideHistory: RideHistory){
+        sourceLocationLabel.text = rideHistory.source.address
+        destinationLocationLabel.text = rideHistory.destination.address
+        sourceTimeLabel.text = rideHistory.source.time
+        rideFareLabel.text = "\(rideHistory.fare)"
+        if rideHistory.serviceProvider.rideType.vehicleType == .car{
+            vehicleLogoImage.image = UIImage(systemName: "car.fill")
+        }else {
+            vehicleLogoImage.image = UIImage(systemName: "bus.fill")
+        }
     }
     
-    func updateSection2Data(with IndexPath: IndexPath){
-        sourceLocationLabel.text = "Pari Chowk"
-        destinationLocationLabel.text = "Akshardham"
-        sourceTimeLabel.text = "09:00 AM"
-        rideFareLabel.text = "100"
-        vehicleLogoImage.image = UIImage(systemName: "car.fill")
+    func updateSection2Data(with rideHistory: RideHistory){
+        sourceLocationLabel.text = rideHistory.source.address
+        destinationLocationLabel.text = rideHistory.destination.address
+        sourceTimeLabel.text = rideHistory.source.time
+        rideFareLabel.text = "\(rideHistory.fare)"
+        if rideHistory.serviceProvider.rideType.vehicleType == .car{
+            vehicleLogoImage.image = UIImage(systemName: "car.fill")
+        }else {
+            vehicleLogoImage.image = UIImage(systemName: "bus.fill")
+        }
     }
     
-    func updateSection3Data(with indexPath: IndexPath){
-        sourceLocationLabel.text = "Source \(indexPath.row + 1)"
-        destinationLocationLabel.text = "Destination \(indexPath.row + 1)"
-        sourceTimeLabel.text = "Source Time \(indexPath.row + 1)"
-        rideFareLabel.text = "Ride Fare \(indexPath.row + 1)"
-        vehicleLogoImage.image = UIImage(systemName: "car.fill")
+    func updateSection3Data(with rideHistory: RideHistory){
+        sourceLocationLabel.text = rideHistory.source.address
+        destinationLocationLabel.text = rideHistory.destination.address
+        sourceTimeLabel.text = rideHistory.source.time
+        rideFareLabel.text = "\(rideHistory.fare)"
+        if rideHistory.serviceProvider.rideType.vehicleType == .car{
+            vehicleLogoImage.image = UIImage(systemName: "car.fill")
+        }else {
+            vehicleLogoImage.image = UIImage(systemName: "bus.fill")
+        }
     }
 }

@@ -14,11 +14,15 @@ class PreviousSectionCollectionViewCell: UICollectionViewCell {
         @IBOutlet weak var rideFareLabel: UILabel!
         @IBOutlet weak var vehicleLogoImage: UIImageView!
         
-        func updatePreviousData(with indexPath: IndexPath){
-            sourceLocationLabel.text = "Sector 62"
-            destinationLocationLabel.text = "Pari Chowk"
-            sourceDateLabel.text = "22 Jan 2025"
-            rideFareLabel.text = "80"
-            vehicleLogoImage.image = UIImage(systemName: "bus.fill")
+        func updatePreviousData(with rideHistory: RideHistory){
+            sourceLocationLabel.text = rideHistory.source.address
+            destinationLocationLabel.text = rideHistory.destination.address
+            sourceDateLabel.text = rideHistory.date
+            rideFareLabel.text = "\(rideHistory.fare)"
+            if rideHistory.serviceProvider.rideType.vehicleType == .bus{
+                vehicleLogoImage.image = UIImage(systemName: "bus.fill")
+            }else{
+                vehicleLogoImage.image = UIImage(systemName: "car.fill")
+            }
         }
 }

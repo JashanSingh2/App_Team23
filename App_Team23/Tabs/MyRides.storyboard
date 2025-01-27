@@ -80,7 +80,7 @@
                     <connections>
                         <outlet property="collectionView" destination="8Bv-MJ-1yx" id="3Tn-zW-VwX"/>
                         <outlet property="segmentedControl" destination="HQR-zb-kfY" id="yf6-tg-rj0"/>
-                        <segue destination="hHk-A1-rsO" kind="show" identifier="myRidesToUpcomingRides" id="syk-9z-4mf"/>
+                        <segue destination="hHk-A1-rsO" kind="show" identifier="myRidesToUpcomingRides" destinationCreationSelector="rideDetailSegue:sender:" id="syk-9z-4mf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -261,7 +261,7 @@
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seat No : 21" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u46-Fx-Gff">
                                                                 <rect key="frame" x="40" y="0.0" width="105" height="25"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <color key="textColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -360,6 +360,7 @@
                         <outlet property="seatNumberStack" destination="cRo-MZ-48W" id="5SA-Kj-U8o"/>
                         <outlet property="sourceLocationLabel" destination="00m-nJ-myb" id="Vpz-Kh-fAc"/>
                         <outlet property="vehicleNumberLabel" destination="ZuT-sU-gUM" id="HH6-qM-TdP"/>
+                        <outlet property="vehicleTypeimageView" destination="EwI-Bd-Vdo" id="Fx4-A3-osc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c1n-G0-vIG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

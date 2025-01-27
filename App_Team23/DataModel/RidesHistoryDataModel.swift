@@ -15,6 +15,7 @@ struct RideHistory{
     var Rating: Double?
     var review: String?
     let fare: Int
+    let seatNumber: Int?
 }
 
 

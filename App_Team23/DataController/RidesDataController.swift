@@ -38,6 +38,11 @@ class RidesDataController {
     
     private var ridesHistory: [RideHistory] = []
     
+    private var today = "28/01/2025"
+    private var tomorrow = "29/01/2025"
+    private var later = "30/01/2025"
+    
+    
     func loadDummyData() {
 //        let myRoute : [,
 //      [Schedule(address: "Akshardham", time: "7:40AM"),
@@ -144,10 +149,13 @@ class RidesDataController {
         
         
         ridesHistory = [
-            RideHistory(source: Schedule(address: "Sector 62", time: "7:50 AM"), destination: Schedule(address: "Pari Chowk", time: "9:20 AM"), serviceProvider: allServiceProviders[6], date: "17/01/2025", fare: 150),
-            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "18/01/2025", fare: 30),
-            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "19/01/2025", fare: 40),
-            RideHistory(source: Schedule(address: "Knowledge Park-II", time: "8:05 AM"), destination: Schedule(address: "Okhla Bird Sanctuary", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "20/01/2025", fare: 45)
+            RideHistory(source: Schedule(address: "Sector 62", time: "7:50 AM"), destination: Schedule(address: "Pari Chowk", time: "9:20 AM"), serviceProvider: allServiceProviders[6], date: "17/01/2025", fare: 150, seatNumber: nil),
+            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "18/01/2025", fare: 30, seatNumber: 21),
+            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "19/01/2025", fare: 40, seatNumber: 1),
+            RideHistory(source: Schedule(address: "Knowledge Park-II", time: "8:05 AM"), destination: Schedule(address: "Okhla Bird Sanctuary", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "20/01/2025", fare: 45, seatNumber: 3),
+            RideHistory(source: Schedule(address: "Sector 62", time: "7:50 AM"), destination: Schedule(address: "Pari Chowk", time: "9:20 AM"), serviceProvider: allServiceProviders[6], date: "28/01/2025", fare: 150, seatNumber: nil),
+            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "29/01/2025", fare: 30, seatNumber: 17),
+            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "30/01/2025", fare: 40, seatNumber: 14)
         ]
     }
     
@@ -162,7 +170,7 @@ class RidesDataController {
         return ridesHistory[index]
     }
     
-    func filterRideHistory(by type: VehicleType) -> [RideHistory] {
+    private func filterRideHistory(by type: VehicleType) -> [RideHistory] {
         var filteredRides: [RideHistory] = []
         for ride in ridesHistory {
             if ride.serviceProvider.rideType.vehicleType == type {
@@ -171,6 +179,7 @@ class RidesDataController {
         }
         return filteredRides
     }
+    
     
     
     func rideHistoryOfBus(At index: Int) -> RideHistory {
@@ -196,8 +205,6 @@ class RidesDataController {
                 return 3
             
         }
-        
-        
     }
     
     
@@ -220,6 +227,58 @@ class RidesDataController {
         return availableRides[index]
         
     }
+    
+    
+    
+    //for myRides
+    func numberOfUpcomingRides(for date: String)-> Int{
+        var count: Int = 0
+        for ride in ridesHistory{
+            if ride.date == date{
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    
+    private func upcomingRides(for date: String)-> [RideHistory]{
+        var upcomingRides: [RideHistory] = []
+        for ride in ridesHistory{
+            if ride.date == date{
+                upcomingRides.append(ride)
+            }
+        }
+        return upcomingRides
+    }
+    
+    func upcomingRides(At index: Int, for date: String)-> RideHistory{
+        print(index)
+        var upcomingRides = upcomingRides(for: date)
+        return upcomingRides[index]
+            
+    }
+    
+    
+    func numberOfPreviousRides()-> Int{
+        var count: Int = 0
+        for ride in ridesHistory{
+            if ride.date != today && ride.date != tomorrow && ride.date != later {
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    func previousRides(At index: Int)-> RideHistory{
+        if ridesHistory[index].date != today && ridesHistory[index].date != tomorrow && ridesHistory[index].date != later {
+            return ridesHistory[index]
+            }else {
+                return previousRides(At: index+1)
+            }
+            
+    }
+    
     
     
 }
