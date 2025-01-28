@@ -20,7 +20,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     var isButtonSelected = false
     
     var selectedSeats: [UIButton] = []
-    let maxSeatsAllowed = 3
+    let maxSeatsAllowed = 1
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,13 +118,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     
     @IBAction func bookNowButtonTapped() {
-        let storyboard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "confirmVC") as! SeatBookingViewController
-        navigationController?.pushViewController(viewController, animated: true)
-//        let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
-//        let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
-//        //viewController.sectionNumber = sender.tag
-//        navigationController?.pushViewController(viewController, animated: true)
+        performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
     }
     
     

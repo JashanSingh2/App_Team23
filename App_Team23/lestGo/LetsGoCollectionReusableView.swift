@@ -9,6 +9,13 @@ import UIKit
 
 class LetsGoCollectionReusableView: UICollectionReusableView {
         
+    
+//    @IBOutlet weak var headerLabel: UILabel!
+//    
+//    @IBOutlet weak var button: UIButton!
+//    
+    
+    
     var headerLabel = UILabel()
     var button = UIButton(type: .system)
     
@@ -43,6 +50,8 @@ class LetsGoCollectionReusableView: UICollectionReusableView {
         ])
         
     }
+    
+    
     
     
     

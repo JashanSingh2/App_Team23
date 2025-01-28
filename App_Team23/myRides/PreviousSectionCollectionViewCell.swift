@@ -14,6 +14,10 @@ class PreviousSectionCollectionViewCell: UICollectionViewCell {
         @IBOutlet weak var rideFareLabel: UILabel!
         @IBOutlet weak var vehicleLogoImage: UIImageView!
         
+        @IBOutlet weak var reBookButton: UIButton!
+    
+    
+    
         func updatePreviousData(with rideHistory: RideHistory){
             sourceLocationLabel.text = rideHistory.source.address
             destinationLocationLabel.text = rideHistory.destination.address

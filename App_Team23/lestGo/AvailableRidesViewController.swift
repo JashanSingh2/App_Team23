@@ -60,7 +60,10 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "AvailableRidesToSeatBooking", sender: self)
+        let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+        navigationController?.pushViewController(viewController, animated: true)
+//        performSegue(withIdentifier: "AvailableRidesToSeatBooking", sender: self)
     }
     
     

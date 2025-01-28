@@ -248,29 +248,23 @@
                             <constraint firstItem="fKv-B3-N5s" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="60" id="zOZ-VN-Jhx"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Ride Booking" id="PGq-uT-YBj">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ITz-5O-30s">
-                            <connections>
-                                <segue destination="yNx-fm-hv6" kind="unwind" unwindAction="unwindToRideSelection:" id="xr6-Ti-Wzl"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Ride Booking" id="PGq-uT-YBj"/>
                     <connections>
                         <outlet property="bookButton" destination="rAK-vg-oLz" id="aaQ-zI-19K"/>
                         <outlet property="collectionViewOuterView" destination="fKv-B3-N5s" id="8x8-GU-xqo"/>
                         <outlet property="routeView" destination="gWF-iG-fwW" id="IQX-Pw-u8d"/>
                         <outlet property="seatCollectionView" destination="wWN-Nf-DFf" id="qoc-ci-uzr"/>
+                        <segue destination="fdS-JH-4jD" kind="show" identifier="rideConfirmedSegue" id="dd5-U1-3tW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="yNx-fm-hv6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1993.1297709923663" y="3.5211267605633805"/>
         </scene>
         <!--Seat Booked-->
         <scene sceneID="061-Lx-avI">
             <objects>
-                <viewController storyboardIdentifier="confirmVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A9a-tk-l1i" customClass="SeatConfirmDeatilsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="confirmVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A9a-tk-l1i" customClass="SeatConfirmDeatilsViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tnI-da-FaH">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -461,7 +455,7 @@
                             <constraint firstItem="VVa-WV-Gnt" firstAttribute="top" secondItem="jLE-zM-RbP" secondAttribute="bottom" constant="25" id="ywI-5q-3KY"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Seat Booked" id="JnX-tO-6LS">
+                    <navigationItem key="navigationItem" title="Seat Booked" leftItemsSupplementBackButton="YES" id="JnX-tO-6LS">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="dlA-kw-Ava">
                             <connections>
                                 <segue destination="jXi-F4-Hmc" kind="unwind" unwindAction="unwindToLetsGo:" id="cFV-Ht-SBG"/>
@@ -472,7 +466,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Q3-tS-jl2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="jXi-F4-Hmc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3500" y="4"/>
+            <point key="canvasLocation" x="4426.7175572519081" y="3.5211267605633805"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xa6-k1-PXT">
@@ -493,22 +487,23 @@
             <point key="canvasLocation" x="1066.4122137404579" y="3.5211267605633805"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="Rek-Hn-IaT">
+        <scene sceneID="CWx-LY-D19">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="F2i-EQ-fXD" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fdS-JH-4jD" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9D9-ux-8oQ">
+                    <navigationItem key="navigationItem" id="vBO-D1-MNU"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hWb-jO-x17">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="A9a-tk-l1i" kind="relationship" relationship="rootViewController" id="jXS-6J-A26"/>
+                        <segue destination="A9a-tk-l1i" kind="relationship" relationship="rootViewController" id="KGm-e9-PKE"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0II-6n-dRg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vYd-AH-lOk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2771.7557251908397" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="3500" y="3.5211267605633805"/>
         </scene>
     </scenes>
     <resources>

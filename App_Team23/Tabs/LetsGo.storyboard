@@ -21,7 +21,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOD-Ki-oh7">
                                 <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-YV-eI8">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-YV-eI8">
                                         <rect key="frame" x="5" y="0.0" width="383" height="666"/>
                                         <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aBh-87-dNs">
@@ -371,15 +371,27 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jT-Jz-gbA">
                                 <rect key="frame" x="0.0" y="44" width="393" height="852"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Bms-oL-tRx">
-                                        <rect key="frame" x="20" y="10" width="300" height="50"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Bms-oL-tRx">
+                                        <rect key="frame" x="20" y="10" width="353" height="50"/>
                                         <subviews>
-                                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="PQb-Ru-sgq">
-                                                <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                                            <datePicker contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="PQb-Ru-sgq">
+                                                <rect key="frame" x="0.0" y="0.0" width="241.33333333333334" height="50"/>
                                             </datePicker>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8md-aw-Cp6">
+                                                <rect key="frame" x="246.33333333333331" y="14.999999999999998" width="7.6666666666666572" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" autorepeat="NO" value="1" minimumValue="1" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="XFO-AI-ymq">
+                                                <rect key="frame" x="259" y="9" width="94" height="32"/>
+                                                <connections>
+                                                    <action selector="stepperClicked:" destination="Mej-Sa-wgd" eventType="valueChanged" id="id2-8e-Nu4"/>
+                                                </connections>
+                                            </stepper>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="300" id="Way-8W-PsB"/>
+                                            <constraint firstAttribute="height" constant="50" id="uOy-c9-Zb2"/>
                                         </constraints>
                                     </stackView>
                                     <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Pickup" translatesAutoresizingMaskIntoConstraints="NO" id="Q9P-O3-bnl">
@@ -472,6 +484,7 @@
                                     <constraint firstAttribute="trailing" secondItem="KlC-LA-npE" secondAttribute="trailing" constant="20" id="evh-6S-5vp"/>
                                     <constraint firstItem="VBw-sE-faW" firstAttribute="leading" secondItem="8jT-Jz-gbA" secondAttribute="leading" constant="20" id="fYZ-O0-eev"/>
                                     <constraint firstAttribute="trailing" secondItem="VBw-sE-faW" secondAttribute="trailing" constant="20" id="mml-BG-S09"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bms-oL-tRx" secondAttribute="trailing" constant="20" id="qYL-Hg-7mA"/>
                                     <constraint firstItem="1aB-mz-Ych" firstAttribute="centerX" secondItem="8jT-Jz-gbA" secondAttribute="centerX" id="vQT-8E-ccK"/>
                                     <constraint firstItem="VBw-sE-faW" firstAttribute="top" secondItem="Q9P-O3-bnl" secondAttribute="bottom" id="vV8-fY-6kg"/>
                                     <constraint firstAttribute="bottom" secondItem="KlC-LA-npE" secondAttribute="bottom" constant="25" id="zDL-YA-atb"/>
@@ -494,7 +507,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Search" style="browser" id="kJV-Ka-B7u">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="rI2-05-Xit">
-                            <color key="tintColor" red="0.109803915" green="0.109803915" blue="0.1176470518" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>
                                 <segue destination="tYn-dw-ibm" kind="unwind" unwindAction="unwindToLetsGo:" id="bwF-ht-uEV"/>
                             </connections>
@@ -507,6 +519,7 @@
                         <outlet property="modalView" destination="8jT-Jz-gbA" id="C4b-D2-HOa"/>
                         <outlet property="pickUpSearchBar" destination="Q9P-O3-bnl" id="InC-HZ-fpv"/>
                         <outlet property="searchRideButton" destination="1aB-mz-Ych" id="bGl-BJ-QSl"/>
+                        <outlet property="seatLabel" destination="8md-aw-Cp6" id="ick-il-UYu"/>
                         <outlet property="suggestionsTableView" destination="KlC-LA-npE" id="esf-3R-f02"/>
                         <segue destination="FMA-nt-oMb" kind="show" identifier="SearchToAvailableRides" id="dou-4o-MZR"/>
                     </connections>
@@ -568,22 +581,11 @@
                     <connections>
                         <outlet property="availableRidesCollectionView" destination="cnc-yh-xTg" id="DW7-lq-y0T"/>
                         <outlet property="routeMapView" destination="7bn-Ll-CT6" id="HWU-s1-ep3"/>
-                        <segue destination="dib-2X-77D" kind="presentation" identifier="AvailableRidesToSeatBooking" id="NGC-dw-wgf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZhJ-nj-oyc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3649.6183206106871" y="728.87323943661977"/>
-        </scene>
-        <!--SeatBookingViewController-->
-        <scene sceneID="XIP-xN-Hlt">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="seatBookingVC" storyboardName="SeatBookingViewController" id="dib-2X-77D" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="JOb-YZ-HYw"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PkY-xx-Mpd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4422" y="729"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wKh-50-8bv">

@@ -23,6 +23,8 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     private var tomorrow = "29/01/2025"
     private var later = "30/01/2025"
     
+    //static var segementIndex: Int = 0
+    
     private var rideSelected: IndexPath!
     
     override func viewDidLoad() {
@@ -43,6 +45,11 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.dataSource = self
         
     }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        segmentedControl.selectedSegmentIndex = MyRidesViewController.segementIndex
+//        MyRidesViewController.segementIndex = 0
+//    }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if segmentedControl.selectedSegmentIndex == 1 {
             return 1
@@ -84,7 +91,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 5
-            
+            cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped(_:)), for: .touchUpInside)
             
             cell.layer.shadowOffset = CGSize(width: 2, height: 2)
             cell.layer.masksToBounds = false
@@ -264,6 +271,13 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         performSegue(withIdentifier: "myRidesToUpcomingRides", sender: self)
     }
     
+    
+    @objc func reBookButtonTapped(_ button : UIButton) {
+        let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+        navigationController?.pushViewController(viewController, animated: true)
+        
+    }
     
     @objc func ResheduleButtonTapped(_ button : UIButton) {
         let storyBoard = UIStoryboard(name: "MyRides", bundle: nil)
