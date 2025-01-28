@@ -29,6 +29,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var searchRideButton: UIButton!
     
+    @IBOutlet weak var seatLabel: UILabel!
+    
+    
+    
+    
     
     private var modalFullyOpenHeight: CGFloat {
             return 0
@@ -44,6 +49,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //seatStackvView.layer.cornerRadius = 10
         
         searchRideButton.isEnabled = false
         
@@ -208,6 +214,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    
+    @IBAction func stepperClicked(_ sender: UIStepper) {
+        
+        seatLabel.text = "\(Int(sender.value))"
+    }
     
     
     

@@ -106,27 +106,42 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let header = letsGoCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LetsGoCollectionReusableView", for: indexPath) as! LetsGoCollectionReusableView
-            header.headerLabel.text = RidesDataController.shared.sectionHeadersInLetsGo(at: indexPath.section)
-            header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-            
-            header.button.setTitle("See All", for: .normal)
-            //header.button.tag = indexPath.section
-            if indexPath.section == 0 {
+        if indexPath.section == 0{
+            if kind == UICollectionView.elementKindSectionHeader {
+                let header = letsGoCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LetsGoCollectionReusableView", for: indexPath) as! LetsGoCollectionReusableView
+                header.headerLabel.text = RidesDataController.shared.sectionHeadersInLetsGo(at: indexPath.section)
+                header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+                
+                header.button.setTitle("See All", for: .normal)
+                //header.button.tag = indexPath.section
                 header.button.addTarget(self, action: #selector(allPreviousRidesButtonTapped(_:)), for: .touchUpInside)
+                
+                
+                header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+                
+                header.button.semanticContentAttribute = .forceRightToLeft
+                
+                return header
             }
-//            }else if indexPath.section == 1 {
-//                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
-//            }
-           
-            
-            header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-            
-            header.button.semanticContentAttribute = .forceRightToLeft
-            
-            return header
+        }else /*if indexPath.section == 1*/{
+            if kind == UICollectionView.elementKindSectionHeader {
+                let header = letsGoCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LetsGoCollectionReusableView", for: indexPath) as! LetsGoCollectionReusableView
+                header.headerLabel.text = RidesDataController.shared.sectionHeadersInLetsGo(at: indexPath.section)
+                header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+                
+                header.button.setTitle("See All", for: .normal)
+                //header.button.tag = indexPath.section
+                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
+               
+                
+                header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+                
+                header.button.semanticContentAttribute = .forceRightToLeft
+                
+                return header
+            }
         }
+       
         print("Supplementry View Not Found")
         return UICollectionReusableView()
     }
@@ -184,9 +199,10 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
 
     @objc func allPreviousRidesButtonTapped(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "MyRides", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "MyRidesViewController") as! MyRidesViewController
+        //let storyboard = UIStoryboard(name: "MyRides", bundle: nil)
+        //let viewController = storyboard.instantiateViewController(withIdentifier: "MyRidesViewController") as! MyRidesViewController
         //viewController.segmentedControl.selectedSegmentIndex = 1
+        //MyRidesViewController.segementIndex = 1
         tabBarController?.selectedIndex = 1
         
         //navigationController?.pushViewController(viewController, animated: true)
@@ -196,6 +212,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     @objc func sectionButtonTapped(_ sender: UIButton) {
+        
         let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
         //viewController.sectionNumber = sender.tag
@@ -221,6 +238,4 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
 }
-
-
 

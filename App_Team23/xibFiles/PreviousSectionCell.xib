@@ -150,6 +150,7 @@
             <color key="backgroundColor" red="0.97647058959999999" green="0.85882353779999998" blue="0.5176470876" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <connections>
                 <outlet property="destinationLocationLabel" destination="5ce-iO-fwS" id="q0U-vy-zXa"/>
+                <outlet property="reBookButton" destination="WIy-CH-wlh" id="7iA-YH-TcH"/>
                 <outlet property="rideFareLabel" destination="f9K-Dl-gaO" id="42g-lv-bJP"/>
                 <outlet property="sourceDateLabel" destination="W3J-El-UKv" id="2Q3-y1-SJB"/>
                 <outlet property="sourceLocationLabel" destination="Qab-na-bME" id="bw0-tA-Jhm"/>
