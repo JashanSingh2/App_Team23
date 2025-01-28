@@ -333,14 +333,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Hl8-h9-oQV">
-                                <rect key="frame" x="22" y="331" width="349.66666666666674" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LlX-KE-jsL">
                                 <rect key="frame" x="46.666666666666657" y="147" width="300" height="60"/>
                                 <subviews>
@@ -392,11 +384,19 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PBH-t3-Op4">
-                                <rect key="frame" x="71" y="554" width="250" height="50"/>
+                                <rect key="frame" x="126" y="498" width="140" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Submit Button "/>
+                                <buttonConfiguration key="configuration" style="plain" title="Submit Button " cornerStyle="capsule"/>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Hl8-h9-oQV">
+                                <rect key="frame" x="20" y="320" width="353" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bUv-p5-NFf"/>
                         <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -420,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yhu-Eu-ymS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3877" y="-840"/>
+            <point key="canvasLocation" x="-3877" y="-833"/>
         </scene>
         <!--Mail Us View Controller-->
         <scene sceneID="R4Z-kf-vCx">
@@ -667,14 +667,16 @@ or need support, feel free to reach out via email.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ud-oO-I5g">
-                                <rect key="frame" x="72.666666666666686" y="425.66666666666669" width="248" height="62"/>
+                                <rect key="frame" x="126.66666666666669" y="425.66666666666669" width="140" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="248" id="k35-rd-OkU"/>
-                                    <constraint firstAttribute="height" constant="62" id="zXr-f6-MqC"/>
+                                    <constraint firstAttribute="height" constant="40" id="Ofw-0d-thV"/>
+                                    <constraint firstAttribute="width" constant="140" id="k35-rd-OkU"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Update" cornerStyle="capsule"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Update" cornerStyle="capsule">
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleBody"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="updateButtonTapped:" destination="pwE-Qc-mA1" eventType="touchUpInside" id="hue-RO-L56"/>
                                 </connections>
@@ -814,10 +816,10 @@ or need support, feel free to reach out via email.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1E-fE-0aq">
-                                <rect key="frame" x="72.666666666666686" y="288" width="248" height="62"/>
+                                <rect key="frame" x="126.66666666666669" y="288" width="140" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="248" id="X5D-YS-emN"/>
-                                    <constraint firstAttribute="height" constant="62" id="igT-oZ-28K"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="5ZX-AY-KiR"/>
+                                    <constraint firstAttribute="width" constant="140" id="X5D-YS-emN"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -897,10 +899,10 @@ or need support, feel free to reach out via email.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XHK-KJ-SEX">
-                                <rect key="frame" x="72.666666666666686" y="288" width="248" height="62"/>
+                                <rect key="frame" x="126.66666666666669" y="288" width="140" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="62" id="7N1-yb-YlL"/>
-                                    <constraint firstAttribute="width" constant="248" id="8vK-sP-vOx"/>
+                                    <constraint firstAttribute="height" constant="40" id="7N1-yb-YlL"/>
+                                    <constraint firstAttribute="width" constant="140" id="8vK-sP-vOx"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
@@ -982,7 +984,7 @@ or need support, feel free to reach out via email.</string>
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

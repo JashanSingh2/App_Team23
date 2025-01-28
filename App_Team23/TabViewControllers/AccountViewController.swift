@@ -193,7 +193,7 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         logOutButton.setTitle("Log Out", for: .normal)
         logOutButton.backgroundColor = .black
         logOutButton.setTitleColor(.white, for: .normal)
-        logOutButton.layer.cornerRadius = 25
+        logOutButton.layer.cornerRadius = 20
         logOutButton.clipsToBounds = true
         
         let containerView = UIView()
@@ -203,10 +203,10 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         logOutButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            logOutButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 50),
-            logOutButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -50),
+            logOutButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 90),
+            logOutButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -90),
             logOutButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            logOutButton.heightAnchor.constraint(equalToConstant: 50)
+            logOutButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
