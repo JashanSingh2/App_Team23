@@ -125,7 +125,7 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
         carButton.layer.cornerRadius = 10
         busButton.backgroundColor = .systemGray6
         busButton.tintColor = .label
-        imageViewOutlet.image = UIImage(named: "Car")
+        imageViewOutlet.image = UIImage(systemName: "car")
         
     }
 
@@ -139,7 +139,7 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
         busButton.layer.cornerRadius = 10
         carButton.backgroundColor = .systemGray6
         carButton.tintColor = .label
-        imageViewOutlet.image = UIImage(named: "Bus")
+        imageViewOutlet.image = UIImage(systemName: "bus")
     }
           @IBAction func phoneNumberVerifyButtonTapped(_ sender: UIButton) {
               print("Phone number verification requested for: \(phoneNumberTextField.text ?? "")")
