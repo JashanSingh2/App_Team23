@@ -281,7 +281,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     @objc func reBookButtonTapped(_ button : UIButton) {
         let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.present(viewController, animated: true)
         
     }
     
@@ -289,7 +289,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         let storyBoard = UIStoryboard(name: "MyRides", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "ResheduleRides") as! ResheduleViewController
         //viewController.sectionNumber = button.tag
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.present(viewController, animated: true)
     }
     
     @IBAction func unwindToMyrides(segue: UIStoryboardSegue) {

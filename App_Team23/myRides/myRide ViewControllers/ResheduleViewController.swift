@@ -73,7 +73,7 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
     @objc func selectButtonTapped(_ button : UIButton) {
         let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.present(viewController, animated: true)
         
     }
     

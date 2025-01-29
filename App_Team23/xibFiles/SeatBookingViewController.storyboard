@@ -231,7 +231,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="bookNowButtonTapped" destination="Y6W-OH-hqX" eventType="touchUpInside" id="VgM-sc-duT"/>
-                                    <segue destination="bru-17-chb" kind="unwind" unwindAction="unwindToMyridesWithSegue:" id="VA1-Cv-bBY"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -259,7 +258,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="bru-17-chb" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1993.1297709923663" y="3.5211267605633805"/>
         </scene>
@@ -468,7 +466,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Q3-tS-jl2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="jXi-F4-Hmc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4008" y="4"/>
+            <point key="canvasLocation" x="3421" y="4"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xa6-k1-PXT">
@@ -507,7 +505,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vYd-AH-lOk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3082" y="4"/>
+            <point key="canvasLocation" x="2720" y="4"/>
         </scene>
     </scenes>
     <resources>
