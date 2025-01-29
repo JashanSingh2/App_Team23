@@ -22,7 +22,6 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Adding search bar
         
         searchController.searchBar.placeholder = "Where are you going?"
         

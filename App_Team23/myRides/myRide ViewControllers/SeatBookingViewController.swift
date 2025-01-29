@@ -118,7 +118,9 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     
     @IBAction func bookNowButtonTapped() {
+        //dismiss(animated: true, completion: nil)
         performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
+        
     }
     
     

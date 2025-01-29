@@ -9,15 +9,13 @@ import UIKit
 
 class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-
+    
     @IBOutlet weak var resheduleViewController: UICollectionView!
-//    var sectionNumber: Int = 0
+    //    var sectionNumber: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-        
+           
         let nibFirst = UINib(nibName: "ResheduleSectionCell", bundle: nil)
         resheduleViewController.register(nibFirst, forCellWithReuseIdentifier: "ResheduleCell")
         
@@ -28,18 +26,21 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
         
     }
     
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ResheduleCell", for: indexPath) as! ResheduleCollectionViewCell
         
         cell.updateReshedulaRideData(with: indexPath)
+        
+        cell.selectButton.addTarget(self, action: #selector(selectButtonTapped(_:)), for: .touchUpInside)
+        
         cell.layer.cornerRadius = 14.0
         cell.layer.shadowColor = UIColor.black.cgColor
         cell.layer.shadowOpacity = 0.5
@@ -52,7 +53,7 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func generateLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in let section : NSCollectionLayoutSection
-         
+            
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
@@ -69,15 +70,12 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc func selectButtonTapped(_ button : UIButton) {
+        let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+        navigationController?.pushViewController(viewController, animated: true)
+        
     }
-    */
-
+    
+    
 }

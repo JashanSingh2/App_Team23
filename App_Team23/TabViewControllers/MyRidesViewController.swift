@@ -13,7 +13,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    var preSelectedSegmentIndex:Int = 0
+    //var preSelectedSegmentIndex:Int = 0
     
     var sectionHeaderNames:[String] = [
         "Today",
@@ -25,7 +25,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     private var tomorrow = "29/01/2025"
     private var later = "30/01/2025"
     
-    //static var segementIndex: Int = 0
+    static var preSelectedSegmentIndex: Int = 0
     
     private var rideSelected: IndexPath!
     
@@ -46,15 +46,16 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        segmentedControl.selectedSegmentIndex = preSelectedSegmentIndex
+        //segmentedControl.selectedSegmentIndex = preSelectedSegmentIndex
         segmentedControl.sendActions(for: .valueChanged)
         
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        segmentedControl.selectedSegmentIndex = MyRidesViewController.segementIndex
-//        MyRidesViewController.segementIndex = 0
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        segmentedControl.selectedSegmentIndex = MyRidesViewController.preSelectedSegmentIndex
+        collectionView.reloadData()
+        MyRidesViewController.preSelectedSegmentIndex = 0
+    }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if segmentedControl.selectedSegmentIndex == 1 {
             return 1
@@ -290,6 +291,12 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         //viewController.sectionNumber = button.tag
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    @IBAction func unwindToMyrides(segue: UIStoryboardSegue) {
+        MyRidesViewController.preSelectedSegmentIndex = 0
+    }
+    
+    
     
 //    @objc func ChevronButtonTapped(_ button : UIButton) {
 //        let storyBoard = UIStoryboard(name: "MyRides", bundle: nil)
