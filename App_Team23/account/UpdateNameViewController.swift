@@ -18,26 +18,14 @@ class UpdateNameViewController: UIViewController {
         lastNameTextField.text = lastName
         addCloseButton()
     }
-
-//    @IBAction func updateButtonTapped(_ sender: UIButton) {
-//        if let firstName = firstNameTextField.text, let lastName = lastNameTextField.text {
-//            // Send a notification with the updated name
-//            NotificationCenter.default.post(name: Notification.Name("NameUpdated"), object: nil, userInfo: ["firstName": firstName, "lastName": lastName])
-//            onUpdateName?(firstName, lastName)
-//            
-//            
-//        }
     @IBAction func updateButtonTapped(_ sender: UIButton) {
         if let firstName = firstNameTextField.text, let lastName = lastNameTextField.text {
             // Send a notification with the updated name
             NotificationCenter.default.post(name: Notification.Name("NameUpdated"), object: nil, userInfo: ["firstName": firstName, "lastName": lastName])
             onUpdateName?(firstName, lastName)
         }
-
-        // Show an alert to confirm the update
         let alert = UIAlertController(title: "Profile Updated", message: "Your profile has been updated successfully!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            // Dismiss the modal view controller
             self.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)

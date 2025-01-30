@@ -9,8 +9,6 @@
 import UIKit
 
 class RideViewController: UIViewController {
-
-    // Outlets for Home and Destination Address TextFields
     @IBOutlet weak var homeAddressTextField: UITextField!
     @IBOutlet weak var destinationAddressTextField: UITextField!
     @IBOutlet weak var workTimingsLabel: UITextField!
@@ -23,12 +21,6 @@ class RideViewController: UIViewController {
         
         // Set custom title for the navigation bar
         self.title = "Ride Preferences"
-        
-        // Optionally, customize navigation bar appearance
-//        self.navigationController?.navigationBar.barTintColor = UIColor.blue
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        
-        // Add custom Save button to the navigation bar
         let saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(savePreferences))
         saveButton.tintColor = .systemBlue
         self.navigationItem.rightBarButtonItem = saveButton
@@ -42,7 +34,6 @@ class RideViewController: UIViewController {
 
     // Action to clear the Home Address TextField
     @IBAction func clearHomeAddress(_ sender: UIButton) {
-//        homeAddressTextField.text = ""
         homeAddressTextField.becomeFirstResponder()
     }
 
@@ -54,10 +45,6 @@ class RideViewController: UIViewController {
 
     // Action to edit Work Timings
     @IBAction func editWorkTimings(_ sender: UIButton) {
-        // Code to handle work timings edit
-//        let alert = UIAlertController(title: "Edit Work Timings", message: "Functionality coming soon!", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        present(alert, animated: true, completion: nil)
         workTimingsLabel.becomeFirstResponder()
     }
 
