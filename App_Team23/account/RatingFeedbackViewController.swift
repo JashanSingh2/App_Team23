@@ -21,8 +21,6 @@ class RatingFeedbackViewController: UIViewController, UITextViewDelegate {
         setupTextView()
         setupSubmitButton()
     }
-
-    // Configure Stars
     private func setupStars() {
         for (index, button) in starButtons.enumerated() {
             button.tag = index + 1
@@ -141,4 +139,5 @@ class RatingFeedbackViewController: UIViewController, UITextViewDelegate {
         submitButton.isEnabled = false
         submitButton.backgroundColor = .gray
     }
+   
 }

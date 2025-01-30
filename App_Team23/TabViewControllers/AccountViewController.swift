@@ -1,9 +1,5 @@
 
-
-
-
 import UIKit
-
 class AccountViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
@@ -21,64 +17,37 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        // Load the saved name from UserDefaults
         loadSavedName()
-        
-        // Set the initial name in the label
         accountNameLabel.text = fullName
-        
-        // Add the Log Out button as the footer view
         addLogOutButton()
         
         // Observe notifications for name updates
         NotificationCenter.default.addObserver(self, selector: #selector(updateName(_:)), name: Notification.Name("NameUpdated"), object: nil)
-        
-        
-        
         NotificationCenter.default.addObserver(self, selector: #selector(updateProfileImage(_:)), name: Notification.Name("ProfileImageUpdated"), object: nil)
-           
            // Load saved name and image
            loadSavedName()
            loadSavedProfileImage()
-        
-        // Image circular shaped
-        // Make the profile image circular with a black border
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.borderColor = UIColor.black.cgColor
         profileImageView.contentMode = .scaleAspectFill
-        
-        
-        // seprator line
-        
-        
         // Bell icon
-        
-        let bellIcon = UIImage(systemName: "bell") // Regular bell icon
-                // Create a UIBarButtonItem with the bell icon
+        let bellIcon = UIImage(systemName: "bell")
         let bellBarButtonItem = UIBarButtonItem(image: bellIcon, style: .plain, target: self, action: #selector(bellIconTapped))
-                // Set the tint color of the button to system blue
         bellBarButtonItem.tintColor = .systemBlue
-                // Add the bar button item to the navigation bar (right side)
         navigationItem.rightBarButtonItem = bellBarButtonItem
         
     }
-    
     @objc func bellIconTapped() {
             print("Bell icon tapped!")
-            // Add the functionality you want here
         }
-    
     // MARK: - Load Saved Name
     func loadSavedName() {
-        // Retrieve the name from UserDefaults
         if let savedFullName = UserDefaults.standard.string(forKey: "fullName") {
             fullName = savedFullName
         }
     }
-    
     // MARK: - Handle Notifications
     @objc func updateName(_ notification: Notification) {
         if let userInfo = notification.userInfo,
@@ -87,7 +56,6 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
             // Update the full name
             fullName = "\(firstName) \(lastName)"
             accountNameLabel.text = fullName
-            
             // Save the updated name in UserDefaults
             UserDefaults.standard.set(fullName, forKey: "fullName")
         }
@@ -95,7 +63,7 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: - TableView DataSource
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2 // Two sections: Settings and Support
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,7 +73,6 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
             return support.count
         }
     }
-    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "SETTINGS"
@@ -134,59 +101,40 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath)
-//        if indexPath.section == 0 {
-//            cell.textLabel?.text = settings[indexPath.row]
-//        } else {
-//            cell.textLabel?.text = support[indexPath.row]
-//        }
-//        cell.accessoryType = .disclosureIndicator
-//        return cell
-//    }
-    
+     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath)
-        
         // Configure the text for the cell
         if indexPath.section == 0 {
             cell.textLabel?.text = settings[indexPath.row]
         } else {
             cell.textLabel?.text = support[indexPath.row]
         }
-        
         // Configure the image for the cell
         let iconName: String
         if indexPath.section == 0 {
             // Icons for the settings section
             switch indexPath.row {
             case 0:
-                iconName = "car" // Ride Preference
+                iconName = "car"
             case 1:
-                iconName = "lock.shield" // Login & Security
+                iconName = "lock.shield"
             case 2:
-                iconName = "star" // Rating & Feedback
+                iconName = "star"
             default:
                 iconName = "gear"
             }
         } else {
-            // Icons for the support section
-            iconName = "envelope" // Mail Us
+            iconName = "envelope"
         }
-        
         // Assign the image to the cell
         cell.imageView?.image = UIImage(systemName: iconName)
-        cell.imageView?.tintColor = .black // Optional: Change icon color
+        cell.imageView?.tintColor = .black
 
-        // Set accessory type for the cell
         cell.accessoryType = .disclosureIndicator
         
         return cell
     }
-
-    
-    
     // MARK: - Log Out Button
     func addLogOutButton() {
         let logOutButton = UIButton(type: .system)
@@ -227,7 +175,6 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
             UserDefaults.standard.set(imageData, forKey: "profileImageData")
         }
     }
-
     func loadSavedProfileImage() {
         if let imageData = UserDefaults.standard.data(forKey: "profileImageData"),
            let savedImage = UIImage(data: imageData) {

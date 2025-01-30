@@ -27,7 +27,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Load saved profile data and image
         loadProfileData()
 
-        // Add close button
         addCloseButton()
         
     }
@@ -81,9 +80,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                let savedImage = UIImage(data: imageData) {
                 cell.customImageView.image = savedImage
             } else {
-                cell.customImageView.image = UIImage(systemName: "person.circle")
+                let defaultImage = UIImage(systemName: "person.circle")?.withRenderingMode(.alwaysTemplate)
+                cell.customImageView.image = defaultImage
+                cell.customImageView.tintColor = .black
             }
-            
+
             // Configure the image view
             cell.customImageView.contentMode = .scaleAspectFill
             cell.customImageView.layer.cornerRadius = cell.customImageView.frame.size.width / 2
