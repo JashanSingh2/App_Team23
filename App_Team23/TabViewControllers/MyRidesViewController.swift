@@ -282,7 +282,6 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
         navigationController?.present(viewController, animated: true)
-        
     }
     
     @objc func ResheduleButtonTapped(_ button : UIButton) {
@@ -294,6 +293,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBAction func unwindToMyrides(segue: UIStoryboardSegue) {
         MyRidesViewController.preSelectedSegmentIndex = 0
+        collectionView.reloadData()
     }
     
     

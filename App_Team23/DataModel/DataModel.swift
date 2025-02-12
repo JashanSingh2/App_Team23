@@ -35,3 +35,9 @@ struct DateAndTime{
     var time: String
 }
 
+struct RouteStop {
+    var stopName: String
+    var stopTime: String
+}
+
+

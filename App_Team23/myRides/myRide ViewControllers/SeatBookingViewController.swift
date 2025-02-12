@@ -163,6 +163,17 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
             selectedSeats.remove(at: index)
         }
     }
-
+    
+    @IBAction func unwindToSeatSelector(segue: UIStoryboardSegue) {
+        
+    }
+    
+    
+    
+    @IBAction func cancelTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
 
 }
