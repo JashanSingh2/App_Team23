@@ -77,20 +77,22 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cG2-g4-wmE">
                                 <rect key="frame" x="0.0" y="50.666666666666664" width="165" height="79.333333333333343"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="Hz5-EZ-6wB">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="Hz5-EZ-6wB">
                                         <rect key="frame" x="0.0" y="0.0" width="19" height="79.333333333333329"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="496-Ia-Fgk">
-                                                <rect key="frame" x="0.0" y="0.66666666666666607" width="19" height="27"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="496-Ia-Fgk">
+                                                <rect key="frame" x="1.666666666666667" y="2.3333333333333321" width="15.666666666666664" height="25"/>
                                                 <color key="tintColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <imageReference key="image" image="circle" catalog="system" symbolScale="small"/>
                                             </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yellowLine" translatesAutoresizingMaskIntoConstraints="NO" id="tKF-Nd-M0a">
-                                                <rect key="frame" x="0.0" y="25.333333333333336" width="19" height="28.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="24.666666666666664" width="19" height="30"/>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="heavy"/>
                                             </imageView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9Oy-TQ-JLG">
-                                                <rect key="frame" x="0.0" y="51.666666666666671" width="19" height="26.999999999999986"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Oy-TQ-JLG">
+                                                <rect key="frame" x="1.666666666666667" y="52" width="15.666666666666664" height="25"/>
                                                 <color key="tintColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <imageReference key="image" image="circle.fill" catalog="system" symbolScale="small"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -167,6 +169,7 @@
                 <outlet property="dropOffTimeLabel" destination="O0O-fR-bxG" id="Q0c-VH-klc"/>
                 <outlet property="fareLabel" destination="eD2-6s-jyZ" id="aiB-sr-iqy"/>
                 <outlet property="pickUpTimeLabel" destination="jpn-s3-9r8" id="RAQ-vd-6St"/>
+                <outlet property="reBookButton" destination="H7y-IU-yhr" id="sGO-Jh-HSk"/>
                 <outlet property="sourceAddress" destination="AJ7-ye-fuA" id="9Av-nT-fmO"/>
                 <outlet property="vehicleTypeImageView" destination="CI0-F0-Fho" id="qJ9-sl-K3I"/>
             </connections>

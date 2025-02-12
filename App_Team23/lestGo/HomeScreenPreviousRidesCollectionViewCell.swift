@@ -12,6 +12,7 @@ import UIKit
 
 class HomeScreenPreviousRidesCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var reBookButton: UIButton!
     
     @IBOutlet weak var vehicleTypeImageView: UIImageView!
     

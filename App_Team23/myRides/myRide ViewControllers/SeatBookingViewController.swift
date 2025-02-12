@@ -19,11 +19,15 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var isButtonSelected = false
     
+    var selectedRide: RidesAvailable?
+    
     var selectedSeats: [UIButton] = []
     let maxSeatsAllowed = 1
      
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(selectedRide)
         
         bookButton.isEnabled = false
         

@@ -9,13 +9,8 @@ import UIKit
 
 class LetsGoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchControllerDelegate {
     
-    
-
-    
     @IBOutlet var letsGoCollectionView: UICollectionView!
-    
-    
-    
+  
     
     let searchController = UISearchController()
     
@@ -54,17 +49,10 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func willPresentSearchController(_ searchController: UISearchController) {
         performSegue(withIdentifier: "searchBar", sender: self)
-        //self.searchController.searchBar.isEnabled = false
     }
-    
-//    func didPresentSearchController(_ searchController: UISearchController) {
-//        
-//    }
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        print("Letsgo section")
-//        print(RidesDataController.shared.numberOfSectionsInLetsGo())
         return RidesDataController.shared.numberOfSectionsInLetsGo()
     }
     
@@ -84,6 +72,9 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             case 0:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
                 let RideHistory = RidesDataController.shared.rideHistoryOfBus(At: indexPath.row)
+                
+                cell.reBookButton.tag = indexPath.row
+                cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped), for: .touchUpInside)
                 cell.updatePreviousRideCell(with: RideHistory)
                 print(RideHistory.date)
                 cell.layer.cornerRadius = 14
@@ -105,44 +96,34 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if indexPath.section == 0{
-            if kind == UICollectionView.elementKindSectionHeader {
-                let header = letsGoCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LetsGoCollectionReusableView", for: indexPath) as! LetsGoCollectionReusableView
+        switch kind {
+            case UICollectionView.elementKindSectionHeader:
+                let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "LetsGoCollectionReusableView",
+                    for: indexPath
+                ) as! LetsGoCollectionReusableView
+                
                 header.headerLabel.text = RidesDataController.shared.sectionHeadersInLetsGo(at: indexPath.section)
                 header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
                 
-                header.button.setTitle("See All", for: .normal)
-                //header.button.tag = indexPath.section
-                header.button.addTarget(self, action: #selector(allPreviousRidesButtonTapped(_:)), for: .touchUpInside)
-                
-                
-                header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-                
-                header.button.semanticContentAttribute = .forceRightToLeft
-                
-                return header
-            }
-        }else /*if indexPath.section == 1*/{
-            if kind == UICollectionView.elementKindSectionHeader {
-                let header = letsGoCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "LetsGoCollectionReusableView", for: indexPath) as! LetsGoCollectionReusableView
-                header.headerLabel.text = RidesDataController.shared.sectionHeadersInLetsGo(at: indexPath.section)
-                header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-                
-                header.button.setTitle("See All", for: .normal)
-                //header.button.tag = indexPath.section
-                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
-               
-                
-                header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-                
-                header.button.semanticContentAttribute = .forceRightToLeft
+                if indexPath.section == 1 {
+                    header.button.isHidden = false  // Ensure button is visible
+                    header.button.setTitle("See All", for: .normal)
+                    header.button.tag = indexPath.section
+                    header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
+                    header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+                    header.button.semanticContentAttribute = .forceRightToLeft
+                } else {
+                    header.button.isHidden = true
+                    header.button.removeTarget(nil, action: nil, for: .allEvents)
+                }
                 
                 return header
-            }
+
+            default:
+                return UICollectionReusableView()
         }
-       
-        print("Supplementry View Not Found")
-        return UICollectionReusableView()
     }
     
     func generateLayout()-> UICollectionViewLayout {
@@ -192,49 +173,43 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
+    
     @IBAction func unwindToLetsGo(_ unwindSegue: UIStoryboardSegue) {
         
     }
-    
 
-    @objc func allPreviousRidesButtonTapped(_ sender: UIButton) {
-        //let storyboard = UIStoryboard(name: "MyRides", bundle: nil)
-        //let viewController = storyboard.instantiateViewController(withIdentifier: "MyRidesViewController") as! MyRidesViewController
-        //viewController.segmentedControl.selectedSegmentIndex = 1
-        //MyRidesViewController.segementIndex = 1
-        tabBarController?.selectedIndex = 1
-        
-        //navigationController?.pushViewController(viewController, animated: true)
-        //navigationController?.popToViewController(viewController, animated: true)
-        
-    }
-    
     
     @objc func sectionButtonTapped(_ sender: UIButton) {
+        if sender.tag == 1 {
+            let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
+            let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
+            navigationController?.pushViewController(viewController, animated: true)
+        }
         
-        let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
-        //viewController.sectionNumber = sender.tag
-        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    var selectedRide: RideHistory?
+    
+    @objc func reBookButtonTapped(_ button : UIButton) {
+        selectedRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
+        
+        let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+        navigationController?.present(viewController, animated: true)
     }
     
     
-//    @objc func searchbarTapped(_ sender: UISearchController){
-//        performSegue(withIdentifier: "searchBar", sender: self)
-//        
-//    }
     
-    
-    
-    
-    
-//    @IBAction func searchBarPressed(_ sender: UISearchController){
-//        performSegue(withIdentifier: "searchBar", sender: self)
-//    }
-    
-    
-    
-    
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let seatVC = segue.destination as? SeatBookingViewController{
+            //notesVC.dataController = dataController
+//            if let selectedNoteBook = notebooksTableView.indexPathForSelectedRow{
+//                notesVC.selectedNoteBook = notebooks[selectedNoteBook.row]
+//            }
+            seatVC.selectedRide = RidesDataController.shared.rideWithSimilarServiceProvider(serviceProvider: selectedRide!.serviceProvider)
+            
+        }
+    }
+     
 }
 

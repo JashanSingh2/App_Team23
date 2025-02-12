@@ -293,7 +293,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBAction func unwindToMyrides(segue: UIStoryboardSegue) {
         MyRidesViewController.preSelectedSegmentIndex = 0
-        collectionView.reloadData()
+        //collectionView.reloadData()
     }
     
     

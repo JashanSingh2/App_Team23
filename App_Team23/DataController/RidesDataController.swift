@@ -38,9 +38,9 @@ class RidesDataController {
     
     private var ridesHistory: [RideHistory] = []
     
-    private var today = "28/01/2025"
-    private var tomorrow = "29/01/2025"
-    private var later = "30/01/2025"
+    var today = "28/01/2025"
+    var tomorrow = "29/01/2025"
+    var later = "30/01/2025"
     
     
     func loadDummyData() {
@@ -279,6 +279,14 @@ class RidesDataController {
             
     }
     
+    func rideWithSimilarServiceProvider(serviceProvider: ServiceProvider)-> RidesAvailable?{
+        for ride in availableRides{
+            if ride.serviceProvider == serviceProvider{
+                return ride
+            }
+        }
+        return nil
+    }
     
     
 }
