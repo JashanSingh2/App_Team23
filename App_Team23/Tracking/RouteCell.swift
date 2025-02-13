@@ -24,6 +24,11 @@ class RouteCell: UITableViewCell {
         stopMarker.clipsToBounds = true
     }
 
+    func updateUI(with schedule: Schedule){
+        stopNameLabel.text = schedule.address
+        stopTImeLabel.text = schedule.time
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

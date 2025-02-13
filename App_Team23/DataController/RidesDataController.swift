@@ -143,10 +143,9 @@ class RidesDataController {
             RidesAvailable(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "8:45 AM"), fare: 65, date: "20/01/2025", seatsAvailable: 40, serviceProvider: allServiceProviders[3] , rating: 4.6),
             RidesAvailable(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "8:45 AM"), fare: 135, date: "20/01/2025", seatsAvailable: 4, serviceProvider: allServiceProviders[4] , rating: 4.1),
             RidesAvailable(source: Schedule(address: "Sector 62", time: "8:00 AM"), destination: Schedule(address: "Pari Chowk", time: "9:30 AM"), fare: 90, date: "20/01/2025", seatsAvailable: 35, serviceProvider: allServiceProviders[5] , rating: 3.9),
-            RidesAvailable(source: Schedule(address: "Sector 62", time: "8:00 AM"), destination: Schedule(address: "Pari Chowk", time: "9:30 AM"), fare: 150, date: "18/01/2025", seatsAvailable: 3, serviceProvider: allServiceProviders[6] , rating: 4.8)
+            RidesAvailable(source: Schedule(address: "Sector 62", time: "8:00 AM"), destination: Schedule(address: "Pari Chowk", time: "9:30 AM"), fare: 150, date: "18/01/2025", seatsAvailable: 3, serviceProvider: allServiceProviders[6] , rating: 4.8),
+            RidesAvailable(source: Schedule(address: "Knowledge Park-II", time: "8:05 AM"), destination: Schedule(address: "Okhla Bird Sanctuary", time: "9:00 AM"), fare: 45, date: today, seatsAvailable: 33, serviceProvider: allServiceProviders[3], rating: 4.6)
         ]
-        
-        
         
         ridesHistory = [
             RideHistory(source: Schedule(address: "Sector 62", time: "7:50 AM"), destination: Schedule(address: "Pari Chowk", time: "9:20 AM"), serviceProvider: allServiceProviders[6], date: "17/01/2025", fare: 150, seatNumber: nil),
@@ -210,7 +209,7 @@ class RidesDataController {
     
     //for section headers
     
-    private let letsGoSectionHeaderTitles: [String] = ["Previous Rides", "Suggested Rides"]
+    private let letsGoSectionHeaderTitles: [String] = ["Recent Rides", "Suggested Rides"]
     
     func sectionHeadersInLetsGo(at sectionNumber: Int) -> String {
         return letsGoSectionHeaderTitles[sectionNumber]
@@ -279,15 +278,20 @@ class RidesDataController {
             
     }
     
-    func rideWithSimilarServiceProvider(serviceProvider: ServiceProvider)-> RidesAvailable?{
+    func ride(from source: String,to destination: String)-> RidesAvailable?{
         for ride in availableRides{
-            if ride.serviceProvider == serviceProvider{
+            if ride.source.address == source && ride.destination.address == destination{
                 return ride
             }
         }
         return nil
     }
     
+    func newRideHistory(with ride: RideHistory){
+        print(ridesHistory.count)
+        ridesHistory.append(ride)
+        print(ridesHistory.count)
+    }
     
 }
 

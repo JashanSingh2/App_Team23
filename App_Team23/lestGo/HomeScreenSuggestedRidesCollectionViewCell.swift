@@ -23,6 +23,7 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var fareLabel: UILabel!
     
+    @IBOutlet weak var selectButton: UIButton!
     
     @IBOutlet weak var borderStack: UIStackView!
     

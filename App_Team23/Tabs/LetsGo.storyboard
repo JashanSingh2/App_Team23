@@ -72,6 +72,8 @@
                     <connections>
                         <outlet property="letsGoCollectionView" destination="seJ-YV-eI8" id="Wav-f9-9oU"/>
                         <segue destination="IyZ-CN-gMi" kind="presentation" identifier="searchBar" animates="NO" modalPresentationStyle="fullScreen" id="nIe-W8-6w3"/>
+                        <segue destination="8lx-Li-bV5" kind="presentation" identifier="seatReBooking" id="p92-2a-BP6"/>
+                        <segue destination="X7g-Np-Q68" kind="presentation" identifier="carBookingSegue" id="VOs-lI-p3S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -308,6 +310,24 @@
                 <exit id="Lbl-IL-aXp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2820.6106870229005" y="5.6338028169014089"/>
+        </scene>
+        <!--CarBooking-->
+        <scene sceneID="CAd-T4-LAa">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="carBooking" storyboardName="CarBooking" id="X7g-Np-Q68" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="SWd-ZB-fdW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h7x-ra-Qqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1743" y="-418"/>
+        </scene>
+        <!--SeatBookingViewController-->
+        <scene sceneID="U4e-DG-Y5t">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="SeatBookingViewController" storyboardName="SeatBookingViewController" id="8lx-Li-bV5" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dEf-jP-Ptz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1744" y="-462"/>
         </scene>
         <!--Suggested Rides-->
         <scene sceneID="SPF-F6-EmN">

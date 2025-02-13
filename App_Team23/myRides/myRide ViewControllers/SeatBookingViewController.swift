@@ -8,6 +8,26 @@
 import UIKit
 
 class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+    
+    
+    @IBOutlet weak var startingLocationLabel: UILabel!
+    
+    @IBOutlet weak var sourceLocationLabel: UILabel!
+    
+    @IBOutlet weak var destinationLocationLabel: UILabel!
+    
+    @IBOutlet weak var endingLocationLabel: UILabel!
+    
+    @IBOutlet weak var vehicleNumberLabel: UILabel!
+       
+    @IBOutlet weak var startingTimeLabel: UILabel!
+    
+    @IBOutlet weak var sourceTimeLabel: UILabel!
+    
+    @IBOutlet weak var destinationTimeLabel: UILabel!
+    
+    @IBOutlet weak var endingTimeLabel: UILabel!
+    
     @IBOutlet weak var routeView: UIView!
     
     @IBOutlet weak var seatCollectionView: UICollectionView!
@@ -22,7 +42,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     var selectedRide: RidesAvailable?
     
     var selectedSeats: [UIButton] = []
-    let maxSeatsAllowed = 1
+    let maxSeatsAllowed = 3
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +60,31 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         
         seatCollectionView.setCollectionViewLayout(generateSeatLayout(), animated: true)
         
+        
+        updateUI()
+        
         seatCollectionView.delegate = self
         seatCollectionView.dataSource = self
         // Do any additional setup after loading the view.
     }
+    
+    func updateUI(){
+        if let selectedRide{
+            startingLocationLabel.text = selectedRide.serviceProvider.route.first?.address
+            sourceLocationLabel.text = selectedRide.source.address
+            destinationLocationLabel.text = selectedRide.destination.address
+            endingLocationLabel.text = selectedRide.serviceProvider.route.last?.address
+            
+            startingTimeLabel.text = selectedRide.serviceProvider.route.first?.time
+            sourceTimeLabel.text = selectedRide.source.time
+            destinationTimeLabel.text = selectedRide.destination.time
+            endingTimeLabel.text = selectedRide.serviceProvider.route.last?.time
+            
+            vehicleNumberLabel.text = selectedRide.serviceProvider.vehicleNumber
+            
+        }
+    }
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 10
@@ -95,8 +136,9 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let destinationVC = segue.destination as? TrackingViewController{
+            destinationVC.route = (selectedRide?.serviceProvider.route)!
+        }
     }
     
 
@@ -123,7 +165,19 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     @IBAction func bookNowButtonTapped() {
         //dismiss(animated: true, completion: nil)
+        
+        var selectedSeat: [Int] = []
+        for seat in selectedSeats {
+            selectedSeat.append(Int((seat.titleLabel?.text)!)!)
+        }
+        
+        var ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: selectedRide!.date, fare: selectedRide!.fare, seatNumber: selectedSeat.first)
+        
+        RidesDataController.shared.newRideHistory(with: ride)
+        
         performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
+        
+        
         
     }
     

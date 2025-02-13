@@ -54,8 +54,15 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewWillAppear(_ animated: Bool) {
         segmentedControl.selectedSegmentIndex = MyRidesViewController.preSelectedSegmentIndex
         collectionView.reloadData()
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
         MyRidesViewController.preSelectedSegmentIndex = 0
     }
+    
+    
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if segmentedControl.selectedSegmentIndex == 1 {
             return 1
@@ -64,6 +71,8 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         return 3
     }
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if segmentedControl.selectedSegmentIndex == 1 {
@@ -71,7 +80,6 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         }else {
             switch section {
             case 0:
-                print("section1  " + "\(RidesDataController.shared.numberOfUpcomingRides(for: today))")
                 return RidesDataController.shared.numberOfUpcomingRides(for: today)
             case 1:
                 return RidesDataController.shared.numberOfUpcomingRides(for: tomorrow)

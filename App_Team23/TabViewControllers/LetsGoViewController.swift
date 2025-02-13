@@ -81,6 +81,10 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 return cell
             case 1:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! HomeScreenSuggestedRidesCollectionViewCell
+                
+                cell.selectButton.tag = indexPath.row
+                cell.selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
+                
                 let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
                 cell.updateSuggestedRideCell(with: rideSuggestion)
                 cell.layer.cornerRadius = 14
@@ -125,6 +129,9 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 return UICollectionReusableView()
         }
     }
+    
+    
+    
     
     func generateLayout()-> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout{
@@ -188,28 +195,41 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
-    var selectedRide: RideHistory?
+    var selectedRecentRide: RideHistory?
     
     @objc func reBookButtonTapped(_ button : UIButton) {
-        selectedRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
-        
-        let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
-        navigationController?.present(viewController, animated: true)
+        selectedRecentRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
+        //print("\(selectedRide!.serviceProvider)\n\n")
+        performSegue(withIdentifier: "seatReBooking", sender: self)
+//        let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
+//        let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+//        navigationController?.present(viewController, animated: true)
     }
     
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let seatVC = segue.destination as? SeatBookingViewController{
-            //notesVC.dataController = dataController
-//            if let selectedNoteBook = notebooksTableView.indexPathForSelectedRow{
-//                notesVC.selectedNoteBook = notebooks[selectedNoteBook.row]
-//            }
-            seatVC.selectedRide = RidesDataController.shared.rideWithSimilarServiceProvider(serviceProvider: selectedRide!.serviceProvider)
-            
+            //print("Hello")
+            //print(self.selectedRide!.serviceProvider)
+            //print(RidesDataController.shared.rideWithSimilarServiceProvider(serviceProvider: self.selectedRide!.serviceProvider))
+            //seatVC.selectedRide = RidesDataController.shared.ride(from: (selectedRecentRide?.source.address)!, to: (selectedRecentRide?.destination.address)!)
         }
     }
      
+    var selectedRide: RidesAvailable?
+    
+    @objc func selectButtonTapped(_ button : UIButton) {
+        selectedRide = RidesDataController.shared.rideSuggestion(At: button.tag)
+        if selectedRide?.serviceProvider.rideType.vehicleType == .bus{
+            performSegue(withIdentifier: "seatReBooking", sender: self)
+        }else if selectedRide?.serviceProvider.rideType.vehicleType == .car{
+            performSegue(withIdentifier: "carBookingSegue", sender: self)
+        }
+    }
+    
+    
+    
+    
 }
 
