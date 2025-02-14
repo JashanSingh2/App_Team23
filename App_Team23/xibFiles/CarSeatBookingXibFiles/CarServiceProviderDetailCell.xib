@@ -180,7 +180,6 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.88235294819999999" blue="0.54901963470000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="240" id="D5O-cP-hRh"/>
                             <constraint firstItem="xlc-a0-c41" firstAttribute="top" secondItem="tDh-7e-xod" secondAttribute="bottom" constant="15" id="FhA-vp-cU7"/>
@@ -209,6 +208,7 @@
                     <constraint firstAttribute="trailing" secondItem="ErJ-bM-g7d" secondAttribute="trailing" id="qbO-Bj-nsq"/>
                 </constraints>
             </collectionViewCellContentView>
+            <color key="backgroundColor" red="0.98039215800000001" green="0.88235294819999999" blue="0.54901963470000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <connections>
                 <outlet property="bookingTimeLabel" destination="9pn-lj-BBY" id="SOM-Cx-tLa"/>
                 <outlet property="rideFareLabel" destination="c2J-0X-9RP" id="oLc-a0-NZn"/>

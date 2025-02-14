@@ -83,7 +83,6 @@
                         </constraints>
                     </stackView>
                 </subviews>
-                <color key="backgroundColor" red="1" green="0.88235294819999999" blue="0.54901963470000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="uJe-He-9FV" secondAttribute="trailing" constant="15" id="5ov-9n-BLw"/>
                     <constraint firstAttribute="bottom" secondItem="uJe-He-9FV" secondAttribute="bottom" constant="15" id="AxK-iv-Zzz"/>
@@ -91,6 +90,7 @@
                     <constraint firstItem="uJe-He-9FV" firstAttribute="leading" secondItem="dSv-pa-aqG" secondAttribute="leading" constant="15" id="cgl-AD-CJv"/>
                 </constraints>
             </collectionViewCellContentView>
+            <color key="backgroundColor" red="0.98039215800000001" green="0.88235294819999999" blue="0.54901963470000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <connections>
                 <outlet property="passengerNameLabel" destination="BDQ-R6-sxa" id="MqO-Ff-ei5"/>
                 <outlet property="passengerRatingLabel" destination="XQo-TZ-fzF" id="zbv-M7-Qe8"/>
