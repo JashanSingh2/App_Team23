@@ -51,9 +51,21 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
         pickupTimeLabel.text = ride.source.time
         dropoffTimeLabel.text = ride.destination.time
         fareLabel.text = "\(ride.fare)"
-        seatsAvailableLabel.text = "\(ride.seatsAvailable)"
+        seatsAvailableLabel.text = "\(ride.seatsAvailable) Seats Available"
         serviceProviderNameLabel.text = "\(ride.serviceProvider.name)"
-        
+        serviceProviderRatingLabel.text = "\(ride.rating)"
+        if ride.serviceProvider.rideType.vehicleType == .car{
+            vehicleTypeImageView.image = UIImage(systemName: "car.fill")
+        }else {
+            vehicleTypeImageView.image = UIImage(systemName: "bus.fill")
+        }
+        if ride.serviceProvider.rideType.facility == .ac{
+            acNonAcLabel.text = "AC"
+            acNonAcImageView.image = UIImage(systemName: "snowflake")
+        }else {
+            acNonAcLabel.text = "Non AC"
+            acNonAcImageView.image = UIImage(systemName: "snowflake.slash")
+        }
         
     }
     

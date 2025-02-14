@@ -21,6 +21,8 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     
     @IBOutlet weak var availableRidesCollectionView: UICollectionView!
     
+    var numberOfSeats: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,7 +55,9 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
-        cell.updateAllSuggestedRidesCell(with: indexPath)
+        
+        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+        cell.updateAllSuggestedRidesCell(with: ride)
         
         return cell
         
@@ -62,6 +66,11 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+        
+        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+        viewController.selectedRide = ride
+        viewController.maxSeatsAllowed = numberOfSeats
+        
         navigationController?.present(viewController, animated: true)
 //        performSegue(withIdentifier: "AvailableRidesToSeatBooking", sender: self)
     }

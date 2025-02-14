@@ -210,10 +210,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func searchButtonTapped() {
+        
+        
         performSegue(withIdentifier: "SearchToAvailableRides", sender: self)
         
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? AvailableRidesViewController {
+            destVC.numberOfSeats = Int(seatLabel.text!)
+        }
+    }
     
     @IBAction func stepperClicked(_ sender: UIStepper) {
         

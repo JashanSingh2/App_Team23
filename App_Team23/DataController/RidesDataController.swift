@@ -44,11 +44,12 @@ protocol DataController {
     
     func numberOfRidesAvailable()-> Int
     
+    func availableRide(At index: Int)-> RidesAvailable
 }
 
 
 class RidesDataController: DataController {
-    
+
     static var shared = RidesDataController()
     
     init() {
@@ -308,5 +309,8 @@ class RidesDataController: DataController {
         return availableRides.count
     }
     
+    func availableRide(At index: Int) -> RidesAvailable {
+        return availableRides[index]
+    }
 }
 
