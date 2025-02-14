@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Second" id="6yN-q0-aiC" customClass="CarServiceDetailCollectionViewCell" customModule="App_Team23" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Second" id="6yN-q0-aiC" customClass="CarServiceProviderDetailCollectionViewCell" customModule="App_Team23" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="353" height="240"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="M8O-8e-OwW">
@@ -209,6 +209,14 @@
                     <constraint firstAttribute="trailing" secondItem="ErJ-bM-g7d" secondAttribute="trailing" id="qbO-Bj-nsq"/>
                 </constraints>
             </collectionViewCellContentView>
+            <connections>
+                <outlet property="bookingTimeLabel" destination="9pn-lj-BBY" id="SOM-Cx-tLa"/>
+                <outlet property="rideFareLabel" destination="c2J-0X-9RP" id="oLc-a0-NZn"/>
+                <outlet property="serviceProviderImageView" destination="d5u-8r-9le" id="s2n-vF-Y4g"/>
+                <outlet property="serviceProviderNameLabel" destination="cbd-P8-v5z" id="PVI-UB-n3N"/>
+                <outlet property="serviceProviderRatingLabel" destination="bSa-aE-LoI" id="vba-w6-pO7"/>
+                <outlet property="vehicleDetailsLabel" destination="28I-bL-ZmH" id="nG7-6e-P6E"/>
+            </connections>
             <point key="canvasLocation" x="123.66412213740458" y="-8.4507042253521139"/>
         </collectionViewCell>
     </objects>

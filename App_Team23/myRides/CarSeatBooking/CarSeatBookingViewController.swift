@@ -45,6 +45,8 @@ class CarSeatBookingViewController: UIViewController, UICollectionViewDelegate, 
     
     @IBOutlet weak var bookButton: UIButton!
     
+    var passengerCount: Int = 4
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,12 +56,12 @@ class CarSeatBookingViewController: UIViewController, UICollectionViewDelegate, 
         //passengerCollectionView.heightAnchor.constraint(equalToConstant: 360).isActive = true
         
         let nib = UINib(nibName: "PassengersCell", bundle: nil)
-        passengerCollectionView.register(nib, forCellWithReuseIdentifier: "PassengerCell")
+        passengerCollectionView.register(nib, forCellWithReuseIdentifier: "Third")
         
         passengerCollectionView.delegate = self
         passengerCollectionView.dataSource = self
         
-       
+        passengerCollectionView.setCollectionViewLayout(generatePassengerLayout(), animated: true)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -67,11 +69,11 @@ class CarSeatBookingViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        return passengerCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PassengerCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Third", for: indexPath) as! PassengersCollectionViewCell
         
         cell.layer.cornerRadius = 14.0
         cell.layer.shadowColor = UIColor.black.cgColor
@@ -83,13 +85,15 @@ class CarSeatBookingViewController: UIViewController, UICollectionViewDelegate, 
         return cell
     }
     
+    
     func generatePassengerLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in            let section : NSCollectionLayoutSection
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            let section : NSCollectionLayoutSection
             
-            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(353), heightDimension: .fractionalHeight(1))
+            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(353), heightDimension: .absolute(80))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(353), heightDimension: .absolute(80))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1))
             
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             

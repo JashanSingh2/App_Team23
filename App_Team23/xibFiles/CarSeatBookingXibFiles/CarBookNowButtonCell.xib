@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zaX-Nl-fkF">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Fourth" id="zaX-Nl-fkF" customClass="CarBookNowButtonCollectionViewCell" customModule="App_Team23" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hwv-rM-U28">
@@ -22,7 +22,10 @@
                             <constraint firstAttribute="width" constant="120" id="Fcc-FD-tuh"/>
                         </constraints>
                         <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="filled" title="Book Now"/>
+                        <buttonConfiguration key="configuration" style="filled" title="Book Now">
+                            <color key="baseForegroundColor" red="0.99607843159999998" green="0.96470588450000005" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </buttonConfiguration>
                     </button>
                 </subviews>
                 <constraints>

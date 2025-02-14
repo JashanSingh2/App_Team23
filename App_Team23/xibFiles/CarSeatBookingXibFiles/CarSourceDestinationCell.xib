@@ -164,6 +164,16 @@
                     <constraint firstAttribute="trailing" secondItem="Elf-sG-mh7" secondAttribute="trailing" id="qjz-vv-clR"/>
                 </constraints>
             </collectionViewCellContentView>
+            <connections>
+                <outlet property="destinationLocationLabel" destination="sqo-dd-rVK" id="D3f-fj-Nrz"/>
+                <outlet property="destinationTimeLabel" destination="NPj-Ro-L7D" id="Cg7-h4-bDg"/>
+                <outlet property="endingLocationLabel" destination="cMK-rM-nEr" id="eMh-qO-o7n"/>
+                <outlet property="endingTimeLabel" destination="xsR-Po-xxb" id="Lid-gv-VWT"/>
+                <outlet property="sourceLocationLabel" destination="Jul-2s-qjH" id="Qhv-iG-0zh"/>
+                <outlet property="sourceTimeLabel" destination="3li-g5-RD4" id="hMn-k1-3XC"/>
+                <outlet property="startingLocationLabel" destination="WxA-jt-Ah9" id="NcK-Mx-UmD"/>
+                <outlet property="startingTimeLabel" destination="swr-qG-dKJ" id="y8E-j6-KaX"/>
+            </connections>
             <point key="canvasLocation" x="95" y="-13"/>
         </collectionViewCell>
     </objects>

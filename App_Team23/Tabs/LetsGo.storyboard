@@ -73,7 +73,7 @@
                         <outlet property="letsGoCollectionView" destination="seJ-YV-eI8" id="Wav-f9-9oU"/>
                         <segue destination="IyZ-CN-gMi" kind="presentation" identifier="searchBar" animates="NO" modalPresentationStyle="fullScreen" id="nIe-W8-6w3"/>
                         <segue destination="8lx-Li-bV5" kind="presentation" identifier="seatReBooking" id="p92-2a-BP6"/>
-                        <segue destination="X7g-Np-Q68" kind="show" identifier="carBookingSegue" id="VOs-lI-p3S"/>
+                        <segue destination="X7g-Np-Q68" kind="presentation" identifier="carBookingSegue" id="VOs-lI-p3S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

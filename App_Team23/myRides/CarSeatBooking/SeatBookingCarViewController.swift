@@ -11,6 +11,8 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var passengerCount: Int = 4
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,6 +25,9 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         
         let nib3 = UINib(nibName: "PassengersCell", bundle: nil)
         collectionView.register(nib3, forCellWithReuseIdentifier: "Third")
+        
+        let nib4 = UINib(nibName: "CarBookNowButtonCell", bundle: nil)
+        collectionView.register(nib4, forCellWithReuseIdentifier: "Fourth")
         
         collectionView.setCollectionViewLayout(generateLayout(), animated: true)
         
@@ -37,7 +42,7 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3 // We have 3 sections
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -45,8 +50,10 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
             return 1 // Only one item in section 0
         } else if section == 1 {
             return 1 // Only one item in section 1
+        } else  if section == 2 {
+            return passengerCount // Or dynamically change based on the number of passengers
         } else {
-            return 6 // Or dynamically change based on the number of passengers
+            return 1
         }
     }
     
@@ -64,15 +71,18 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
             //cell.layer.shadowOffset = CGSize(width: 2, height: 2)
            // cell.layer.masksToBounds = false
             
+            
+            
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! CarServiceDetailCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! CarServiceProviderDetailCollectionViewCell
             
             cell.layer.cornerRadius = 14
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 5
             
+                        
             return cell
             
         case 2:
@@ -82,6 +92,15 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 5
+            return cell
+            
+        case 3:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Fourth", for: indexPath) as! CarBookNowButtonCollectionViewCell
+            
+//            cell.layer.cornerRadius = 14
+//            cell.layer.shadowColor = UIColor.black.cgColor
+//            cell.layer.shadowOpacity = 0.5
+//            cell.layer.shadowRadius = 5
             return cell
             
         default :
@@ -101,9 +120,13 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
                 return self.generateSecondSection()
             case 2:
                 return self.generateThirdSection()
+            case 3:
+                return self.generateFourthSection()
             default:
                 return nil
             }
+            
+            
 //            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50))
 //            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 //            section.boundarySupplementaryItems = [header]
@@ -118,10 +141,12 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(240)) // Adjust the height as needed
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
-        group.interItemSpacing = .fixed(20)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+        //group.interItemSpacing = .fixed(20)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
+        
         
         let section = NSCollectionLayoutSection(group: group)
+        
         return section
     }
 
@@ -132,8 +157,8 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(260)) // Adjust the height as needed
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
         
-        group.interItemSpacing = .fixed(20)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+        //group.interItemSpacing = .fixed(20)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
         
         let section = NSCollectionLayoutSection(group: group)
         return section
@@ -146,11 +171,29 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)) // Adjust the height as needed
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
         
-        group.interItemSpacing = .fixed(5)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+        //group.interItemSpacing = .fixed(5)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20)
         
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0)
+        
         return section
+    }
+    
+    func generateFourthSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(90))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        //group.interItemSpacing = .fixed(5)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        //section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0)
+        return section
+        
     }
 
 }
