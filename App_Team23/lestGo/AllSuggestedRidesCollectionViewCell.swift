@@ -39,12 +39,21 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
-    func updateAllSuggestedRidesCell(with indexPath: IndexPath){
+    func updateAllSuggestedRidesCell(with ride: RidesAvailable){
         seatsAvailableStackView.layer.borderWidth = 1
         seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
         seatsAvailableStackView.layer.cornerRadius = 5
         
         cellContentview.layer.cornerRadius = 10
+        
+        sourceAddressLabel.text = ride.source.address
+        destinationAddressLabel.text = ride.destination.address
+        pickupTimeLabel.text = ride.source.time
+        dropoffTimeLabel.text = ride.destination.time
+        fareLabel.text = "\(ride.fare)"
+        seatsAvailableLabel.text = "\(ride.seatsAvailable)"
+        serviceProviderNameLabel.text = "\(ride.serviceProvider.name)"
+        
         
     }
     

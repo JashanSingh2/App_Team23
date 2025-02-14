@@ -10,27 +10,50 @@ import UIKit
 
 
 
-class RidesDataController {
+protocol DataController {
+    func rideHistoryAddress(At index: Int)-> String
+    
+    func rideHistory(At index: Int)-> RideHistory
+    
+    //private func filterRideHistory(by type: VehicleType) -> [RideHistory]
     
 
+    func rideHistoryOfBus(At index: Int) -> RideHistory
+    
+    func numberOfRidesInHistory()-> Int
+    
+    func numberOfBusRidesInHistory()-> Int
+    
+    
+    //for ride suggestions
+    func rideSuggestion(At index: Int)-> RidesAvailable
+    
+    //for myRides
+    func numberOfUpcomingRides(for date: String)-> Int
+    
+    
+    func upcomingRides(At index: Int, for date: String)-> RideHistory
+    
+    func numberOfPreviousRides()-> Int
+    
+    func previousRides(At index: Int)-> RideHistory
+    
+    func ride(from source: String,to destination: String)-> RidesAvailable?
+    
+    func newRideHistory(with ride: RideHistory)
+    
+    func numberOfRidesAvailable()-> Int
+    
+}
 
-//    private init() {
-//        loadDummyData()
-//        
-//    }
-//  
+
+class RidesDataController: DataController {
     
-    //static var shared = RidesDataController()
- static var shared = RidesDataController()
-//    static let shared: RidesDataController = {
-//        let instance = RidesDataController()
-//        return instance
-//    }()
+    static var shared = RidesDataController()
     
-        private init() {
-            loadDummyData()
-    
-        }
+    init() {
+        loadDummyData()
+    }
     
     private var allServiceProviders: [ServiceProvider] = []
     
@@ -44,19 +67,7 @@ class RidesDataController {
     
     
     func loadDummyData() {
-//        let myRoute : [,
-//      [Schedule(address: "Akshardham", time: "7:40AM"),
-//          Schedule(address: "Yamuna Bank", time: "7:50Am"),
-//          Schedule(address: "Mayur Vihar 1", time: "8:00AM"),
-//          Schedule(address: "Ashok Nagar", time: "8:05AM"),
-//          Schedule(address: "Noida Sec-15", time: "8:15AM"),
-//          Schedule(address: "Noida Sec-18", time: "8:25AM"),
-//          Schedule(address: "Botanical Garden", time: "8:30AM"),
-//          Schedule(address: "Noida City Centre", time: "8:40AM"),
-//          Schedule(address: "Noida Sec-51", time: "8:45AM"),
-//          Schedule(address: "Noida Sec-62", time: "9:10AM")
-//      ],
-//        ]
+
         allServiceProviders = [
             ServiceProvider(name: "Anuj", vehicleNumber: "A1035", rideType: RideType(vehicleModelName: "Force Traveller", vehicleType: .bus, facility: .nonAc), maxSeats: 35, fare: 55, route: [
                 Schedule(address: "Akshardham", time: "7:40AM"),
@@ -253,7 +264,7 @@ class RidesDataController {
     
     func upcomingRides(At index: Int, for date: String)-> RideHistory{
         print(index)
-        var upcomingRides = upcomingRides(for: date)
+        let upcomingRides = upcomingRides(for: date)
         return upcomingRides[index]
             
     }
@@ -291,6 +302,10 @@ class RidesDataController {
         print(ridesHistory.count)
         ridesHistory.append(ride)
         print(ridesHistory.count)
+    }
+    
+    func numberOfRidesAvailable() -> Int {
+        return availableRides.count
     }
     
 }
