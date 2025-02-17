@@ -182,7 +182,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
             selectedSeat.append(Int((seat.titleLabel?.text)!)!)
         }
         
-        var ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: selectedRide!.date, fare: selectedRide!.fare, seatNumber: selectedSeat.first)
+        var ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: selectedRide!.fare, seatNumber: selectedSeat.first)
         
         RidesDataController.shared.newRideHistory(with: ride)
         
@@ -208,16 +208,14 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
                     // Alert user if they exceed the limit
                     //showAlert()
                 }
-                
-
             }
         
-        if selectedSeats.count == maxSeatsAllowed {
-                    bookButton.isEnabled = true
-        } else {
-                bookButton.isEnabled = false
-        }
-        }
+            if selectedSeats.count == maxSeatsAllowed {
+                        bookButton.isEnabled = true
+            } else {
+                    bookButton.isEnabled = false
+            }
+    }
 
     @objc func selectSeat(_ seat: UIButton) {
         seat.configuration?.baseBackgroundColor = .systemGreen

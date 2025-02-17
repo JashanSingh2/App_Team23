@@ -31,6 +31,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var seatLabel: UILabel!
     
+    @IBOutlet weak var dateAndTimePicker: UIDatePicker!
     
     
     
@@ -42,7 +43,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return view.bounds.height * 0.3
         }
         private var modalHiddenHeight: CGFloat {
-            return view.bounds.height * 0.6
+            return view.bounds.height * 0.58
         }
     
     
@@ -210,7 +211,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func searchButtonTapped() {
-        
+        print(dateAndTimePicker.date.description)
         
         performSegue(withIdentifier: "SearchToAvailableRides", sender: self)
         

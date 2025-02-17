@@ -64,15 +64,16 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
-        
         let ride = RidesDataController.shared.availableRide(At: indexPath.row)
-        viewController.selectedRide = ride
-        viewController.maxSeatsAllowed = numberOfSeats
         
-        navigationController?.present(viewController, animated: true)
-//        performSegue(withIdentifier: "AvailableRidesToSeatBooking", sender: self)
+        if ride.serviceProvider.rideType.vehicleType == .bus{
+            let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
+            let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+            viewController.selectedRide = ride
+            viewController.maxSeatsAllowed = numberOfSeats
+            navigationController?.present(viewController, animated: true)
+        }
+        
     }
     
     

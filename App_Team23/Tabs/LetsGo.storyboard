@@ -533,6 +533,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="dateAndTimePicker" destination="PQb-Ru-sgq" id="kd5-pO-dVk"/>
                         <outlet property="dropOffSearchBar" destination="VBw-sE-faW" id="Y6n-0I-4Bn"/>
                         <outlet property="mapView" destination="e7v-eu-caW" id="DgJ-wY-uRW"/>
                         <outlet property="modalBottomConstraint" destination="qap-qn-lN1" id="m7P-el-46e"/>

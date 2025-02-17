@@ -80,6 +80,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         }else {
             switch section {
             case 0:
+                    print("Rides: \(RidesDataController.shared.numberOfUpcomingRides(for: today))")
                 return RidesDataController.shared.numberOfUpcomingRides(for: today)
             case 1:
                 return RidesDataController.shared.numberOfUpcomingRides(for: tomorrow)
@@ -235,7 +236,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         group.interItemSpacing = .fixed(10)
         group.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
+        //section.orthogonalScrollingBehavior = .groupPaging
         return section
     }
     
@@ -251,6 +252,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         let section = NSCollectionLayoutSection(group: group)
         return section
     }
+    
     @IBAction func previousAndUpcomingControlTapped(_ sender: Any) {
         collectionView.reloadData()
     }
@@ -305,12 +307,6 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     
-    
-//    @objc func ChevronButtonTapped(_ button : UIButton) {
-//        let storyBoard = UIStoryboard(name: "MyRides", bundle: nil)
-//        let viewController = storyBoard.instantiateViewController(withIdentifier: "yourUpcomingRide") as! YourUpcomingRideViewController
-//        navigationController?.pushViewController(viewController, animated: true)
-//    }
-//    
+       
     
 }
