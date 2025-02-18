@@ -14,9 +14,25 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     let searchController = UISearchController()
     
+    var dataController: DataController?
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        //print(dataController!.numberOfBusRidesInHistory())
+        if let dataController{
+            print(dataController.numberOfBusRidesInHistory())
+        }else{
+            print("Not Found")
+        }
+        
+        
+        
+        
+        
         
         searchController.searchBar.placeholder = "Where are you going?"
         
@@ -44,6 +60,9 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func viewWillAppear(_ animated: Bool) {
         letsGoCollectionView.reloadData()
+        if let dataController{
+            print(dataController.numberOfBusRidesInHistory())
+        }
     }
     
     
@@ -76,7 +95,6 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 cell.reBookButton.tag = indexPath.row
                 cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped), for: .touchUpInside)
                 cell.updatePreviousRideCell(with: RideHistory)
-                print(RideHistory.date)
                 cell.layer.cornerRadius = 14
                 return cell
             case 1:
@@ -92,7 +110,6 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             default:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
                 let RideHistory = RidesDataController.shared.rideHistoryOfBus(At: indexPath.item)
-                print(RideHistory.date)
                 cell.updatePreviousRideCell(with: RideHistory)
                 cell.layer.cornerRadius = 14
                 return cell
@@ -210,10 +227,14 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let seatVC = segue.destination as? SeatBookingViewController{
-            //print("Hello")
-            //print(self.selectedRide!.serviceProvider)
-            //print(RidesDataController.shared.rideWithSimilarServiceProvider(serviceProvider: self.selectedRide!.serviceProvider))
-            //seatVC.selectedRide = RidesDataController.shared.ride(from: (selectedRecentRide?.source.address)!, to: (selectedRecentRide?.destination.address)!)
+            
+            if let selectedRecentRide{
+                seatVC.selectedRide = RidesDataController.shared.ride(from: (selectedRecentRide.source.address), to: (selectedRecentRide.destination.address), on: RidesDataController.shared.today)
+            }
+            
+            if let selectedRide{
+                seatVC.selectedRide = selectedRide
+            }
         }
     }
      

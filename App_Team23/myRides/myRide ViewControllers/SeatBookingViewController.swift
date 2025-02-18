@@ -42,10 +42,17 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     var selectedRide: RidesAvailable?
     
     var selectedSeats: [UIButton] = []
-    let maxSeatsAllowed = 3
+    var maxSeatsAllowed: Int?
      
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let maxSeatsAllowed{
+            
+        }else{
+            maxSeatsAllowed = 1
+        }
+        
         
         print(selectedRide)
         
@@ -87,7 +94,10 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 10
+        if let selectedRide{
+            return Int(selectedRide.serviceProvider.maxSeats / 4)
+        }
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -139,6 +149,10 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         if let destinationVC = segue.destination as? TrackingViewController{
             destinationVC.route = (selectedRide?.serviceProvider.route)!
         }
+        if let destinationVC = segue.destination as? SeatConfirmDeatilsViewController{
+            destinationVC.ride = selectedRide
+            destinationVC.seat = selectedSeat
+        }
     }
     
 
@@ -162,16 +176,16 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
 //        }
 //    }
     
-    
+    var selectedSeat: [Int] = []
     @IBAction func bookNowButtonTapped() {
         //dismiss(animated: true, completion: nil)
         
-        var selectedSeat: [Int] = []
+        
         for seat in selectedSeats {
             selectedSeat.append(Int((seat.titleLabel?.text)!)!)
         }
         
-        var ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: selectedRide!.date, fare: selectedRide!.fare, seatNumber: selectedSeat.first)
+        var ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: selectedRide!.fare, seatNumber: selectedSeat.first)
         
         RidesDataController.shared.newRideHistory(with: ride)
         
@@ -190,23 +204,21 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
                 deselectSeat(sender)
             } else {
                 // Select the seat if within the limit
-                if selectedSeats.count < maxSeatsAllowed {
+                if selectedSeats.count < maxSeatsAllowed! {
                     selectSeat(sender)
                 } else if selectedSeats.count == maxSeatsAllowed {
                     //bookButton.isEnabled = true
                     // Alert user if they exceed the limit
                     //showAlert()
                 }
-                
-
             }
         
-        if selectedSeats.count == maxSeatsAllowed {
-                    bookButton.isEnabled = true
-        } else {
-                bookButton.isEnabled = false
-        }
-        }
+            if selectedSeats.count == maxSeatsAllowed {
+                        bookButton.isEnabled = true
+            } else {
+                    bookButton.isEnabled = false
+            }
+    }
 
     @objc func selectSeat(_ seat: UIButton) {
         seat.configuration?.baseBackgroundColor = .systemGreen

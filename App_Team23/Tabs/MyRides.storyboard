@@ -96,7 +96,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SsF-gf-OX5">
-                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <rect key="frame" x="0.0" y="54" width="393" height="764"/>
                                 <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QYp-dT-byh">
                                     <size key="itemSize" width="128" height="128"/>
@@ -115,14 +115,30 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iS1-aE-axw">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <color key="barTintColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <items>
+                                    <navigationItem title="Rides For You" id="m9B-T2-ubA">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="3lL-QF-ynr">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="BH9-oX-iVN" id="ToT-bc-5zq"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9N9-qv-YqM"/>
                         <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="9N9-qv-YqM" firstAttribute="trailing" secondItem="SsF-gf-OX5" secondAttribute="trailing" id="7KP-Cd-Gv4"/>
                             <constraint firstItem="SsF-gf-OX5" firstAttribute="leading" secondItem="9N9-qv-YqM" secondAttribute="leading" id="LIe-hb-p8g"/>
+                            <constraint firstItem="iS1-aE-axw" firstAttribute="top" secondItem="C3H-Qt-ciu" secondAttribute="top" id="RJC-qq-xSY"/>
                             <constraint firstItem="9N9-qv-YqM" firstAttribute="bottom" secondItem="SsF-gf-OX5" secondAttribute="bottom" id="jWS-xs-GnS"/>
-                            <constraint firstItem="SsF-gf-OX5" firstAttribute="top" secondItem="9N9-qv-YqM" secondAttribute="top" id="wou-Fd-IJS"/>
+                            <constraint firstItem="iS1-aE-axw" firstAttribute="leading" secondItem="C3H-Qt-ciu" secondAttribute="leading" id="o2H-OL-XLy"/>
+                            <constraint firstItem="SsF-gf-OX5" firstAttribute="top" secondItem="iS1-aE-axw" secondAttribute="bottom" constant="10" id="wou-Fd-IJS"/>
+                            <constraint firstAttribute="trailing" secondItem="iS1-aE-axw" secondAttribute="trailing" id="zce-Rw-ilO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Rides For you" largeTitleDisplayMode="never" id="XBw-hW-Z92"/>
@@ -389,27 +405,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xyi-f9-Tsd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.64122137404578" y="3.5211267605633805"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="O7s-CR-rT5">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tLP-Cw-7s0" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CJC-UL-RRA">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <color key="tintColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <color key="barTintColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BH9-oX-iVN" kind="relationship" relationship="rootViewController" id="ecQ-yc-R6X"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cXp-uT-Nzn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="135" y="692"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9ai-eS-Rq9">
