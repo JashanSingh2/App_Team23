@@ -77,5 +77,12 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
         
     }
     
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+        
+        
+    }
+    
+    
     
 }

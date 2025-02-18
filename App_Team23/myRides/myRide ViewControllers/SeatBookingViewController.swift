@@ -94,7 +94,10 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return Int(selectedRide!.serviceProvider.maxSeats / 4)
+        if let selectedRide{
+            return Int(selectedRide.serviceProvider.maxSeats / 4)
+        }
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

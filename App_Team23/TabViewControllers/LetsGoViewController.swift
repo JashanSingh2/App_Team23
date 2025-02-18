@@ -229,7 +229,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         if let seatVC = segue.destination as? SeatBookingViewController{
             
             if let selectedRecentRide{
-                seatVC.selectedRide = RidesDataController.shared.ride(from: (selectedRecentRide.source.address), to: (selectedRecentRide.destination.address))
+                seatVC.selectedRide = RidesDataController.shared.ride(from: (selectedRecentRide.source.address), to: (selectedRecentRide.destination.address), on: RidesDataController.shared.today)
             }
             
             if let selectedRide{

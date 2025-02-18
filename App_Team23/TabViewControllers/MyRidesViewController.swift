@@ -107,6 +107,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 5
             cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped(_:)), for: .touchUpInside)
+            cell.reBookButton.tag = indexPath.row
             
             cell.layer.shadowOffset = CGSize(width: 2, height: 2)
             cell.layer.masksToBounds = false
@@ -291,6 +292,9 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     @objc func reBookButtonTapped(_ button : UIButton) {
         let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+        let selectedRide = RidesDataController.shared.previousRides(At: button.tag)
+        
+        viewController.selectedRide = RidesDataController.shared.ride(from: selectedRide.source.address, to: selectedRide.destination.address, on: today)
         navigationController?.present(viewController, animated: true)
     }
     

@@ -38,7 +38,7 @@ protocol DataController {
     
     func previousRides(At index: Int)-> RideHistory
     
-    func ride(from source: String,to destination: String)-> RidesAvailable?
+    func ride(from source: String,to destination: String, on date: String)-> RidesAvailable?
     
     func newRideHistory(with ride: RideHistory)
     
@@ -49,6 +49,8 @@ protocol DataController {
 
 
 class RidesDataController: DataController {
+
+    
 
     static var shared = RidesDataController()
     
@@ -290,9 +292,9 @@ class RidesDataController: DataController {
             
     }
     
-    func ride(from source: String,to destination: String)-> RidesAvailable?{
+    func ride(from source: String,to destination: String, on date: String)-> RidesAvailable?{
         for ride in availableRides{
-            if ride.source.address == source && ride.destination.address == destination{
+            if ride.source.address == source && ride.destination.address == destination && ride.date == date{
                 return ride
             }
         }
