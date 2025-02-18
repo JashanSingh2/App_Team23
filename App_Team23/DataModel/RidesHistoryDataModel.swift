@@ -8,6 +8,7 @@
 import Foundation
 
 struct RideHistory{
+    
     var source: Schedule
     var destination: Schedule
     var serviceProvider: ServiceProvider

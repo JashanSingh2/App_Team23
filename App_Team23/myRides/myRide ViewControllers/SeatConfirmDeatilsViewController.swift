@@ -40,7 +40,7 @@ class SeatConfirmDeatilsViewController: UIViewController {
             updateUI()
         }
         if let seat{
-            seatNoLabel.text = "Seat No : \(seat))"
+            seatNoLabel.text = "Seat No : \(seat)"
         } else {
             seatNoStackView.isHidden = true
         }

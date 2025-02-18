@@ -314,5 +314,17 @@ class RidesDataController: DataController {
     func availableRide(At index: Int) -> RidesAvailable {
         return availableRides[index]
     }
+    
+    func cancelRide(rideHistory: RideHistory){
+        var index: Int = 0
+        for ride in ridesHistory{
+            if ride.source.address == rideHistory.source.address && ride.destination.address == rideHistory.destination.address && ride.date == rideHistory.date && ride.serviceProvider == rideHistory.serviceProvider{
+                ridesHistory.remove(at: index)
+                return
+            }
+            index += 1
+        }
+    }
+    
 }
 

@@ -97,6 +97,18 @@ class YourUpcomingRideViewController: UIViewController {
         
     }
     
+    @IBAction func doneButtonTapped(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        
+        RidesDataController.shared.cancelRide(rideHistory: YourUpcomingRideViewController.rideHistory!)
+        
+        dismiss(animated: true)
+    }
+    
     
 
 }

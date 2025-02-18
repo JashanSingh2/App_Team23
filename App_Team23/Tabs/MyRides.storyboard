@@ -120,7 +120,7 @@
                                 <color key="barTintColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <items>
                                     <navigationItem title="Rides For You" id="m9B-T2-ubA">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="3lL-QF-ynr">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="3lL-QF-ynr">
                                             <connections>
                                                 <action selector="cancelButtonTapped:" destination="BH9-oX-iVN" id="ToT-bc-5zq"/>
                                             </connections>
@@ -347,6 +347,9 @@
                                 <buttonConfiguration key="configuration" style="gray" title="Cancel Ride">
                                     <color key="baseForegroundColor" red="1" green="0.23137255009999999" blue="0.18823529780000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="JPC-Fd-DwO" eventType="touchUpInside" id="u9I-Np-uti"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9J7-AU-YAj"/>
@@ -363,7 +366,13 @@
                             <constraint firstItem="9J7-AU-YAj" firstAttribute="trailing" secondItem="SJy-aQ-18I" secondAttribute="trailing" constant="20" id="uf5-u9-inm"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Your Ride" id="7cc-tH-TM5"/>
+                    <navigationItem key="navigationItem" title="Your Ride" id="7cc-tH-TM5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="42R-bL-dqw">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="JPC-Fd-DwO" id="Fhz-aG-Mdx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="cancelRideButton" destination="lD3-3Z-cdm" id="agc-x9-GZY"/>
                         <outlet property="cardView" destination="Eoi-UT-GSr" id="uvg-M4-gVC"/>

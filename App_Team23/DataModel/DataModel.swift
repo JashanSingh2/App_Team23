@@ -25,7 +25,8 @@ struct RideType{
     var facility: Facility
 }
 
-struct Schedule{
+struct Schedule: Equatable{
+    
     var address: String
     var time: String
 }

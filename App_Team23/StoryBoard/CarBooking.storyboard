@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="s8r-Dt-Uhs">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="44" width="393" height="808"/>
                                 <color key="backgroundColor" red="0.99607843159999998" green="0.96470588450000005" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="njB-J7-VmR">
                                     <size key="itemSize" width="128" height="128"/>
@@ -37,12 +37,28 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7cj-WG-gFo">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <color key="barTintColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <items>
+                                    <navigationItem title="Ride Booking" id="GyK-Zb-1f5">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="WlR-Bu-N3o">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="pSE-Af-Blt" id="TFk-2W-XYk"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3ta-Gd-VaF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="s8r-Dt-Uhs" firstAttribute="leading" secondItem="3ta-Gd-VaF" secondAttribute="leading" id="23a-2y-FTb"/>
-                            <constraint firstItem="s8r-Dt-Uhs" firstAttribute="top" secondItem="R3f-L1-Ccp" secondAttribute="top" id="8NR-fm-R4Z"/>
+                            <constraint firstItem="s8r-Dt-Uhs" firstAttribute="top" secondItem="7cj-WG-gFo" secondAttribute="bottom" id="8NR-fm-R4Z"/>
+                            <constraint firstItem="7cj-WG-gFo" firstAttribute="leading" secondItem="R3f-L1-Ccp" secondAttribute="leading" id="AeM-MO-U8H"/>
+                            <constraint firstAttribute="trailing" secondItem="7cj-WG-gFo" secondAttribute="trailing" id="Ma6-Kz-LMl"/>
+                            <constraint firstItem="7cj-WG-gFo" firstAttribute="top" secondItem="R3f-L1-Ccp" secondAttribute="top" id="Qmr-Qv-JeK"/>
                             <constraint firstAttribute="trailing" secondItem="s8r-Dt-Uhs" secondAttribute="trailing" id="ZzV-si-fxS"/>
                             <constraint firstAttribute="bottom" secondItem="s8r-Dt-Uhs" secondAttribute="bottom" id="x2n-yd-XPS"/>
                         </constraints>

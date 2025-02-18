@@ -109,66 +109,100 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped(_:)), for: .touchUpInside)
             cell.reBookButton.tag = indexPath.row
             
+            if history.serviceProvider.rideType.vehicleType == .car {
+                cell.reBookButton.isEnabled = false
+                print("car")
+            }else{
+                cell.reBookButton.isEnabled = true
+                print("bus")
+            }
+            
+            
+            
             cell.layer.shadowOffset = CGSize(width: 2, height: 2)
             cell.layer.masksToBounds = false
             return cell
+        }else{
+            switch indexPath.section {
+                
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
+                let history = RidesDataController.shared.upcomingRides(At: indexPath.row, for: today)
+                
+                
+                cell.updateSection1Data(with: history)
+                cell.layer.cornerRadius = 14.0
+                cell.layer.shadowColor = UIColor.black.cgColor
+                cell.layer.shadowOpacity = 0.5
+                cell.layer.shadowRadius = 5
+                
+                cell.resheduleButton.tag = indexPath.row
+                cell.resheduleButton.addTarget(self, action: #selector(ResheduleButtonTapped(_:)), for: .touchUpInside)
+                
+                    if history.serviceProvider.rideType.vehicleType == .car {
+                        cell.resheduleButton.isEnabled = false
+                        print("car1")
+                    }else {
+                        cell.resheduleButton.isEnabled = true
+                        print("bus1")
+                    }
+                    
+                cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+                cell.layer.masksToBounds = false
+                
+                    return cell
+                
+            case 1:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
+                let history = RidesDataController.shared.upcomingRides(At: indexPath.row, for: tomorrow)
+                cell.updateSection2Data(with: history)
+                cell.layer.cornerRadius = 14.0
+                cell.layer.shadowColor = UIColor.black.cgColor
+                cell.layer.shadowOpacity = 0.5
+                cell.layer.shadowRadius = 5
+                cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+                cell.layer.masksToBounds = false
+                    if history.serviceProvider.rideType.vehicleType == .car {
+                        cell.resheduleButton.isEnabled = false
+                    }else{
+                        cell.resheduleButton.isEnabled = true
+                    }
+                    
+                    return cell
+               
+            case 2:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
+                let history = RidesDataController.shared.upcomingRides(At: indexPath.row, for: later)
+                cell.updateSection3Data(with: history)
+                cell.layer.cornerRadius = 14.0
+                cell.layer.shadowColor = UIColor.black.cgColor
+                cell.layer.shadowOpacity = 0.5
+                cell.layer.shadowRadius = 5
+                cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+                cell.layer.masksToBounds = false
+                    if history.serviceProvider.rideType.vehicleType == .car {
+                        cell.resheduleButton.isEnabled = false
+                    }else{
+                        cell.resheduleButton.isEnabled = true
+                    }
+                    
+                    return cell
+                
+            default :
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
+                let history = RidesDataController.shared.upcomingRides(At: indexPath.row, for: today)
+                cell.updateSection1Data(with: history)
+                cell.layer.cornerRadius = 14.0
+                cell.layer.shadowColor = UIColor.black.cgColor
+                cell.layer.shadowOpacity = 0.5
+                cell.layer.shadowRadius = 5
+                cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+                cell.layer.masksToBounds = false
+                    return cell
+            }
         }
         
-        switch indexPath.section {
-            
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
-            let history = RidesDataController.shared.upcomingRides(At: indexPath.row, for: today)
-            cell.updateSection1Data(with: history)
-            cell.layer.cornerRadius = 14.0
-            cell.layer.shadowColor = UIColor.black.cgColor
-            cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = 5
-            
-            cell.resheduleButton.tag = indexPath.row
-            cell.resheduleButton.addTarget(self, action: #selector(ResheduleButtonTapped(_:)), for: .touchUpInside)
-            
-            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
-            cell.layer.masksToBounds = false
-            
-                return cell
-            
-        case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
-            let history = RidesDataController.shared.upcomingRides(At: indexPath.row, for: tomorrow)
-            cell.updateSection2Data(with: history)
-            cell.layer.cornerRadius = 14.0
-            cell.layer.shadowColor = UIColor.black.cgColor
-            cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = 5
-            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
-            cell.layer.masksToBounds = false
-                return cell
-           
-        case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
-            let history = RidesDataController.shared.upcomingRides(At: indexPath.row, for: later)
-            cell.updateSection3Data(with: history)
-            cell.layer.cornerRadius = 14.0
-            cell.layer.shadowColor = UIColor.black.cgColor
-            cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = 5
-            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
-            cell.layer.masksToBounds = false
-                return cell
-            
-        default :
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! MyRideSection1CollectionViewCell
-            let history = RidesDataController.shared.upcomingRides(At: indexPath.row, for: today)
-            cell.updateSection1Data(with: history)
-            cell.layer.cornerRadius = 14.0
-            cell.layer.shadowColor = UIColor.black.cgColor
-            cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = 5
-            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
-            cell.layer.masksToBounds = false
-                return cell
-        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -309,6 +343,8 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         MyRidesViewController.preSelectedSegmentIndex = 0
         //collectionView.reloadData()
     }
+    
+    
     
     
        
