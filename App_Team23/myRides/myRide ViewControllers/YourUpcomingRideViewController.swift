@@ -106,7 +106,6 @@ class YourUpcomingRideViewController: UIViewController {
         
         RidesDataController.shared.cancelRide(rideHistory: YourUpcomingRideViewController.rideHistory!)
         
-        dismiss(animated: true)
     }
     
     

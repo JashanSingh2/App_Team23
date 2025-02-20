@@ -9,4 +9,5 @@ import UIKit
 
 class CarBookNowButtonCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var bookNowButton: UIButton!
 }

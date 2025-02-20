@@ -16,6 +16,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     var dataController: DataController?
 
+    private let letsGoSectionHeaderTitles: [String] = ["Recent Rides", "Suggested Rides"]
     
     
     override func viewDidLoad() {
@@ -72,7 +73,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return RidesDataController.shared.numberOfSectionsInLetsGo()
+        return letsGoSectionHeaderTitles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -125,7 +126,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                     for: indexPath
                 ) as! LetsGoCollectionReusableView
                 
-                header.headerLabel.text = RidesDataController.shared.sectionHeadersInLetsGo(at: indexPath.section)
+                header.headerLabel.text = letsGoSectionHeaderTitles[indexPath.section]
                 header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
                 
                 if indexPath.section == 1 {
@@ -228,13 +229,19 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let seatVC = segue.destination as? SeatBookingViewController{
             
-            if let selectedRecentRide{
-                seatVC.selectedRide = RidesDataController.shared.ride(from: (selectedRecentRide.source.address), to: (selectedRecentRide.destination.address), on: RidesDataController.shared.today)
-            }
+//            if let selectedRecentRide{
+//                seatVC.selectedRide = RidesDataController.shared.ride(from: (selectedRecentRide.source.address), to: (selectedRecentRide.destination.address), on: RidesDataController.shared.today)
+//            }
             
             if let selectedRide{
                 seatVC.selectedRide = selectedRide
             }
+        }
+        
+        
+        if let carVC = segue.destination as? SeatBookingCarViewController{
+            carVC.selectedRide = selectedRide
+            
         }
     }
      

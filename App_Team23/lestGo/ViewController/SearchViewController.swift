@@ -167,7 +167,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         private func updateCollectionViewTopConstraint(for modalPosition: CGFloat) {
             // Get the safe area inset
-            let safeAreaTop = view.safeAreaInsets.top
+            _ = view.safeAreaInsets.top
         }
          
     

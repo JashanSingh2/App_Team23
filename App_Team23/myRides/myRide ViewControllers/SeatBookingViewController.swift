@@ -54,8 +54,6 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         }
         
         
-        print(selectedRide)
-        
         bookButton.isEnabled = false
         
         routeView.layer.cornerRadius = 10

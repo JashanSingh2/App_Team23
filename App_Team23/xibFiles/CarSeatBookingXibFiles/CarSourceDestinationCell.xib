@@ -25,32 +25,32 @@
                                 <rect key="frame" x="25" y="20" width="303" height="180"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="PTl-z5-4pM">
-                                        <rect key="frame" x="0.0" y="0.0" width="303" height="140"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="303" height="180"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-4" translatesAutoresizingMaskIntoConstraints="NO" id="4FQ-Ld-oby">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="140"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="180"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.64999997615814209" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Br-7y-K8X">
-                                                        <rect key="frame" x="0.0" y="1.3333333333333321" width="50" height="28.666666666666668"/>
+                                                        <rect key="frame" x="0.0" y="1.3333333333333321" width="50" height="36.666666666666671"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <imageReference key="image" image="capsule.portrait" catalog="system" symbolScale="small"/>
                                                     </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bf2-aC-Idc">
-                                                        <rect key="frame" x="0.0" y="29.666666666666664" width="50" height="26.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="37.666666666666671" width="50" height="34.333333333333329"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <imageReference key="image" image="circle" catalog="system" symbolScale="small"/>
                                                     </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="4JX-Q2-xMv">
-                                                        <rect key="frame" x="0.0" y="54.333333333333336" width="50" height="31.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="70.333333333333329" width="50" height="39.333333333333329"/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="thin"/>
                                                     </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Ia-ED-dhh">
-                                                        <rect key="frame" x="0.0" y="84" width="50" height="26.333333333333343"/>
+                                                        <rect key="frame" x="0.0" y="108" width="50" height="34.333333333333343"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <imageReference key="image" image="circle.fill" catalog="system" symbolScale="small"/>
                                                     </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hhf-bC-BCB">
-                                                        <rect key="frame" x="0.0" y="109.99999999999999" width="50" height="28.666666666666671"/>
+                                                        <rect key="frame" x="0.0" y="142" width="50" height="36.666666666666657"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <imageReference key="image" image="capsule.portrait.fill" catalog="system" symbolScale="small"/>
                                                     </imageView>
@@ -60,28 +60,28 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DVO-UV-quM">
-                                                <rect key="frame" x="60" y="0.0" width="143" height="140"/>
+                                                <rect key="frame" x="60" y="0.0" width="143" height="180"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Delhi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxA-jt-Ah9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="143" height="31.333333333333332"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="143" height="41.333333333333336"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pari Chowk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jul-2s-qjH">
-                                                        <rect key="frame" x="0.0" y="36.333333333333336" width="143" height="31.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="46.333333333333329" width="143" height="41.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sector 51" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sqo-dd-rVK">
-                                                        <rect key="frame" x="0.0" y="72.666666666666671" width="143" height="31"/>
+                                                        <rect key="frame" x="0.0" y="92.666666666666671" width="143" height="41.000000000000014"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sector 62" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMK-rM-nEr">
-                                                        <rect key="frame" x="0.0" y="108.66666666666666" width="143" height="31.333333333333343"/>
+                                                        <rect key="frame" x="0.0" y="138.66666666666666" width="143" height="41.333333333333343"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -89,28 +89,28 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lpX-Hm-QKk">
-                                                <rect key="frame" x="213" y="0.0" width="90" height="140"/>
+                                                <rect key="frame" x="213" y="0.0" width="90" height="180"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07:45 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swr-qG-dKJ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="90" height="35"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="90" height="45"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3li-g5-RD4">
-                                                        <rect key="frame" x="0.0" y="35" width="90" height="35"/>
+                                                        <rect key="frame" x="0.0" y="45" width="90" height="45"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="09:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NPj-Ro-L7D">
-                                                        <rect key="frame" x="0.0" y="70" width="90" height="35"/>
+                                                        <rect key="frame" x="0.0" y="90" width="90" height="45"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="09:40 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsR-Po-xxb">
-                                                        <rect key="frame" x="0.0" y="105" width="90" height="35"/>
+                                                        <rect key="frame" x="0.0" y="135" width="90" height="45"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -133,14 +133,6 @@
                                             <constraint firstItem="4FQ-Ld-oby" firstAttribute="leading" secondItem="PTl-z5-4pM" secondAttribute="leading" id="xpb-Km-Lak"/>
                                         </constraints>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwW-ps-G3Q">
-                                        <rect key="frame" x="0.0" y="148" width="303" height="32"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" image="map" catalog="system" title="Show Route">
-                                            <color key="baseForegroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="z9R-n2-6om"/>
@@ -183,6 +175,5 @@
         <image name="circle" catalog="system" width="128" height="123"/>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
         <image name="line" width="661" height="1023"/>
-        <image name="map" catalog="system" width="128" height="112"/>
     </resources>
 </document>

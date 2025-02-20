@@ -48,16 +48,19 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         //segmentedControl.selectedSegmentIndex = preSelectedSegmentIndex
         segmentedControl.sendActions(for: .valueChanged)
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        segmentedControl.selectedSegmentIndex = MyRidesViewController.preSelectedSegmentIndex
         collectionView.reloadData()
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.reloadData()
+        segmentedControl.selectedSegmentIndex = MyRidesViewController.preSelectedSegmentIndex
+        
+        
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
+
         MyRidesViewController.preSelectedSegmentIndex = 0
     }
     
@@ -80,7 +83,6 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         }else {
             switch section {
             case 0:
-                    print("Rides: \(RidesDataController.shared.numberOfUpcomingRides(for: today))")
                 return RidesDataController.shared.numberOfUpcomingRides(for: today)
             case 1:
                 return RidesDataController.shared.numberOfUpcomingRides(for: tomorrow)
@@ -210,6 +212,20 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "SectionHeaderCollectionReusableView", for: indexPath) as! SectionHeaderCollectionReusableView
             header.headerLabel.text = sectionHeaderNames[indexPath.section]
+            
+            if RidesDataController.shared.numberOfUpcomingRides(for: today) == 0 && indexPath.section == 0 {
+                header.headerLabel.text = ""
+            }
+            if RidesDataController.shared.numberOfUpcomingRides(for: tomorrow) == 0 && indexPath.section == 1{
+                header.headerLabel.text = ""
+            }
+            if RidesDataController.shared.numberOfUpcomingRides(for: later) == 0 && indexPath.section == 2{
+                header.headerLabel.text = ""
+            }
+            
+            
+            
+            
             header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
             
             return header
@@ -253,8 +269,23 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
                 return nil
             }
             
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
+            
+            
+            
+            
+            var headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
             let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+            
+            if RidesDataController.shared.numberOfUpcomingRides(for: self.today) == 0 && sectionIndex == 0 {
+                headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0), heightDimension: .absolute(0))
+            }
+            if RidesDataController.shared.numberOfUpcomingRides(for: self.tomorrow) == 0 && sectionIndex == 1{
+                headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0), heightDimension: .absolute(0))
+            }
+            if RidesDataController.shared.numberOfUpcomingRides(for: self.later) == 0 && sectionIndex == 2{
+                headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0), heightDimension: .absolute(0))
+            }
+            
             section.boundarySupplementaryItems = [header]
             return section
         }
@@ -341,7 +372,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBAction func unwindToMyrides(segue: UIStoryboardSegue) {
         MyRidesViewController.preSelectedSegmentIndex = 0
-        //collectionView.reloadData()
+        collectionView?.reloadData()
     }
     
     

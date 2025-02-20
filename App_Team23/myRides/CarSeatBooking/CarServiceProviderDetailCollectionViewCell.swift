@@ -27,12 +27,11 @@ class CarServiceProviderDetailCollectionViewCell: UICollectionViewCell {
 //        
 //    }
     
-    func updateCarServiceProviderCell(with serviceProvider: ServiceProvider){
-        serviceProviderImageView.image = UIImage(named: serviceProvider.name)
-        serviceProviderNameLabel.text = serviceProvider.name
-        serviceProviderRatingLabel.text = "\(serviceProvider.rideType)"
-        rideFareLabel.text = "\(serviceProvider.fare)"
-        vehicleDetailsLabel.text = "\(serviceProvider.vehicleNumber)"
+    func updateCarServiceProviderCell(with Ride: RidesAvailable){
+        serviceProviderNameLabel.text = Ride.serviceProvider.name
+        serviceProviderRatingLabel.text = "\(Ride.rating)"
+        rideFareLabel.text = "\(Ride.fare)"
+        vehicleDetailsLabel.text = Ride.serviceProvider.rideType.vehicleModelName
     }
     
 }

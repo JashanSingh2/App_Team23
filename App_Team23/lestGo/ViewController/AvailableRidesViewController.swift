@@ -72,6 +72,11 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
             viewController.selectedRide = ride
             viewController.maxSeatsAllowed = numberOfSeats
             navigationController?.present(viewController, animated: true)
+        }else{
+            let storyBoard = UIStoryboard(name: "CarBooking", bundle: nil)
+            let viewController = storyBoard.instantiateViewController(withIdentifier: "carBookingVC") as! SeatBookingCarViewController
+            viewController.selectedRide = ride
+            navigationController?.present(viewController, animated: true)
         }
         
     }

@@ -12,7 +12,7 @@
         <!--Seat Booking Car View Controller-->
         <scene sceneID="8LL-Ga-ewH">
             <objects>
-                <viewController id="pSE-Af-Blt" customClass="SeatBookingCarViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="carBookingVC" id="pSE-Af-Blt" customClass="SeatBookingCarViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R3f-L1-Ccp">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -65,11 +65,20 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="s8r-Dt-Uhs" id="PyH-8K-LLq"/>
+                        <segue destination="LWd-tf-c9s" kind="presentation" identifier="carBookingConfirm" modalPresentationStyle="fullScreen" id="MC5-8E-qXV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M69-iN-h9n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="375" y="-139"/>
+        </scene>
+        <!--RideConfirmation-->
+        <scene sceneID="ArC-m9-0C0">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="confirmVC" storyboardName="RideConfirmation" id="LWd-tf-c9s" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KnM-wk-dxt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1331" y="-208"/>
         </scene>
     </scenes>
     <resources>

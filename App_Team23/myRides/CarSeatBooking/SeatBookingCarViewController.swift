@@ -13,11 +13,14 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
     
     var passengerCount: Int = 4
     
+    var selectedRide: RidesAvailable?
+    
     var sectionHeaderNames: [String] =
     ["",
      "Service Provider",
      "Passengers Details",
      ""]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +86,12 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! CarSourceDestinationCollectionViewCell
             
+                
+                if let selectedRide{
+                    cell.updateUI(with: selectedRide.serviceProvider.route, source: selectedRide.source, destination: selectedRide.destination)
+                }
+                
+                
             cell.layer.cornerRadius = 14
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
@@ -95,7 +104,13 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
             return cell
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! CarServiceProviderDetailCollectionViewCell
-            
+                
+                if let selectedRide{
+                    cell.updateCarServiceProviderCell(with: selectedRide)
+                }
+                
+                
+                
             cell.layer.cornerRadius = 14
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
@@ -121,6 +136,8 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Fourth", for: indexPath) as! CarBookNowButtonCollectionViewCell
             
+                cell.bookNowButton.addTarget(self, action: #selector(bookNowTapped), for: .touchUpInside)
+                
             return cell
             
         default :
@@ -237,9 +254,26 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         
     }
     
+    @objc func bookNowTapped() {
+        print("Hello")
+        
+        performSegue(withIdentifier: "carBookingConfirm", sender: self)
+        //viewController.modalPresentationStyle = .fullScreen
+        
+        
+        
+    }
     
-    
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let VC = segue.destination as? SeatConfirmDeatilsViewController {
+            if let selectedRide{
+                VC.ride = selectedRide
+                let ride = RideHistory(source: selectedRide.source, destination: selectedRide.destination, serviceProvider: selectedRide.serviceProvider, date: selectedRide.date, fare: selectedRide.fare, seatNumber: nil)
+                RidesDataController.shared.newRideHistory(with: ride)
+            }
+            
+        }
+    }
     
 
 }

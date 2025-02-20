@@ -35,6 +35,9 @@
                     <constraint firstItem="xaN-oS-4KU" firstAttribute="centerX" secondItem="hwv-rM-U28" secondAttribute="centerX" id="qlT-IZ-SrI"/>
                 </constraints>
             </collectionViewCellContentView>
+            <connections>
+                <outlet property="bookNowButton" destination="xaN-oS-4KU" id="DMp-PF-lrr"/>
+            </connections>
             <point key="canvasLocation" x="295" y="-34"/>
         </collectionViewCell>
     </objects>

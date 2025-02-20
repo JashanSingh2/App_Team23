@@ -152,12 +152,12 @@ class RidesDataController: DataController {
             ]
         
         availableRides = [
-            RidesAvailable(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "8:45 AM"), fare: 45, date: "20/01/2025", seatsAvailable: 30, serviceProvider: allServiceProviders[0] , rating: 3.5),
-            RidesAvailable(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "8:45 AM"), fare: 75, date: "20/01/2025", seatsAvailable: 3, serviceProvider: allServiceProviders[2] , rating: 4.9),
-            RidesAvailable(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "8:45 AM"), fare: 65, date: "20/01/2025", seatsAvailable: 40, serviceProvider: allServiceProviders[3] , rating: 4.6),
-            RidesAvailable(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "8:45 AM"), fare: 135, date: "20/01/2025", seatsAvailable: 4, serviceProvider: allServiceProviders[4] , rating: 4.1),
-            RidesAvailable(source: Schedule(address: "Sector 62", time: "8:00 AM"), destination: Schedule(address: "Pari Chowk", time: "9:30 AM"), fare: 90, date: "20/01/2025", seatsAvailable: 35, serviceProvider: allServiceProviders[5] , rating: 3.9),
-            RidesAvailable(source: Schedule(address: "Sector 62", time: "8:00 AM"), destination: Schedule(address: "Pari Chowk", time: "9:30 AM"), fare: 150, date: "18/01/2025", seatsAvailable: 3, serviceProvider: allServiceProviders[6] , rating: 4.8),
+            RidesAvailable(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "8:45 AM"), fare: 45, date: "28/01/2025", seatsAvailable: 30, serviceProvider: allServiceProviders[0] , rating: 3.5),
+            RidesAvailable(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "8:45 AM"), fare: 75, date: "28/01/2025", seatsAvailable: 3, serviceProvider: allServiceProviders[2] , rating: 4.9),
+            RidesAvailable(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "8:45 AM"), fare: 65, date: "28/01/2025", seatsAvailable: 40, serviceProvider: allServiceProviders[3] , rating: 4.6),
+            RidesAvailable(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "8:45 AM"), fare: 135, date: "28/01/2025", seatsAvailable: 4, serviceProvider: allServiceProviders[4] , rating: 4.1),
+            RidesAvailable(source: Schedule(address: "Sector 62", time: "8:00 AM"), destination: Schedule(address: "Pari Chowk", time: "9:30 AM"), fare: 90, date: "28/01/2025", seatsAvailable: 35, serviceProvider: allServiceProviders[5] , rating: 3.9),
+            RidesAvailable(source: Schedule(address: "Sector 62", time: "8:00 AM"), destination: Schedule(address: "Pari Chowk", time: "9:30 AM"), fare: 150, date: "28/01/2025", seatsAvailable: 3, serviceProvider: allServiceProviders[6] , rating: 4.8),
             RidesAvailable(source: Schedule(address: "Knowledge Park-II", time: "8:05 AM"), destination: Schedule(address: "Okhla Bird Sanctuary", time: "9:00 AM"), fare: 45, date: today, seatsAvailable: 33, serviceProvider: allServiceProviders[3], rating: 4.6)
         ]
         
@@ -220,19 +220,7 @@ class RidesDataController: DataController {
         }
     }
     
-    
-    //for section headers
-    
-    private let letsGoSectionHeaderTitles: [String] = ["Recent Rides", "Suggested Rides"]
-    
-    func sectionHeadersInLetsGo(at sectionNumber: Int) -> String {
-        return letsGoSectionHeaderTitles[sectionNumber]
-    }
-  
-    
-    func numberOfSectionsInLetsGo() -> Int {
-        return letsGoSectionHeaderTitles.count
-    }
+
     
     
     //for ride suggestions
