@@ -47,6 +47,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         if let maxSeatsAllowed{
             
         }else{

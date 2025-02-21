@@ -7,7 +7,7 @@
 
 import UIKit
 
-class YourUpcomingRideViewController: UIViewController {
+class RideDetailViewController: UIViewController {
     @IBOutlet weak var vehicleNumberLabel: UILabel!
     @IBOutlet weak var rideDateLabel: UILabel!
     @IBOutlet weak var sourceLocationLabel: UILabel!
@@ -25,6 +25,7 @@ class YourUpcomingRideViewController: UIViewController {
     
     
     @IBOutlet weak var cancelRideButton: UIButton!
+    @IBOutlet weak var trackButton: UIButton!
     
     static var rideHistory: RideHistory?
     static var sender: Int?
@@ -46,8 +47,9 @@ class YourUpcomingRideViewController: UIViewController {
         
         cardView.layer.cornerRadius = 10
         
-        if YourUpcomingRideViewController.sender == 1{
-            self.cancelRideButton.isHidden = true
+        if RideDetailViewController.sender == 1{
+            cancelRideButton.isHidden = true
+            trackButton.isHidden = true
         }
         
         UpdateCard()
@@ -72,7 +74,7 @@ class YourUpcomingRideViewController: UIViewController {
         fareStack.layer.borderColor = view.backgroundColor?.cgColor
         fareStack.layer.cornerRadius = 5
         
-        if let rideHistory = YourUpcomingRideViewController.rideHistory as? RideHistory{
+        if let rideHistory = RideDetailViewController.rideHistory{
             
             vehicleNumberLabel.text = rideHistory.serviceProvider.vehicleNumber
             rideDateLabel.text = rideHistory.date
@@ -104,7 +106,7 @@ class YourUpcomingRideViewController: UIViewController {
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
         
-        RidesDataController.shared.cancelRide(rideHistory: YourUpcomingRideViewController.rideHistory!)
+        RidesDataController.shared.cancelRide(rideHistory: RideDetailViewController.rideHistory!)
         
     }
     

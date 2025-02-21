@@ -153,7 +153,7 @@
         <!--Your Ride-->
         <scene sceneID="3R9-FR-oq2">
             <objects>
-                <viewController storyboardIdentifier="yourUpcomingRide" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JPC-Fd-DwO" customClass="YourUpcomingRideViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="yourUpcomingRide" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JPC-Fd-DwO" customClass="RideDetailViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tQ2-4z-8bq">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -386,6 +386,7 @@
                         <outlet property="seatNumberLabel" destination="u46-Fx-Gff" id="XZW-ng-1eo"/>
                         <outlet property="seatNumberStack" destination="cRo-MZ-48W" id="5SA-Kj-U8o"/>
                         <outlet property="sourceLocationLabel" destination="00m-nJ-myb" id="Vpz-Kh-fAc"/>
+                        <outlet property="trackButton" destination="SJy-aQ-18I" id="s33-2K-rCs"/>
                         <outlet property="vehicleNumberLabel" destination="ZuT-sU-gUM" id="HH6-qM-TdP"/>
                         <outlet property="vehicleTypeimageView" destination="EwI-Bd-Vdo" id="Fx4-A3-osc"/>
                     </connections>

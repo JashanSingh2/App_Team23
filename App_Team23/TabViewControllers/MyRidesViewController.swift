@@ -18,7 +18,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     var sectionHeaderNames:[String] = [
         "Today",
         "Tommorow",
-        "Next Shedules"
+        "All Other Rides"
     ]
     
     private var today = "28/01/2025"
@@ -274,7 +274,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             
             var headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
-            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+            
             
             if RidesDataController.shared.numberOfUpcomingRides(for: self.today) == 0 && sectionIndex == 0 {
                 headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0), heightDimension: .absolute(0))
@@ -285,7 +285,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             if RidesDataController.shared.numberOfUpcomingRides(for: self.later) == 0 && sectionIndex == 2{
                 headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0), heightDimension: .absolute(0))
             }
-            
+            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
             section.boundarySupplementaryItems = [header]
             return section
         }
@@ -325,7 +325,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     
     
-    @IBSegueAction func rideDetailSegue(_ coder: NSCoder, sender: Any?) -> YourUpcomingRideViewController? {
+    @IBSegueAction func rideDetailSegue(_ coder: NSCoder, sender: Any?) -> RideDetailViewController? {
         
         var rideHistory: RideHistory = RidesDataController.shared.previousRides(At: rideSelected.row)
         
@@ -344,8 +344,8 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
                 //return YourUpcomingRideViewController(coder: coder, rideHistory: RidesDataController.shared.upcomingRides(At: rideSelected.row, for: later))
             }
         }
-        YourUpcomingRideViewController.sender = segmentedControl.selectedSegmentIndex
-        YourUpcomingRideViewController.rideHistory = rideHistory
+        RideDetailViewController.sender = segmentedControl.selectedSegmentIndex
+        RideDetailViewController.rideHistory = rideHistory
         return nil
     }
     

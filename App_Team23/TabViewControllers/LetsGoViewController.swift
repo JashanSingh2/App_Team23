@@ -213,25 +213,12 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
-    var selectedRecentRide: RideHistory?
     
-    @objc func reBookButtonTapped(_ button : UIButton) {
-        selectedRecentRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
-        //print("\(selectedRide!.serviceProvider)\n\n")
-        performSegue(withIdentifier: "seatReBooking", sender: self)
-//        let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
-//        let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
-//        navigationController?.present(viewController, animated: true)
-    }
     
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let seatVC = segue.destination as? SeatBookingViewController{
-            
-//            if let selectedRecentRide{
-//                seatVC.selectedRide = RidesDataController.shared.ride(from: (selectedRecentRide.source.address), to: (selectedRecentRide.destination.address), on: RidesDataController.shared.today)
-//            }
             
             if let selectedRide{
                 seatVC.selectedRide = selectedRide
@@ -240,6 +227,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         if let carVC = segue.destination as? SeatBookingCarViewController{
+            print(selectedRide)
             carVC.selectedRide = selectedRide
             
         }
@@ -249,6 +237,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     @objc func selectButtonTapped(_ button : UIButton) {
         selectedRide = RidesDataController.shared.rideSuggestion(At: button.tag)
+        print(button.tag)
         if selectedRide?.serviceProvider.rideType.vehicleType == .bus{
             performSegue(withIdentifier: "seatReBooking", sender: self)
         }else if selectedRide?.serviceProvider.rideType.vehicleType == .car{
@@ -256,8 +245,41 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
+    var selectedRecentRide: RideHistory?
     
     
+    @objc func reBookButtonTapped(_ button : UIButton) {
+        selectedRecentRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
+        
+        
+        //print("\(selectedRide!.serviceProvider)\n\n")
+        
+        
+        if let selectedRecentRide{
+            selectedRide = RidesDataController.shared.ride(from: selectedRecentRide.source.address, to: selectedRecentRide.destination.address, on: RidesDataController.shared.today)
+            
+            if let selectedRide{
+                performSegue(withIdentifier: "seatReBooking", sender: self)
+            }else{
+                showAlert()
+            }
+            
+            
+        }
+    }
+    
+    
+    func showAlert(){
+        let alert = UIAlertController(
+        title: "No Rides Available",
+        message: "No ride are available for today. Please try again later",
+        preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     
 }
 
