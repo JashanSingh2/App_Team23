@@ -14,8 +14,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         ("Mobile", "+1234567890"),
         ("Email", "john.doe@example.com")
     ]
-
-    
     var selectedImage: UIImage?
 
     override func viewDidLoad() {
@@ -24,25 +22,26 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileTableView.delegate = self
         profileTableView.dataSource = self
         profileTableView.separatorStyle = .singleLine
-        // Load saved profile data and image
         loadProfileData()
 
         addCloseButton()
         
+        
     }
-
     func loadProfileData() {
-        // Load profile details
         let savedFirstName = UserDefaults.standard.string(forKey: "firstName") ?? profileInfo[1].1
         let savedLastName = UserDefaults.standard.string(forKey: "lastName") ?? profileInfo[2].1
         let savedMobile = UserDefaults.standard.string(forKey: "mobile") ?? profileInfo[3].1
-        let savedEmail = UserDefaults.standard.string(forKey: "email") ?? profileInfo[4].1
+//        let savedEmail = UserDefaults.standard.string(forKey: "email") ?? profileInfo[4].1
         profileInfo[1].1 = savedFirstName
         profileInfo[2].1 = savedLastName
         profileInfo[3].1 = savedMobile
-        profileInfo[4].1 = savedEmail
+//        profileInfo[4].1 = savedEmail
+        let savedEmail = UserDefaults.standard.string(forKey: "email") ?? profileInfo[4].1
+                profileInfo[4].1 = savedEmail
+                profileTableView.reloadData()
+          
     }
-
     func addCloseButton() {
         let closeButton = UIButton(type: .system)
         closeButton.setTitle("X", for: .normal)
@@ -59,23 +58,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @objc func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
-
-    // MARK: Table View Data Source
     func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-
-
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case 0: // Profile Image
+        case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileImageCell", for: indexPath) as! ProfileImageCell
-            // Retrieve the saved profile image from UserDefaults
             if let imageData = UserDefaults.standard.data(forKey: "profileImageData"),
                let savedImage = UIImage(data: imageData) {
                 cell.customImageView.image = savedImage
@@ -84,61 +76,37 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell.customImageView.image = defaultImage
                 cell.customImageView.tintColor = .black
             }
-
-            // Configure the image view
             cell.customImageView.contentMode = .scaleAspectFill
             cell.customImageView.layer.cornerRadius = cell.customImageView.frame.size.width / 2
             cell.customImageView.clipsToBounds = true
-            
-            // Add black border
             cell.customImageView.layer.borderWidth = 1.0
             cell.customImageView.layer.borderColor = UIColor.black.cgColor
-            
             return cell
-            
-        case 1: // Name (First Name + Last Name)
+        case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "NameCell", for: indexPath)
             let fullName = "\(profileInfo[1].1) \(profileInfo[2].1)"
             cell.textLabel?.text = "Name: \(fullName)"
-            
-            // Add pencil accessory
             cell.accessoryView = createPencilAccessoryView()
-            
             return cell
-            
-        case 2: // Mobile Number
+        case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "MobileCell", for: indexPath)
             cell.textLabel?.text = "\(profileInfo[3].0): \(profileInfo[3].1)"
-            
-            // Add pencil accessory
             cell.accessoryView = createPencilAccessoryView()
-            
             return cell
-            
-        case 3: // Email Address
+        case 3:
             let cell = tableView.dequeueReusableCell(withIdentifier: "EmailCell", for: indexPath)
             cell.textLabel?.text = "\(profileInfo[4].0): \(profileInfo[4].1)"
-            
-            // Add pencil accessory
             cell.accessoryView = createPencilAccessoryView()
-            
             return cell
-            
         default:
             return UITableViewCell() // Fallback
         }
     }
-
-    // Create a pencil icon for accessory view
     func createPencilAccessoryView() -> UIImageView {
         let pencilImageView = UIImageView(image: UIImage(systemName: "pencil"))
         pencilImageView.tintColor = .systemBlue
         return pencilImageView
     }
-
-
-
-    // MARK: Table View Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.section {
@@ -157,9 +125,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             break
         }
     }
-
-    // MARK: UIImagePickerControllerDelegate
-
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
             selectedImage = pickedImage
@@ -167,27 +132,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell.customImageView.image = pickedImage
             }
             saveImageToUserDefaults(image: pickedImage)
-            
-            // Post notification for image update
             if let imageData = pickedImage.jpegData(compressionQuality: 1.0) {
                 NotificationCenter.default.post(name: Notification.Name("ProfileImageUpdated"), object: nil, userInfo: ["imageData": imageData])
             }
         }
         picker.dismiss(animated: true, completion: nil)
     }
-
-    
     func saveImageToUserDefaults(image: UIImage) {
         if let imageData = image.jpegData(compressionQuality: 1.0) {
             UserDefaults.standard.set(imageData, forKey: "profileImageData")
         }
     }
-
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-
-    // MARK: Segue Preparation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UpdateNameSegue",
            let destinationVC = segue.destination as? UpdateNameViewController {
@@ -203,8 +161,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
     }
-
-    // MARK: Adjust Cell Height for Profile Image Cell
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return indexPath.section == 0 ? 130.0 : 44.0
     }

@@ -8,15 +8,8 @@
 import UIKit
 
 class OTPViewController: UIViewController {
-
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
-
-    
-
-    
 }
