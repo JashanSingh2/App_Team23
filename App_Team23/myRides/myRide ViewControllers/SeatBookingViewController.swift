@@ -180,21 +180,38 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         //dismiss(animated: true, completion: nil)
         
         
-        for seat in selectedSeats {
-            selectedSeat.append(Int((seat.titleLabel?.text)!)!)
-        }
-        
-        var ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: selectedRide!.fare * selectedSeats.count, seatNumber: selectedSeat.first)
-        
-        RidesDataController.shared.newRideHistory(with: ride)
-        
-        performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
+        showAlert()
         
         
         
     }
     
+    func showAlert(){
+        let alert = UIAlertController(
+        title: "Are you sure?",
+        message: "You want to book this ride",
+        preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.confirmRide() } ))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     
+    func confirmRide(){
+     
+        for seat in selectedSeats {
+            selectedSeat.append(Int((seat.titleLabel?.text)!)!)
+        }
+        
+        let ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: selectedRide!.fare * selectedSeats.count, seatNumber: selectedSeat.first)
+        
+        RidesDataController.shared.newRideHistory(with: ride)
+        
+        performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
+    }
     
     
     @objc func seatButtonTapped(_ sender: UIButton) {

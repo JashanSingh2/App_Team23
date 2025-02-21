@@ -349,7 +349,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="cancelButtonTapped:" destination="JPC-Fd-DwO" eventType="touchUpInside" id="u9I-Np-uti"/>
-                                    <segue destination="nbc-4I-hMZ" kind="unwind" unwindAction="unwindToMyridesWithSegue:" id="wX7-Rl-5hc"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -389,6 +388,7 @@
                         <outlet property="trackButton" destination="SJy-aQ-18I" id="s33-2K-rCs"/>
                         <outlet property="vehicleNumberLabel" destination="ZuT-sU-gUM" id="HH6-qM-TdP"/>
                         <outlet property="vehicleTypeimageView" destination="EwI-Bd-Vdo" id="Fx4-A3-osc"/>
+                        <segue destination="nbc-4I-hMZ" kind="unwind" identifier="unwindToMyrides" unwindAction="unwindToMyridesWithSegue:" id="gfJ-pA-GMj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c1n-G0-vIG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

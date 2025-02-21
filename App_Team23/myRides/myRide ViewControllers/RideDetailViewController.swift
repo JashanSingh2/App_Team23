@@ -106,10 +106,32 @@ class RideDetailViewController: UIViewController {
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
         
-        RidesDataController.shared.cancelRide(rideHistory: RideDetailViewController.rideHistory!)
+        showAlert()
+        //RidesDataController.shared.cancelRide(rideHistory: RideDetailViewController.rideHistory!)
         
     }
     
-    
+    func showAlert(){
+        let alert = UIAlertController(
+        title: "Are you sure?",
+        message: "You are about to cancel this ride",
+        preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.confirmCancel() } ))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
 
+    func confirmCancel(){
+     
+        RidesDataController.shared.cancelRide(rideHistory: RideDetailViewController.rideHistory!)
+
+        performSegue(withIdentifier: "unwindToMyrides", sender: self)
+        
+        
+    }
+    
 }
