@@ -22,8 +22,8 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-YV-eI8">
-                                        <rect key="frame" x="5" y="0.0" width="383" height="666"/>
-                                        <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <rect key="frame" x="16" y="0.0" width="361" height="666"/>
+                                        <color key="backgroundColor" red="0.99215686319999996" green="0.97994237879757029" blue="0.82791385362237879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aBh-87-dNs">
                                             <size key="itemSize" width="128" height="128"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -44,10 +44,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="seJ-YV-eI8" secondAttribute="trailing" constant="5" id="Fnk-ck-dgk"/>
+                                    <constraint firstAttribute="trailing" secondItem="seJ-YV-eI8" secondAttribute="trailing" constant="16" id="Fnk-ck-dgk"/>
                                     <constraint firstItem="seJ-YV-eI8" firstAttribute="top" secondItem="EOD-Ki-oh7" secondAttribute="top" id="VgL-MY-0MY"/>
                                     <constraint firstAttribute="bottom" secondItem="seJ-YV-eI8" secondAttribute="bottom" id="X0i-8E-POM"/>
-                                    <constraint firstItem="seJ-YV-eI8" firstAttribute="leading" secondItem="EOD-Ki-oh7" secondAttribute="leading" constant="5" id="yeW-4A-IXL"/>
+                                    <constraint firstItem="seJ-YV-eI8" firstAttribute="leading" secondItem="EOD-Ki-oh7" secondAttribute="leading" constant="16" id="yeW-4A-IXL"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -359,7 +359,7 @@
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zHe-kR-pFn"/>
-                        <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="zHe-kR-pFn" firstAttribute="trailing" secondItem="jeA-cw-qGM" secondAttribute="trailing" id="3zI-nI-Jzx"/>
                             <constraint firstItem="jeA-cw-qGM" firstAttribute="top" secondItem="zHe-kR-pFn" secondAttribute="top" id="GNe-7g-jt6"/>

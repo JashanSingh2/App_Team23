@@ -42,3 +42,10 @@ struct RouteStop {
 }
 
 
+struct RideSearch{
+    var source: String
+    var destination: String
+    var numberOfSeats: Int
+    var date: Date
+}
+

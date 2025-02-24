@@ -39,6 +39,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         //Adding xib files to collection view
         let firstNib = UINib(nibName: "PreviousRides", bundle: nil)
         let secondNib = UINib(nibName: "SuggestedRides", bundle: nil)
@@ -174,8 +175,8 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(185), heightDimension: .absolute(175))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-        group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
+        group.interItemSpacing = .fixed(15)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         return section
@@ -190,8 +191,8 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(400))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 4)
         
-        group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        group.interItemSpacing = .fixed(15)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 1, bottom: 8, trailing: 1)
         
         let section = NSCollectionLayoutSection(group: group)
         return section

@@ -34,6 +34,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var dateAndTimePicker: UIDatePicker!
     
     
+    var rideSearch: RideSearch?
+    var source = ""
+    var destination = ""
+    var numberOfSeats: Int = 1
+    
     
     
     private var modalFullyOpenHeight: CGFloat {
@@ -67,8 +72,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         
         
-        pickUpSearchBar.searchTextField.addTarget(self, action: #selector(pickUpTextFieldChanged(_:)), for: .editingChanged)
-        dropOffSearchBar.searchTextField.addTarget(self, action: #selector(pickUpTextFieldChanged(_:)), for: .editingChanged)
+        pickUpSearchBar.searchTextField.addTarget(self, action: #selector(pickupTextFieldChanged(_:)), for: .editingChanged)
+        dropOffSearchBar.searchTextField.addTarget(self, action: #selector(dropoffTextFieldChanged(_:)), for: .editingChanged)
         
         
         
@@ -195,13 +200,27 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
-    @objc func pickUpTextFieldChanged(_ sender: UITextField){
+    @objc func pickupTextFieldChanged(_ sender: UITextField){
         
         if !pickUpSearchBar.text!.isEmpty && !dropOffSearchBar.text!.isEmpty {
             searchRideButton.isEnabled = true
         }
         openModal()
-
+        
+        source = sender.text!
+        
+    }
+    
+    
+    @objc func dropoffTextFieldChanged(_ sender: UITextField){
+        
+        if !pickUpSearchBar.text!.isEmpty && !dropOffSearchBar.text!.isEmpty {
+            searchRideButton.isEnabled = true
+        }
+        openModal()
+        
+        destination = sender.text!
+        
     }
     
     @objc func searchBarTapped(_ sender: UITextField){
@@ -220,7 +239,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destVC = segue.destination as? AvailableRidesViewController {
-            destVC.numberOfSeats = Int(seatLabel.text!)
+            
+            rideSearch = RideSearch(source: source, destination: destination, numberOfSeats: Int(seatLabel.text!)!, date: dateAndTimePicker.date)
+            
+            destVC.ride = rideSearch
         }
     }
     
