@@ -172,7 +172,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(185), heightDimension: .absolute(175))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(245), heightDimension: .absolute(245))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
         group.interItemSpacing = .fixed(8)
         group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
