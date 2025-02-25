@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOD-Ki-oh7">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="155" width="393" height="614"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-YV-eI8">
-                                        <rect key="frame" x="16" y="0.0" width="361" height="666"/>
+                                        <rect key="frame" x="16" y="0.0" width="361" height="614"/>
                                         <color key="backgroundColor" red="0.99215686319999996" green="0.97994237879757029" blue="0.82791385362237879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aBh-87-dNs">
                                             <size key="itemSize" width="128" height="128"/>
@@ -395,16 +395,19 @@
                                         <rect key="frame" x="15" y="10" width="363" height="50"/>
                                         <subviews>
                                             <datePicker contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="PQb-Ru-sgq">
-                                                <rect key="frame" x="0.0" y="0.0" width="247.33333333333334" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="252.66666666666666" height="50"/>
+                                                <connections>
+                                                    <action selector="dateEntered:" destination="Mej-Sa-wgd" eventType="editingDidEnd" id="3gG-Ep-Oif"/>
+                                                </connections>
                                             </datePicker>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8md-aw-Cp6">
-                                                <rect key="frame" x="254.33333333333329" y="14.999999999999998" width="7.6666666666666572" height="20.333333333333329"/>
+                                                <rect key="frame" x="259.66666666666669" y="14.999999999999998" width="7.3333333333333144" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" autorepeat="NO" value="1" minimumValue="1" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="XFO-AI-ymq">
-                                                <rect key="frame" x="269" y="9" width="94" height="32"/>
+                                                <rect key="frame" x="273.66666666666669" y="9" width="89.333333333333314" height="32"/>
                                                 <connections>
                                                     <action selector="stepperClicked:" destination="Mej-Sa-wgd" eventType="valueChanged" id="id2-8e-Nu4"/>
                                                 </connections>

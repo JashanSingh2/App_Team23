@@ -55,6 +55,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        dateAndTimePicker.minimumDate = Date.now
         //seatStackvView.layer.cornerRadius = 10
         
         searchRideButton.isEnabled = false
@@ -252,6 +254,24 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
+    private var date: String?
+    private var time: String?
+    
+    @IBAction func dateEntered(_ sender: UIDatePicker) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+        
+        date = dateFormatter.string(from: sender.date)
+        time = timeFormatter.string(from: sender.date)
+        
+        print("\(String(describing: date))   \(String(describing: time))")
+        
+        print("Hello")
+    }
     
     
     
@@ -260,6 +280,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
+    @IBAction func dateAndTimeSelected(_ sender: Any) {
+        
+        
+        
+        
+    }
     
     
     
