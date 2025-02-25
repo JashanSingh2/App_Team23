@@ -16,7 +16,6 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailVerifyButton: UIButton!
-    
     @IBOutlet weak var phoneNumberVerifyButton: UIButton!
     
     @IBOutlet weak var preferredVehicleTextField: UILabel!

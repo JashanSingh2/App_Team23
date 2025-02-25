@@ -6,12 +6,18 @@
 //
 
 import UIKit
+import Supabase
+
 
 class loginViewController: UIViewController,UITextFieldDelegate {
+    let supabase = SupabaseClient(supabaseURL: URL(string: "https://nwjlijnbgvmvcowxyxfu.supabase.co")!,
+                                         supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53amxpam5iZ3ZtdmNvd3h5eGZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkzNTI1OTgsImV4cCI6MjA1NDkyODU5OH0.Ie59yeseEc8A82gbJ56IVOq17bZOSjEkmzz-8qCPuPo")
 
-    @IBOutlet var phoneNumber1: UIView!
+    @IBOutlet var enterEmailView: UIView!
     
-    @IBOutlet var Email: UIView!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet var Apple: UIView!
     
@@ -20,16 +26,17 @@ class loginViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet var signUpOutlet: UIButton!
     
-    @IBOutlet weak var phoneNumberTextField: UITextField!
+ 
+    @IBOutlet weak var loginButton: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        phoneNumberTextField.delegate = self
+       
 
-        phoneNumber1.layer.borderWidth = 1
-        phoneNumber1.layer.borderColor = UIColor.systemGray.cgColor
-        phoneNumber1.layer.cornerRadius = 8
+        enterEmailView.layer.borderWidth = 1
+        enterEmailView.layer.borderColor = UIColor.systemGray.cgColor
+        enterEmailView.layer.cornerRadius = 8
         let horizontalLine = UIView()
                horizontalLine.backgroundColor = UIColor.gray // Set the color of the line
                horizontalLine.translatesAutoresizingMaskIntoConstraints = false
@@ -39,13 +46,11 @@ class loginViewController: UIViewController,UITextFieldDelegate {
                
                // Set up constraints
                NSLayoutConstraint.activate([
-                horizontalLine.centerYAnchor.constraint(equalTo: phoneNumber1.centerYAnchor), // Place it in the middle
-                horizontalLine.leadingAnchor.constraint(equalTo: phoneNumber1.leadingAnchor), // Start at the leading edge
-                horizontalLine.trailingAnchor.constraint(equalTo: phoneNumber1.trailingAnchor), // End at the trailing edge
+                horizontalLine.centerYAnchor.constraint(equalTo: enterEmailView.centerYAnchor), // Place it in the middle
+                horizontalLine.leadingAnchor.constraint(equalTo: enterEmailView.leadingAnchor), // Start at the leading edge
+                horizontalLine.trailingAnchor.constraint(equalTo: enterEmailView.trailingAnchor), // End at the trailing edge
                 horizontalLine.heightAnchor.constraint(equalToConstant: 1)])
-        Email.layer.borderWidth = 1
-        Email.layer.borderColor = UIColor.black.cgColor
-        Email.layer.cornerRadius = 8
+       
         Apple.layer.borderWidth = 1
         Apple.layer.borderColor = UIColor.black.cgColor
         Apple.layer.cornerRadius = 8
@@ -54,46 +59,74 @@ class loginViewController: UIViewController,UITextFieldDelegate {
         Google.layer.cornerRadius = 8
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-            if textField == phoneNumberTextField {
-                let allowedCharacters = CharacterSet.decimalDigits
-                let characterSet = CharacterSet(charactersIn: string)
-                
-                // Ensure only digits are entered
-                if !allowedCharacters.isSuperset(of: characterSet) {
-                    return false
+   
+    
+    @IBAction func loginTapped(_ sender: UIButton) {
+        guard let email = emailTextField.text, !email.isEmpty,
+                      let password = passwordTextField.text, !password.isEmpty else {
+                   showAlert("Please enter email and password")
+                    return
                 }
 
-                // Ensure maximum 10 digits
-                let currentText = textField.text ?? ""
-                let newLength = currentText.count + string.count - range.length
-                return newLength <= 10
+                Task {
+                    do {
+                        let session = try await supabase.auth.signIn(email: email, password: password)
+                        navigateToHome()
+                    } catch {
+                        showAlert("Login failed: \(error.localizedDescription)")
+                    }
+                }
             }
-            return true
+
+            @IBAction func signUpTapped(_ sender: UIButton) {
+                let storyboard = UIStoryboard(name: "LogIn", bundle: nil)
+                    let signUpVC = storyboard.instantiateViewController(withIdentifier: "IDSignupTableViewController") as! SignupTableViewController
+                    self.navigationController?.pushViewController(signUpVC, animated: true)
+                
+            }
+    
+    
+    func navigateToHome() {
+           DispatchQueue.main.async {
+               let storyboard = UIStoryboard(name: "Main", bundle: nil)
+               let homeVC = storyboard.instantiateViewController(withIdentifier: "LetsGoViewController") as! LetsGoViewController
+   //            homeVC.navigationItem. = true
+               // ✅ Check if there is a navigationController
+               if let navigationController = self.navigationController {
+                   navigationController.setViewControllers([homeVC], animated: true)
+               } else {
+                   // ✅ If no navigationController, replace the rootViewController
+                   if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                       let navController = UINavigationController(rootViewController: homeVC)
+                       sceneDelegate.window?.rootViewController = navController
+                       sceneDelegate.window?.makeKeyAndVisible()
+                   }
+               }
+           }
+       }
+
+    
+    func showAlert(_ message: String) {
+            let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
         }
-    
-    
-    
-    
-    @IBAction func SignUpButtonTapped(_ sender: Any) {
-        
     }
+ 
+
     
-    @IBAction func appleButtonTapped(_ sender: UIButton) {
+func appleButtonTapped(_ sender: UIButton) {
         
         if let appleURL = URL(string: "https:appleid.apple.com/"){
             UIApplication.shared.open(appleURL)
         }
     }
     
-    @IBAction func googleButtonTapped(_ sender: UIButton) {
+func googleButtonTapped(_ sender: UIButton) {
         if let googleURL = URL(string: "https://accounts.google..com/"){
             UIApplication.shared.open(googleURL)
         }
     }
     
-    
-    
-}
 
 
