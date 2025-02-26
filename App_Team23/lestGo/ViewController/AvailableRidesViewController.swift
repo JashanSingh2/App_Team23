@@ -27,15 +27,19 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     
     
     var numberOfSeats: Int?
-    var ride: RideSearch?
+    
+    var source: String = ""
+    var destination: String = ""
+    
+    var rides: [(RidesAvailable, Schedule, Schedule)] = []
     let locationManager = CLLocationManager()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Source \(ride!.source)")
-        print("Destination \(ride!.destination)")
+        //print("Source \(ride!.source)")
+        //print("Destination \(ride!.destination)")
         //routeMapView.layer.cornerRadius = 18
         
         availableRidesCollectionView.layer.cornerRadius = 18
@@ -78,13 +82,13 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return RidesDataController.shared.numberOfRidesAvailable()
+        return rides.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
         
-        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+        let ride = rides[indexPath.row].0
         cell.updateAllSuggestedRidesCell(with: ride)
         
         return cell
@@ -92,18 +96,25 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+        let ride = rides[indexPath.row].0
+        let source = rides[indexPath.row].1
+        let destination = rides[indexPath.row].2
+        
         
         if ride.serviceProvider.rideType.vehicleType == .bus{
             let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
             let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
             viewController.selectedRide = ride
-            viewController.maxSeatsAllowed = self.ride!.numberOfSeats
+            viewController.source = source
+            viewController.destination = destination
+            viewController.maxSeatsAllowed = numberOfSeats
             navigationController?.present(viewController, animated: true)
         }else{
             let storyBoard = UIStoryboard(name: "CarBooking", bundle: nil)
             let viewController = storyBoard.instantiateViewController(withIdentifier: "carBookingVC") as! SeatBookingCarViewController
             viewController.selectedRide = ride
+            viewController.source = source
+            viewController.destination = destination
             navigationController?.present(viewController, animated: true)
         }
         
@@ -143,10 +154,10 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     // Enable search button only when both text fields have input
 
     func searchRide() {
-        getCoordinates(for: ride!.source) { sourcePlacemark in
+        getCoordinates(for: rides[0].1.address) { sourcePlacemark in
             guard let sourcePlacemark = sourcePlacemark else { return }
 
-            self.getCoordinates(for: self.ride!.destination) { destinationPlacemark in
+            self.getCoordinates(for: self.rides[0].2.address) { destinationPlacemark in
                 guard let destinationPlacemark = destinationPlacemark else { return }
 
                 self.showRoute(source: sourcePlacemark, destination: destinationPlacemark)
@@ -173,11 +184,11 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     func showRoute(source: MKPlacemark, destination: MKPlacemark) {
         let sourceAnnotation = MKPointAnnotation()
         sourceAnnotation.coordinate = source.coordinate
-        sourceAnnotation.title = ride?.source
+        sourceAnnotation.title = rides[0].1.address
 
         let destinationAnnotation = MKPointAnnotation()
         destinationAnnotation.coordinate = destination.coordinate
-        destinationAnnotation.title = ride?.destination
+        destinationAnnotation.title = rides[0].2.address
 
         routeMapView.showAnnotations([sourceAnnotation, destinationAnnotation], animated: true)
 

@@ -38,17 +38,21 @@ protocol DataController {
     
     func previousRides(At index: Int)-> RideHistory
     
-    func ride(from source: String,to destination: String, on date: String)-> RidesAvailable?
+    func ride(from source: String,to destination: String, on date: String)-> [(RidesAvailable, Schedule, Schedule)]?
     
     func newRideHistory(with ride: RideHistory)
     
     func numberOfRidesAvailable()-> Int
     
     func availableRide(At index: Int)-> RidesAvailable
+    
+    func fareOfRide(from source: Schedule, to destination: Schedule, in serviceProvider: ServiceProvider) -> Int
 }
 
 
 class RidesDataController: DataController {
+    
+    
 
     
 
@@ -99,7 +103,8 @@ class RidesDataController: DataController {
                 Schedule(address: "Noida City Centre", time: "08:40"),
                 Schedule(address: "Noida Sec-51", time: "08:45"),
                 Schedule(address: "Noida Sec-62", time: "09:10")
-            ]),
+                ], rating: 3.5
+            ),
             ServiceProvider(name: "Firdosh", vehicleNumber: "A9999", rideType: RideType(vehicleModelName: "Volvo", vehicleType: .bus, facility: .ac), maxSeats: 45, fare: 65, route: [
                 Schedule(address: "Akshardham", time: "07:40"),
                 Schedule(address: "Yamuna Bank", time: "07:50"),
@@ -111,20 +116,22 @@ class RidesDataController: DataController {
                 Schedule(address: "Noida City Centre", time: "08:40"),
                 Schedule(address: "Noida Sec-51", time: "08:45"),
                 Schedule(address: "Noida Sec-62", time: "09:10")
-            ]),
+                ] , rating: 4.9
+            ),
             
             ServiceProvider(name: "Aryan", vehicleNumber: "B1035", rideType: RideType(vehicleModelName: "Suzuki Dzire", vehicleType: .car, facility: .nonAc), maxSeats: 3, fare: 85, route: [
-                Schedule(address: "Akshardham", time: "07:40AM"),
-                Schedule(address: "Yamuna Bank", time: "07:50Am"),
-                Schedule(address: "Mayur Vihar 1", time: "08:00AM"),
-                Schedule(address: "Ashok Nagar", time: "08:05AM"),
-                Schedule(address: "Noida Sec-15", time: "08:15AM"),
-                Schedule(address: "Noida Sec-18", time: "08:25AM"),
-                Schedule(address: "Botanical Garden", time: "08:30AM"),
-                Schedule(address: "Noida City Centre", time: "08:40AM"),
-                Schedule(address: "Noida Sec-51", time: "08:45AM"),
-                Schedule(address: "Noida Sec-62", time: "09:10AM")
-            ]),
+                Schedule(address: "Akshardham", time: "07:40"),
+                Schedule(address: "Yamuna Bank", time: "07:50"),
+                Schedule(address: "Mayur Vihar 1", time: "08:00"),
+                Schedule(address: "Ashok Nagar", time: "08:05"),
+                Schedule(address: "Noida Sec-15", time: "08:15"),
+                Schedule(address: "Noida Sec-18", time: "08:25"),
+                Schedule(address: "Botanical Garden", time: "08:30"),
+                Schedule(address: "Noida City Centre", time: "08:40"),
+                Schedule(address: "Noida Sec-51", time: "08:45"),
+                Schedule(address: "Noida Sec-62", time: "09:10")
+                ] , rating: 4.6
+            ),
             ServiceProvider(name: "Firdosh", vehicleNumber: "A9999", rideType: RideType(vehicleModelName: "Volvo", vehicleType: .bus, facility: .ac), maxSeats: 45, fare: 65, route: [
                 Schedule(address: "Pari Chowk", time: "08:00"),
                 Schedule(address: "Knowledge Park-II", time: "08:05"),
@@ -135,7 +142,8 @@ class RidesDataController: DataController {
                 Schedule(address: "Amity University", time: "08:50"),
                 Schedule(address: "Okhla Bird Sanctuary", time: "09:00"),
                 Schedule(address: "Botanical Garden", time: "09:10")
-            ]),
+                ] , rating: 4.1
+            ),
             ServiceProvider(name: "Jashan", vehicleNumber: "B5911", rideType: RideType(vehicleModelName: "XL6", vehicleType: .car, facility: .ac), maxSeats: 5, fare: 135, route: [
                 Schedule(address: "Pari Chowk", time: "08:00"),
                 Schedule(address: "Jaypee Hospital", time: "08:35"),
@@ -143,7 +151,8 @@ class RidesDataController: DataController {
                 Schedule(address: "Amity University", time: "08:50"),
                 Schedule(address: "Okhla Bird Sanctuary", time: "09:00"),
                 Schedule(address: "Botanical Garden", time: "09:10")
-            ]),
+                ] , rating: 3.9
+            ),
             ServiceProvider(name: "Vishal", vehicleNumber: "C9099", rideType: RideType(vehicleModelName: "Volvo", vehicleType: .bus, facility: .ac), maxSeats: 40, fare: 90, route: [
                 Schedule(address: "Sector 62", time: "07:50"),
                 Schedule(address: "Fortis Hospital", time: "08:05"),
@@ -153,7 +162,8 @@ class RidesDataController: DataController {
                 Schedule(address: "Sector 37", time: "08:50"),
                 Schedule(address: "Axis House", time: "09:15"),
                 Schedule(address: "Pari Chowk", time: "09:30")
-            ]),
+                ] , rating: 4.8
+            ),
             ServiceProvider(name: "Lakshay", vehicleNumber: "B0101", rideType: RideType(vehicleModelName: "Nexon", vehicleType: .car, facility: .ac), maxSeats: 4, fare: 150, route: [
                 Schedule(address: "Sector 62", time: "07:50"),
                 Schedule(address: "Fortis Hospital", time: "08:05"),
@@ -163,28 +173,29 @@ class RidesDataController: DataController {
                 Schedule(address: "Sector 37", time: "08:50"),
                 Schedule(address: "Axis House", time: "09:15"),
                 Schedule(address: "Pari Chowk", time: "09:20")
-            ])
+                ], rating: 4.6
+            )
             
             ]
         
         availableRides = [
-            RidesAvailable(fare: 45, date: today, seatsAvailable: 30, serviceProvider: allServiceProviders[0] , rating: 3.5),
-            RidesAvailable(fare: 75, date: today, seatsAvailable: 3, serviceProvider: allServiceProviders[2] , rating: 4.9),
-            RidesAvailable(fare: 65, date: tomorrow, seatsAvailable: 40, serviceProvider: allServiceProviders[3] , rating: 4.6),
-            RidesAvailable(fare: 135, date: tomorrow, seatsAvailable: 4, serviceProvider: allServiceProviders[4] , rating: 4.1),
-            RidesAvailable(fare: 90, date: later, seatsAvailable: 35, serviceProvider: allServiceProviders[5] , rating: 3.9),
-            RidesAvailable(fare: 150, date: later, seatsAvailable: 3, serviceProvider: allServiceProviders[6] , rating: 4.8),
-            RidesAvailable(fare: 45, date: later, seatsAvailable: 33, serviceProvider: allServiceProviders[3], rating: 4.6)
+            RidesAvailable(date: today, seatsAvailable: 30, serviceProvider: allServiceProviders[0]),
+            RidesAvailable(date: today, seatsAvailable: 3, serviceProvider: allServiceProviders[2]),
+            RidesAvailable(date: tomorrow, seatsAvailable: 40, serviceProvider: allServiceProviders[3]),
+            RidesAvailable(date: tomorrow, seatsAvailable: 4, serviceProvider: allServiceProviders[4]),
+            RidesAvailable(date: later, seatsAvailable: 35, serviceProvider: allServiceProviders[5]),
+            RidesAvailable(date: later, seatsAvailable: 3, serviceProvider: allServiceProviders[6]),
+            RidesAvailable(date: later, seatsAvailable: 33, serviceProvider: allServiceProviders[3])
         ]
         
         ridesHistory = [
             RideHistory(source: Schedule(address: "Sector 62", time: "7:50 AM"), destination: Schedule(address: "Pari Chowk", time: "9:20 AM"), serviceProvider: allServiceProviders[6], date: "2025-01-17", fare: 150, seatNumber: nil),
-            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-18", fare: 30, seatNumber: 21),
-            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "2025-01-19", fare: 40, seatNumber: 1),
-            RideHistory(source: Schedule(address: "Knowledge Park-II", time: "8:05 AM"), destination: Schedule(address: "Okhla Bird Sanctuary", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-20", fare: 45, seatNumber: 3),
+            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-18", fare: 30, seatNumber: [21]),
+            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "2025-01-19", fare: 40, seatNumber: [1]),
+            RideHistory(source: Schedule(address: "Knowledge Park-II", time: "8:05 AM"), destination: Schedule(address: "Okhla Bird Sanctuary", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-20", fare: 45, seatNumber: [3]),
             RideHistory(source: Schedule(address: "Sector 62", time: "7:50 AM"), destination: Schedule(address: "Pari Chowk", time: "9:20 AM"), serviceProvider: allServiceProviders[6], date: "2025-01-28", fare: 150, seatNumber: nil),
-            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-29", fare: 30, seatNumber: 17),
-            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "2025-01-30", fare: 40, seatNumber: 14)
+            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-29", fare: 30, seatNumber: [17]),
+            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "2025-01-30", fare: 40, seatNumber: [14])
         ]
     }
     
@@ -296,13 +307,40 @@ class RidesDataController: DataController {
             
     }
     
-    func ride(from source: String,to destination: String, on date: String)-> RidesAvailable?{
+    func ride(of serviceProvider: ServiceProvider)-> RidesAvailable?{
+        for ride in availableRides {
+            if ride.serviceProvider == serviceProvider{
+                return ride
+            }
+        }
+        return nil
+    }
+    
+    func ride(from source: String,to destination: String, on date: String)-> [(RidesAvailable, Schedule, Schedule)]?{
+        
+        var ridesAvail: [(RidesAvailable, Schedule, Schedule)] = []
+        
+        var sourceFound: Bool = false
+        var sourceAdd: Schedule = Schedule(address: "", time: "")
+        var destinationAdd: Schedule
+        //var destinationFound: Bool = false
+        
         for ride in availableRides{
             for schedule in ride.serviceProvider.route{
-                if cosineSimilarity(source, schedule.address) > 0.6 && onTime(<#T##time1: String##String#>, comparedTo: <#T##String#>){
-                    
+                if cosineSimilarity(source, schedule.address) > 0.6 && onTime(date, comparedTo: schedule.time) && !sourceFound{
+                    sourceAdd = schedule
+                    sourceFound = true
+                }
+                if cosineSimilarity(destination, schedule.address) > 0.6 && onTime(date, comparedTo: schedule.time) && sourceFound{
+                    //destinationFound = true
+                    destinationAdd = schedule
+                    if sourceFound{
+                        ridesAvail.append((ride, sourceAdd, destinationAdd))
+                    }
                 }
             }
+            print(ridesAvail)
+            return ridesAvail
         }
         return nil
     }
@@ -363,6 +401,7 @@ class RidesDataController: DataController {
     
     func newRideHistory(with ride: RideHistory){
         print(ridesHistory.count)
+        
         ridesHistory.append(ride)
         print(ridesHistory.count)
     }
@@ -385,6 +424,26 @@ class RidesDataController: DataController {
             index += 1
         }
     }
+    
+    func fareOfRide(from source: Schedule, to destination: Schedule, in serviceProvider: ServiceProvider) -> Int {
+        var stops: Int = 0
+        var routeMatch: Bool = false
+        for stop in serviceProvider.route{
+            if stop == source{
+                routeMatch = true
+            }
+            if routeMatch{
+                stops += 1
+            }
+            if stop == destination{
+                routeMatch = false
+            }
+        }
+        return Int((stops/serviceProvider.route.count) * serviceProvider.fare)
+    }
+    
+    
+    
     
 }
 

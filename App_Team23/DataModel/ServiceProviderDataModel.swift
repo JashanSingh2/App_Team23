@@ -19,5 +19,6 @@ struct ServiceProvider: Equatable{
     var maxSeats: Int
     var fare: Int
     var route: [Schedule]
+    var rating: Double
 }
 

@@ -9,10 +9,8 @@ import Foundation
 
 
 struct RidesAvailable{
-    var fare: Int
     var date: String
     var seatsAvailable: Int
     var serviceProvider: ServiceProvider
-    var rating: Double
 }
 

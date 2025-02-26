@@ -228,7 +228,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         if let carVC = segue.destination as? SeatBookingCarViewController{
-            print(selectedRide)
+            //print(selectedRide!)
             carVC.selectedRide = selectedRide
             
         }
@@ -257,7 +257,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         if let selectedRecentRide{
-            selectedRide = RidesDataController.shared.ride(from: selectedRecentRide.source.address, to: selectedRecentRide.destination.address, on: RidesDataController.shared.today)
+            selectedRide = RidesDataController.shared.ride(from: selectedRecentRide.source.address, to: selectedRecentRide.destination.address, on: RidesDataController.shared.today)![0].0
             
             if let selectedRide{
                 performSegue(withIdentifier: "seatReBooking", sender: self)

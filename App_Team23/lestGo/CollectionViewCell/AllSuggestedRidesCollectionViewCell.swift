@@ -46,14 +46,14 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
         
         cellContentview.layer.cornerRadius = 10
         
-        sourceAddressLabel.text = ride.source.address
-        destinationAddressLabel.text = ride.destination.address
-        pickupTimeLabel.text = ride.source.time
-        dropoffTimeLabel.text = ride.destination.time
-        fareLabel.text = "\(ride.fare)"
+        sourceAddressLabel.text = ride.serviceProvider.route.first?.address
+        destinationAddressLabel.text = ride.serviceProvider.route.last?.address
+        pickupTimeLabel.text = ride.serviceProvider.route.first?.time
+        dropoffTimeLabel.text = ride.serviceProvider.route.last?.time
+        fareLabel.text = "\(ride.serviceProvider.fare)"
         seatsAvailableLabel.text = "\(ride.seatsAvailable) Seats Available"
         serviceProviderNameLabel.text = "\(ride.serviceProvider.name)"
-        serviceProviderRatingLabel.text = "\(ride.rating)"
+        serviceProviderRatingLabel.text = "\(ride.serviceProvider.rating)"
         if ride.serviceProvider.rideType.vehicleType == .car{
             vehicleTypeImageView.image = UIImage(systemName: "car.fill")
         }else {

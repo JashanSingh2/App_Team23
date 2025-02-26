@@ -33,11 +33,11 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
         borderStack.layer.borderWidth = 1.0
         borderStack.layer.cornerRadius = 5.0
         
-        sourceAddressLabel.text = rideSuggestion.source.address
-        destinationAddressLabel.text = rideSuggestion.destination.address
+        sourceAddressLabel.text = rideSuggestion.serviceProvider.route.first?.address
+        destinationAddressLabel.text = rideSuggestion.serviceProvider.route.last?.address
         
-        pickUpTimeLabel.text = rideSuggestion.source.time
-        dropOffTimeLabel.text = rideSuggestion.destination.time
+        pickUpTimeLabel.text = rideSuggestion.serviceProvider.route.first?.time
+        dropOffTimeLabel.text = rideSuggestion.serviceProvider.route.last?.time
         
         if rideSuggestion.serviceProvider.rideType.vehicleType == .bus{
             busORcarImageView.image = UIImage(systemName: "bus.fill")
@@ -46,7 +46,7 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
         }
         
         seatsAvailableLabel.text = "\(rideSuggestion.seatsAvailable) Seats Available"
-        fareLabel.text = "\(rideSuggestion.fare)"
+        fareLabel.text = "\(rideSuggestion.serviceProvider.fare)"
         
         
     }

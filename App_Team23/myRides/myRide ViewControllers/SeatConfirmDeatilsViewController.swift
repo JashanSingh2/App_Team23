@@ -30,7 +30,7 @@ class SeatConfirmDeatilsViewController: UIViewController {
     
     @IBOutlet weak var seatNoStackView: UIStackView!
     
-    var ride: RidesAvailable?
+    var ride: RideHistory?
     var seat: [Int]?
     
     override func viewDidLoad() {

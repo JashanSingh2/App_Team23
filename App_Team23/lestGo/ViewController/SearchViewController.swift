@@ -34,7 +34,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var dateAndTimePicker: UIDatePicker!
     
     
-    var rideSearch: RideSearch?
+    //var rideSearch: RideSearch?
     var source = ""
     var destination = ""
     var numberOfSeats: Int = 1
@@ -231,20 +231,43 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    var ridesAvail: [(RidesAvailable,Schedule,Schedule)] = []
+    
     @IBAction func searchButtonTapped() {
         print(dateAndTimePicker.date.description)
         
-        performSegue(withIdentifier: "SearchToAvailableRides", sender: self)
+        if let time{
+            ridesAvail = RidesDataController.shared.ride(from: source, to: destination, on: time)!
+        }
         
+        if ridesAvail.count > 0 {
+            performSegue(withIdentifier: "SearchToAvailableRides", sender: self)
+        }else{
+            showAlert()
+        }
+        
+        
+        
+    }
+    func showAlert(){
+        let alert = UIAlertController(
+        title: "No Rides Available",
+        message: "No ride are available for this route. Please try again later",
+        preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destVC = segue.destination as? AvailableRidesViewController {
             
-            rideSearch = RideSearch(source: source, destination: destination, numberOfSeats: Int(seatLabel.text!)!, date: dateAndTimePicker.date)
+            //rideSearch = RideSearch(source: source, destination: destination, numberOfSeats: Int(seatLabel.text!)!, date: dateAndTimePicker.date)
             
-            destVC.ride = rideSearch
+            destVC.rides = ridesAvail
         }
     }
     
