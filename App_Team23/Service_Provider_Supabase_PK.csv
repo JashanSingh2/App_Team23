@@ -1,0 +1,7 @@
+id,name,vehicleNumber,vehicleModel,vehicleType,facility,maxSeats,fare,rating
+1,Anuj,A1035,Force Traveller,bus,nonAc,35,55,3.5
+2,Firdosh,A9999,Volvo,bus,ac,45,65,4.9
+3,Aryan,B1035,Suzuki Dzire,car,nonAc,3,85,4.6
+4,Jashan,B5911,XL6,car,ac,5,135,3.9
+5,Vishal,C9099,Volvo,bus,ac,40,90,4.8
+6,Lakshay,B0101,Nexon,car,ac,4,150,4.6

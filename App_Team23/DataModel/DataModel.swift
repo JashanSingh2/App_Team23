@@ -13,6 +13,13 @@ enum VehicleType{
     case car
 }
 
+struct User: Codable {
+    let id: UUID
+    let email: String
+    let preferred_vehicle: String
+    let work_time: String
+}
+
 
 enum Facility{
     case ac

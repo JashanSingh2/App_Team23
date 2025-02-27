@@ -59,7 +59,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="loginTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4XK-xw-saV"/>
-                                    <segue destination="Ef3-gL-HQc" kind="presentation" animates="NO" modalPresentationStyle="fullScreen" id="AVo-bZ-CKM"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7i-VH-wMx">
@@ -280,7 +279,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="R4L-6F-8si">
                                                     <rect key="frame" x="20" y="5" width="367" height="50"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phone" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fdM-TU-Igd">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fdM-TU-Igd">
                                                             <rect key="frame" x="0.0" y="1" width="37" height="48"/>
                                                             <color key="tintColor" systemColor="labelColor"/>
                                                             <constraints>
@@ -288,23 +287,14 @@
                                                                 <constraint firstAttribute="height" constant="43.670000000000002" id="JXt-sM-NYJ"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone number" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3fl-FQ-JPb">
-                                                            <rect key="frame" x="45" y="0.0" width="246" height="50"/>
+                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3fl-FQ-JPb">
+                                                            <rect key="frame" x="45" y="0.0" width="322" height="50"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="246" id="ewS-xu-evH"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xyc-kk-EJx">
-                                                            <rect key="frame" x="299" y="0.0" width="68" height="50"/>
-                                                            <color key="tintColor" name="AccentColor"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" title="Verify"/>
-                                                            <connections>
-                                                                <action selector="phoneNumberVerifyButtonTapped:" destination="O0t-a3-T29" eventType="touchUpInside" id="Hb9-Vp-Phg"/>
-                                                            </connections>
-                                                        </button>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -572,7 +562,7 @@
                                                         <color key="baseBackgroundColor" systemColor="labelColor"/>
                                                     </buttonConfiguration>
                                                     <connections>
-                                                        <segue destination="Ef3-gL-HQc" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="aKY-Rs-gnj"/>
+                                                        <action selector="signupButtonTapped:" destination="O0t-a3-T29" eventType="touchUpInside" id="c62-TP-TRH"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -597,12 +587,11 @@
                     <connections>
                         <outlet property="busButton" destination="FK1-QQ-MQL" id="gnm-Ue-V3c"/>
                         <outlet property="carButton" destination="uEV-Fy-ABF" id="ANj-le-5iU"/>
+                        <outlet property="confirmPasswordTextField" destination="3fl-FQ-JPb" id="zkZ-Lq-mCq"/>
                         <outlet property="emailTextField" destination="FfQ-bb-1fd" id="Lym-YK-V8s"/>
                         <outlet property="emailVerifyButton" destination="QnV-1J-imy" id="8ym-zM-lFz"/>
                         <outlet property="fromTimePicker" destination="J5O-wK-yx4" id="qIA-YE-bjO"/>
                         <outlet property="imageViewOutlet" destination="0DR-Jt-0hL" id="jYf-hR-4aV"/>
-                        <outlet property="phoneNumberTextField" destination="3fl-FQ-JPb" id="zkZ-Lq-mCq"/>
-                        <outlet property="phoneNumberVerifyButton" destination="Xyc-kk-EJx" id="yvi-NR-zpF"/>
                         <outlet property="preferredVehicleTextField" destination="DMo-tD-xE0" id="RBy-gv-aR3"/>
                         <outlet property="toTimePicker" destination="FiB-yh-Pgq" id="V3E-tZ-bBV"/>
                         <outlet property="workTimeTextField" destination="Hsx-Qv-jRT" id="YNy-UC-vOh"/>
@@ -893,7 +882,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="O2L-3n-Q0e"/>
-        <segue reference="aKY-Rs-gnj"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Google" width="512" height="512"/>
@@ -907,10 +895,10 @@
         <image name="envelope" catalog="system" width="128" height="85"/>
         <image name="location" catalog="system" width="128" height="119"/>
         <image name="location.fill" catalog="system" width="128" height="119"/>
+        <image name="lock" catalog="system" width="111" height="128"/>
         <image name="mappin" catalog="system" width="106" height="128"/>
         <image name="mappin.and.ellipse" catalog="system" width="110" height="128"/>
         <image name="person" catalog="system" width="128" height="121"/>
-        <image name="phone" catalog="system" width="128" height="115"/>
         <image name="point.topright.arrow.triangle.backward.to.point.bottomleft.filled.scurvepath" catalog="system" width="117" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

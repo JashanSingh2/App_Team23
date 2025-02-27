@@ -6,17 +6,20 @@
 //
 
 import UIKit
-
+import Supabase
 
 
 
 class SignupTableViewController: UITableViewController, UITextFieldDelegate {
     var isTimeSlotExpanded = false // Tracks if the Time Slot is expanded
+    let supabase = SupabaseClient(supabaseURL: URL(string: "https://nwjlijnbgvmvcowxyxfu.supabase.co")!,
+                                         supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53amxpam5iZ3ZtdmNvd3h5eGZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkzNTI1OTgsImV4cCI6MjA1NDkyODU5OH0.Ie59yeseEc8A82gbJ56IVOq17bZOSjEkmzz-8qCPuPo")
+
   
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var emailVerifyButton: UIButton!
-    @IBOutlet weak var phoneNumberVerifyButton: UIButton!
+   
     
     @IBOutlet weak var preferredVehicleTextField: UILabel!
     
@@ -46,34 +49,30 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
         
         tableView.dataSource = self
         emailTextField.delegate = self
-              phoneNumberTextField.delegate = self
-              
-              // Disable the verify buttons initially
-              emailVerifyButton.isEnabled = false
-              phoneNumberVerifyButton.isEnabled = false
-              
-              // Add targets for text field changes
-              emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-              phoneNumberTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+//              confirmPasswordTextField.delegate = self
+//              
+//              // Disable the verify buttons initially
+//              emailVerifyButton.isEnabled = false
+//             
+//              
+//              // Add targets for text field changes
+//              emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+//              confirmPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         fromTimePicker.datePickerMode = .time
                 toTimePicker.datePickerMode = .time
           }
           
           // MARK: - UITextFieldDelegate
-          @objc func textFieldDidChange(_ textField: UITextField) {
-              if textField == emailTextField {
-                  emailVerifyButton.isEnabled = isValidEmail(emailTextField.text ?? "")
-              } else if textField == phoneNumberTextField {
-                  phoneNumberVerifyButton.isEnabled = isValidPhoneNumber(phoneNumberTextField.text ?? "")
-              }
-          }
+//          @objc func textFieldDidChange(_ textField: UITextField) {
+//              if textField == emailTextField {
+//                  emailVerifyButton.isEnabled = isValidEmail(emailTextField.text ?? "")
+//              } else if textField == confirmPasswordTextField {
+//                  phoneNumberVerifyButton.isEnabled = isValidPhoneNumber(phoneNumberTextField.text ?? "")
+//              }
+          //}
           
           // MARK: - Validation Methods
-          func isValidEmail(_ email: String) -> Bool {
-              let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-              let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-              return emailPredicate.evaluate(with: email)
-          }
+         
     func updateWorkTime() {
         // Get the times from the pickers
         let fromTime = fromTimePicker.date
@@ -92,11 +91,7 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
     }
 
           
-          func isValidPhoneNumber(_ phone: String) -> Bool {
-              let phoneRegex = "^[0-9]{10}$" // Adjust the regex for your specific requirements
-              let phonePredicate = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
-              return phonePredicate.evaluate(with: phone)
-          }
+          
           
           // MARK: - Button Actions
           @IBAction func emailVerifyButtonTapped(_ sender: UIButton) {
@@ -141,13 +136,13 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
         imageViewOutlet.image = UIImage(systemName: "bus")
     }
           @IBAction func phoneNumberVerifyButtonTapped(_ sender: UIButton) {
-              print("Phone number verification requested for: \(phoneNumberTextField.text ?? "")")
+              print("Phone number verification requested for: \(confirmPasswordTextField.text ?? "")")
               // Add your phone number verification logic here
           }
     
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-           if textField == phoneNumberTextField {
+           if textField == confirmPasswordTextField {
                // Allow only digits (0-9)
                let allowedCharacters = CharacterSet.decimalDigits
                let characterSet = CharacterSet(charactersIn: string)
@@ -164,6 +159,55 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
        }
     
     
+    
+    func showAlert(_ message: String) {
+            let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        }
+    
+    
+    @IBAction func signupButtonTapped(_ sender: UIButton) {
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = confirmPasswordTextField.text, !password.isEmpty else {
+            showAlert("Please enter email and password")
+            return
+        }
+
+        Task {
+            do {
+                // Step 1: Sign up the user in Supabase Authentication
+                let userResponse = try await supabase.auth.signUp(email: email, password: password)
+
+                // Step 2: Prepare additional user details
+                let fromTimeString = DateFormatter.localizedString(from: fromTimePicker.date, dateStyle: .none, timeStyle: .short)
+                let toTimeString = DateFormatter.localizedString(from: toTimePicker.date, dateStyle: .none, timeStyle: .short)
+                let workTime = "\(fromTimeString) - \(toTimeString)"
+                let preferredVehicle = preferredVehicleTextField.text ?? ""
+
+                // Step 3: Insert user details in Supabase Database
+                let userData = [
+                    "id": userResponse.user.id.uuidString,
+                    "email": email,
+                    "preferred_vehicle": preferredVehicle,
+                    "work_time": workTime
+                ]
+
+                try await supabase.database.from("users").insert(userData).execute()
+
+                showAlert("Signup successful! Please verify your email and log in.")
+
+                // Step 4: Navigate to the Login screen
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } catch {
+                showAlert("Signup failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
+
     
       }
 
