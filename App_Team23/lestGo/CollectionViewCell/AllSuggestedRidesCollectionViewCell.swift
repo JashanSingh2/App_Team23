@@ -39,12 +39,33 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
-    func updateAllSuggestedRidesCell(with indexPath: IndexPath){
+    func updateAllSuggestedRidesCell(with ride: RidesAvailable){
         seatsAvailableStackView.layer.borderWidth = 1
         seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
         seatsAvailableStackView.layer.cornerRadius = 5
         
         cellContentview.layer.cornerRadius = 10
+        
+        sourceAddressLabel.text = ride.serviceProvider.route.first?.address
+        destinationAddressLabel.text = ride.serviceProvider.route.last?.address
+        pickupTimeLabel.text = ride.serviceProvider.route.first?.time
+        dropoffTimeLabel.text = ride.serviceProvider.route.last?.time
+        fareLabel.text = "\(ride.serviceProvider.fare)"
+        seatsAvailableLabel.text = "\(ride.seatsAvailable) Seats Available"
+        serviceProviderNameLabel.text = "\(ride.serviceProvider.name)"
+        serviceProviderRatingLabel.text = "\(ride.serviceProvider.rating)"
+        if ride.serviceProvider.rideType.vehicleType == .car{
+            vehicleTypeImageView.image = UIImage(systemName: "car.fill")
+        }else {
+            vehicleTypeImageView.image = UIImage(systemName: "bus.fill")
+        }
+        if ride.serviceProvider.rideType.facility == .ac{
+            acNonAcLabel.text = "AC"
+            acNonAcImageView.image = UIImage(systemName: "snowflake")
+        }else {
+            acNonAcLabel.text = "Non AC"
+            acNonAcImageView.image = UIImage(systemName: "snowflake.slash")
+        }
         
     }
     

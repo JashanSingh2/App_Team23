@@ -12,6 +12,7 @@ import UIKit
 
 class HomeScreenPreviousRidesCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var reBookButton: UIButton!
     
     @IBOutlet weak var vehicleTypeImageView: UIImageView!
     
@@ -34,9 +35,6 @@ class HomeScreenPreviousRidesCollectionViewCell: UICollectionViewCell {
         destinationAddress.text = rideHistory.destination.address
         pickUpTimeLabel.text = rideHistory.source.time
         dropOffTimeLabel.text = rideHistory.destination.time
-        
-        
-        
     }
     
     

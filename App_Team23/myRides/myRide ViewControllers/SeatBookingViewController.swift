@@ -8,6 +8,26 @@
 import UIKit
 
 class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+    
+    
+    @IBOutlet weak var startingLocationLabel: UILabel!
+    
+    @IBOutlet weak var sourceLocationLabel: UILabel!
+    
+    @IBOutlet weak var destinationLocationLabel: UILabel!
+    
+    @IBOutlet weak var endingLocationLabel: UILabel!
+    
+    @IBOutlet weak var vehicleNumberLabel: UILabel!
+       
+    @IBOutlet weak var startingTimeLabel: UILabel!
+    
+    @IBOutlet weak var sourceTimeLabel: UILabel!
+    
+    @IBOutlet weak var destinationTimeLabel: UILabel!
+    
+    @IBOutlet weak var endingTimeLabel: UILabel!
+    
     @IBOutlet weak var routeView: UIView!
     
     @IBOutlet weak var seatCollectionView: UICollectionView!
@@ -19,11 +39,24 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var isButtonSelected = false
     
+    var selectedRide: RidesAvailable?
+    var source: Schedule?
+    var destination: Schedule?
+    
+    
     var selectedSeats: [UIButton] = []
-    let maxSeatsAllowed = 1
+    var maxSeatsAllowed: Int?
      
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        if let maxSeatsAllowed{
+            
+        }else{
+            maxSeatsAllowed = 1
+        }
+        
         
         bookButton.isEnabled = false
         
@@ -36,13 +69,37 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         
         seatCollectionView.setCollectionViewLayout(generateSeatLayout(), animated: true)
         
+        
+        updateUI()
+        
         seatCollectionView.delegate = self
         seatCollectionView.dataSource = self
         // Do any additional setup after loading the view.
     }
     
+    func updateUI(){
+        if let selectedRide,let source,let destination{
+            startingLocationLabel.text = selectedRide.serviceProvider.route.first?.address
+            sourceLocationLabel.text = source.address
+            destinationLocationLabel.text = destination.address
+            endingLocationLabel.text = selectedRide.serviceProvider.route.last?.address
+            
+            startingTimeLabel.text = selectedRide.serviceProvider.route.first?.time
+            sourceTimeLabel.text = source.time
+            destinationTimeLabel.text = destination.time
+            endingTimeLabel.text = selectedRide.serviceProvider.route.last?.time
+            
+            vehicleNumberLabel.text = selectedRide.serviceProvider.vehicleNumber
+            
+        }
+    }
+    
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 10
+        if let selectedRide{
+            return Int(selectedRide.serviceProvider.maxSeats / 4)
+        }
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -91,8 +148,20 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let destinationVC = segue.destination as? TrackingViewController{
+            destinationVC.route = (selectedRide?.serviceProvider.route)!
+        }
+        if let destinationVC = segue.destination as? SeatConfirmDeatilsViewController{
+            for seat in selectedSeats {
+                selectedSeat.append(Int((seat.titleLabel?.text)!)!)
+            }
+            
+            let ride = RideHistory(source: source!, destination: destination!, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: (RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide!.serviceProvider) * selectedSeats.count), seatNumber: selectedSeat)
+            
+            RidesDataController.shared.newRideHistory(with: ride)
+            destinationVC.ride = ride
+            destinationVC.seat = selectedSeat
+        }
     }
     
 
@@ -116,10 +185,16 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
 //        }
 //    }
     
-    
+    var selectedSeat: [Int] = []
     @IBAction func bookNowButtonTapped() {
         //dismiss(animated: true, completion: nil)
+        
+        
+        
+        
         performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
+        
+        
         
     }
     
@@ -132,23 +207,21 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
                 deselectSeat(sender)
             } else {
                 // Select the seat if within the limit
-                if selectedSeats.count < maxSeatsAllowed {
+                if selectedSeats.count < maxSeatsAllowed! {
                     selectSeat(sender)
                 } else if selectedSeats.count == maxSeatsAllowed {
                     //bookButton.isEnabled = true
                     // Alert user if they exceed the limit
                     //showAlert()
                 }
-                
-
             }
         
-        if selectedSeats.count == maxSeatsAllowed {
-                    bookButton.isEnabled = true
-        } else {
-                bookButton.isEnabled = false
-        }
-        }
+            if selectedSeats.count == maxSeatsAllowed {
+                        bookButton.isEnabled = true
+            } else {
+                    bookButton.isEnabled = false
+            }
+    }
 
     @objc func selectSeat(_ seat: UIButton) {
         seat.configuration?.baseBackgroundColor = .systemGreen

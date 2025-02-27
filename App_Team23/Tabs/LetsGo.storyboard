@@ -13,17 +13,17 @@
         <!--Let'sGo-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="LetsGoViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="letsGoVC" id="Y6W-OH-hqX" customClass="LetsGoViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOD-Ki-oh7">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <rect key="frame" x="0.0" y="155" width="393" height="614"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="seJ-YV-eI8">
-                                        <rect key="frame" x="5" y="0.0" width="383" height="666"/>
-                                        <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <rect key="frame" x="16" y="0.0" width="361" height="614"/>
+                                        <color key="backgroundColor" red="0.99215686319999996" green="0.97994237879757029" blue="0.82791385362237879" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aBh-87-dNs">
                                             <size key="itemSize" width="128" height="128"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -44,10 +44,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="seJ-YV-eI8" secondAttribute="trailing" constant="5" id="Fnk-ck-dgk"/>
+                                    <constraint firstAttribute="trailing" secondItem="seJ-YV-eI8" secondAttribute="trailing" constant="16" id="Fnk-ck-dgk"/>
                                     <constraint firstItem="seJ-YV-eI8" firstAttribute="top" secondItem="EOD-Ki-oh7" secondAttribute="top" id="VgL-MY-0MY"/>
                                     <constraint firstAttribute="bottom" secondItem="seJ-YV-eI8" secondAttribute="bottom" id="X0i-8E-POM"/>
-                                    <constraint firstItem="seJ-YV-eI8" firstAttribute="leading" secondItem="EOD-Ki-oh7" secondAttribute="leading" constant="5" id="yeW-4A-IXL"/>
+                                    <constraint firstItem="seJ-YV-eI8" firstAttribute="leading" secondItem="EOD-Ki-oh7" secondAttribute="leading" constant="16" id="yeW-4A-IXL"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -72,6 +72,8 @@
                     <connections>
                         <outlet property="letsGoCollectionView" destination="seJ-YV-eI8" id="Wav-f9-9oU"/>
                         <segue destination="IyZ-CN-gMi" kind="presentation" identifier="searchBar" animates="NO" modalPresentationStyle="fullScreen" id="nIe-W8-6w3"/>
+                        <segue destination="8lx-Li-bV5" kind="presentation" identifier="seatReBooking" id="p92-2a-BP6"/>
+                        <segue destination="X7g-Np-Q68" kind="presentation" identifier="carBookingSegue" id="VOs-lI-p3S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -309,6 +311,24 @@
             </objects>
             <point key="canvasLocation" x="2820.6106870229005" y="5.6338028169014089"/>
         </scene>
+        <!--CarBooking-->
+        <scene sceneID="CAd-T4-LAa">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="carBooking" storyboardName="CarBooking" id="X7g-Np-Q68" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="SWd-ZB-fdW"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h7x-ra-Qqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1743" y="-418"/>
+        </scene>
+        <!--SeatBookingViewController-->
+        <scene sceneID="U4e-DG-Y5t">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="SeatBookingViewController" storyboardName="SeatBookingViewController" id="8lx-Li-bV5" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dEf-jP-Ptz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1744" y="-462"/>
+        </scene>
         <!--Suggested Rides-->
         <scene sceneID="SPF-F6-EmN">
             <objects>
@@ -339,7 +359,7 @@
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zHe-kR-pFn"/>
-                        <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="zHe-kR-pFn" firstAttribute="trailing" secondItem="jeA-cw-qGM" secondAttribute="trailing" id="3zI-nI-Jzx"/>
                             <constraint firstItem="jeA-cw-qGM" firstAttribute="top" secondItem="zHe-kR-pFn" secondAttribute="top" id="GNe-7g-jt6"/>
@@ -375,16 +395,19 @@
                                         <rect key="frame" x="15" y="10" width="363" height="50"/>
                                         <subviews>
                                             <datePicker contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="PQb-Ru-sgq">
-                                                <rect key="frame" x="0.0" y="0.0" width="247.33333333333334" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="252.66666666666666" height="50"/>
+                                                <connections>
+                                                    <action selector="dateEntered:" destination="Mej-Sa-wgd" eventType="editingDidEnd" id="3gG-Ep-Oif"/>
+                                                </connections>
                                             </datePicker>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8md-aw-Cp6">
-                                                <rect key="frame" x="254.33333333333329" y="14.999999999999998" width="7.6666666666666572" height="20.333333333333329"/>
+                                                <rect key="frame" x="259.66666666666669" y="14.999999999999998" width="7.3333333333333144" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" autorepeat="NO" value="1" minimumValue="1" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="XFO-AI-ymq">
-                                                <rect key="frame" x="269" y="9" width="94" height="32"/>
+                                                <rect key="frame" x="273.66666666666669" y="9" width="89.333333333333314" height="32"/>
                                                 <connections>
                                                     <action selector="stepperClicked:" destination="Mej-Sa-wgd" eventType="valueChanged" id="id2-8e-Nu4"/>
                                                 </connections>
@@ -513,6 +536,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="dateAndTimePicker" destination="PQb-Ru-sgq" id="kd5-pO-dVk"/>
                         <outlet property="dropOffSearchBar" destination="VBw-sE-faW" id="Y6n-0I-4Bn"/>
                         <outlet property="mapView" destination="e7v-eu-caW" id="DgJ-wY-uRW"/>
                         <outlet property="modalBottomConstraint" destination="qap-qn-lN1" id="m7P-el-46e"/>

@@ -8,12 +8,17 @@
 import Foundation
 
 
-struct ServiceProvider{
+struct ServiceProvider: Equatable{
+    static func == (lhs: ServiceProvider, rhs: ServiceProvider) -> Bool {
+        true
+    }
+    
     var name: String
     var vehicleNumber: String
     var rideType: RideType
     var maxSeats: Int
     var fare: Int
     var route: [Schedule]
+    var rating: Double
 }
 

@@ -13,20 +13,7 @@ class TrackingViewController: UIViewController,UITableViewDataSource, UITableVie
     
     @IBOutlet weak var BusNumberOutlet: UILabel!
     
-    let stops: [RouteStop] = [
-        RouteStop(stopName: "Akshardham", stopTime: "7:40 AM"),
-        RouteStop(stopName: "Yamuna Bank", stopTime: "7:50 AM"),
-        RouteStop(stopName: "Mayur Vihar 1", stopTime: "8:00 AM"),
-        RouteStop(stopName: "Ashok Nagar", stopTime: "8:05 AM"),
-        RouteStop(stopName: "Sector 15", stopTime: "8:15 AM"),
-        RouteStop(stopName: "Sector 18", stopTime: "8:25 AM"),
-        RouteStop(stopName: "Botanical Garden", stopTime: "8:30 AM"),
-        RouteStop(stopName: "Noida City Center", stopTime: "8:40 AM"),
-        RouteStop(stopName: "Sector 51", stopTime: "8:45 AM"),
-        RouteStop(stopName: "Sector 62", stopTime: "9:10 AM"),
-        RouteStop(stopName: "Secotor 63", stopTime: "9:20 AM")
-        
-    ]
+    var route: [Schedule] = []
         
     @IBOutlet weak var tableView: UITableView!
    
@@ -44,7 +31,7 @@ class TrackingViewController: UIViewController,UITableViewDataSource, UITableVie
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stops.count
+        return route.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -52,10 +39,10 @@ class TrackingViewController: UIViewController,UITableViewDataSource, UITableVie
             return UITableViewCell()
         }
 
-        let stop = stops[indexPath.row]
-        cell.stopNameLabel.text = stop.stopName
-        cell.stopTImeLabel.text = stop.stopTime
-       
+        let stop = route[indexPath.row]
+        
+        cell.updateUI(with: stop)
+        
         return cell
     }
 

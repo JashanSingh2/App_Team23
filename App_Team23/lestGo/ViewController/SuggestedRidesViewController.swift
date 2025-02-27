@@ -39,12 +39,13 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return RidesDataController.shared.numberOfRidesAvailable()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AllSuggestedRidesCollectionViewCell
-        cell.updateAllSuggestedRidesCell(with: indexPath)
+        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+        cell.updateAllSuggestedRidesCell(with: ride)
         cell.layer.cornerRadius = 10
         return cell
     }

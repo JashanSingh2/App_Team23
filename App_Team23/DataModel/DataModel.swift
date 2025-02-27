@@ -25,7 +25,8 @@ struct RideType{
     var facility: Facility
 }
 
-struct Schedule{
+struct Schedule: Equatable{
+    
     var address: String
     var time: String
 }
@@ -40,4 +41,11 @@ struct RouteStop {
     var stopTime: String
 }
 
+
+struct RideSearch{
+    var source: String
+    var destination: String
+    var numberOfSeats: Int
+    var date: Date
+}
 
