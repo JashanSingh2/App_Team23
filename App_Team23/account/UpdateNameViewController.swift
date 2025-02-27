@@ -17,6 +17,7 @@ class UpdateNameViewController: UIViewController {
         firstNameTextField.text = firstName
         lastNameTextField.text = lastName
         addCloseButton()
+        setupTapGesture()
     }
     @IBAction func updateButtonTapped(_ sender: UIButton) {
         if let firstName = firstNameTextField.text, let lastName = lastNameTextField.text {
@@ -47,4 +48,12 @@ class UpdateNameViewController: UIViewController {
     @objc func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
+    
+    func setupTapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        }
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }

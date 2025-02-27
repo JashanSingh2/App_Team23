@@ -2,7 +2,6 @@
 
 
 import UIKit
-
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var profileTableView: UITableView!
@@ -32,15 +31,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let savedFirstName = UserDefaults.standard.string(forKey: "firstName") ?? profileInfo[1].1
         let savedLastName = UserDefaults.standard.string(forKey: "lastName") ?? profileInfo[2].1
         let savedMobile = UserDefaults.standard.string(forKey: "mobile") ?? profileInfo[3].1
-//        let savedEmail = UserDefaults.standard.string(forKey: "email") ?? profileInfo[4].1
+        let savedEmail = UserDefaults.standard.string(forKey: "email") ?? profileInfo[4].1
         profileInfo[1].1 = savedFirstName
         profileInfo[2].1 = savedLastName
         profileInfo[3].1 = savedMobile
-//        profileInfo[4].1 = savedEmail
-        let savedEmail = UserDefaults.standard.string(forKey: "email") ?? profileInfo[4].1
-                profileInfo[4].1 = savedEmail
-                profileTableView.reloadData()
-          
+        profileInfo[4].1 = savedEmail
+
     }
     func addCloseButton() {
         let closeButton = UIButton(type: .system)

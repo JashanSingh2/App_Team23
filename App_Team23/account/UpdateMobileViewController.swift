@@ -4,11 +4,12 @@ import UIKit
 
 class UpdateMobileViewController: UIViewController {
 
-    @IBOutlet weak var mobileNumberTextField: UITextField! // Connect this to the text field in your storyboard
+    @IBOutlet weak var mobileNumberTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addCloseButton()
+        setupTapGesture()
     }
 
     @objc func closeButtonTapped() {
@@ -52,4 +53,13 @@ class UpdateMobileViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         self.view.addSubview(closeButton)
     }
+    
+    func setupTapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        }
+        
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }

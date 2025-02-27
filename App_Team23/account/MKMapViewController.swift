@@ -8,8 +8,7 @@ class MKMapViewController: UIViewController, MKMapViewDelegate, CLLocationManage
     var locationManager = CLLocationManager()
     var selectedPin: MKPointAnnotation?
     var completionHandler: ((String) -> Void)?
-    
-    // Variables to store the original navigation bar appearance
+
     var originalNavBarBackgroundImage: UIImage?
     var originalNavBarShadowImage: UIImage?
     var originalNavBarIsTranslucent: Bool = false

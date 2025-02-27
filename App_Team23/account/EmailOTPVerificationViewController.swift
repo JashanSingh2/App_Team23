@@ -1,29 +1,6 @@
-//
-//  EmailOTPVerificationViewController.swift
-//  App_Team23
-//
-//  Created by Batch- 1 on 25/02/25.
-//
-
-//import UIKit
-//import Supabase
-//class EmailOTPVerificationViewController: UIViewController {
-//
-//   
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        // Setup UI for OTP input here
-//    }
-//
-//    
-//
-//    
-//}
-
 
 import UIKit
 import Supabase
-
 class EmailOTPVerificationViewController: UIViewController {
 
     @IBOutlet weak var otpTextField: UITextField!
@@ -35,6 +12,8 @@ class EmailOTPVerificationViewController: UIViewController {
         supabaseClient = SupabaseClient(supabaseURL: URL(string: "https://lazbodjuwncbuwovuyfy.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhemJvZGp1d25jYnV3b3Z1eWZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NjM2MTcsImV4cCI6MjA1NjAzOTYxN30.xSk0gmzaLWSLDZ7F3o_LhFH5cIyYzrmEnjwIldyDyrg")
         
         // Setup UI for OTP input
+        
+        setupTapGesture()
     }
 
     @IBAction func verifyOTP(_ sender: UIButton) {
@@ -76,6 +55,15 @@ class EmailOTPVerificationViewController: UIViewController {
             self.navigationController?.pushViewController(profileVC, animated: true)
         }
     }
+    func setupTapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        }
+        
+        // Dismiss keyboard when user taps outside of the text field
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }
 
 

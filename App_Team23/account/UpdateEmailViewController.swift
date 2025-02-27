@@ -1,32 +1,6 @@
 
-//import UIKit
-//class UpdateEmailViewController: UIViewController {
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        addCloseButton()
-//    }
-//    func addCloseButton() {
-//        let closeButton = UIButton(type: .system)
-//        closeButton.setTitle("X", for: .normal)
-//        closeButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-//        closeButton.frame = CGRect(x: self.view.frame.width - 50, y: 20, width: 30, height: 30)
-//        closeButton.backgroundColor = .gray
-//        closeButton.layer.cornerRadius = closeButton.frame.height / 2
-//        closeButton.clipsToBounds = true
-//        closeButton.setTitleColor(.white, for: .normal)
-//        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-//        self.view.addSubview(closeButton)
-//    }
-//    @objc func closeButtonTapped() {
-//        dismiss(animated: true, completion: nil)
-//    }
-//}
-//
-
-
 import UIKit
 import Supabase
-
 class UpdateEmailViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
@@ -40,6 +14,8 @@ class UpdateEmailViewController: UIViewController {
             supabaseURL: URL(string: "https://your-project-url.supabase.co")!,
             supabaseKey: "your-supabase-key"
         )
+        
+        setupTapGesture()
     }
 
     @IBAction func submitEmail(_ sender: UIButton) {
@@ -66,7 +42,6 @@ class UpdateEmailViewController: UIViewController {
 //            }
 //        }
     }
-
     func navigateToOTPVerification(email: String) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let otpVC = storyboard.instantiateViewController(withIdentifier: "EmailOTPVerificationViewController") as? EmailOTPVerificationViewController {
@@ -92,4 +67,12 @@ class UpdateEmailViewController: UIViewController {
     @objc func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
+    
+    func setupTapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        }
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }

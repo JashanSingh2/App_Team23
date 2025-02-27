@@ -17,6 +17,8 @@ class RatingFeedbackViewController: UIViewController, UITextViewDelegate {
         setupStars()
         setupTextView()
         setupSubmitButton()
+        
+        setupTapGesture()
     }
     private func setupStars() {
         for (index, button) in starButtons.enumerated() {
@@ -116,5 +118,13 @@ class RatingFeedbackViewController: UIViewController, UITextViewDelegate {
         submitButton.isEnabled = false
         submitButton.backgroundColor = .gray
     }
-   
+    func setupTapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        }
+        
+        // Dismiss keyboard when user taps outside of the text field
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }

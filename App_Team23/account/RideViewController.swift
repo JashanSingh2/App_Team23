@@ -3,6 +3,11 @@ import UIKit
 class RideViewController: UIViewController {
     @IBOutlet weak var homeAddressTextField: UITextField!
     @IBOutlet weak var destinationAddressTextField: UITextField!
+    
+        
+        @IBOutlet weak var startTimePicker: UIDatePicker!  // First time picker
+        @IBOutlet weak var endTimePicker: UIDatePicker!    // Second time picker
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -14,12 +19,22 @@ class RideViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = saveButton
         loadPreferences()
         setupTextFieldIcons()
-    }
+        setupTapGesture()
+    }    
     private func loadPreferences() {
-        let defaults = UserDefaults.standard
-        homeAddressTextField.text = defaults.string(forKey: "homeAddress")
-        destinationAddressTextField.text = defaults.string(forKey: "destinationAddress")
-    }
+            let defaults = UserDefaults.standard
+            homeAddressTextField.text = defaults.string(forKey: "homeAddress")
+            destinationAddressTextField.text = defaults.string(forKey: "destinationAddress")
+            
+            // Load both saved times to the time pickers
+            if let savedStartTime = defaults.object(forKey: "startTime") as? Date {
+                startTimePicker.date = savedStartTime
+            }
+            
+            if let savedEndTime = defaults.object(forKey: "endTime") as? Date {
+                endTimePicker.date = savedEndTime
+            }
+        }
     private func setupTextFieldIcons() {
         // Keep icons for address fields
         addIcon(to: homeAddressTextField, icon: "mappin.circle", selector: #selector(selectHomeAddressFromMap))
@@ -64,29 +79,39 @@ class RideViewController: UIViewController {
     @IBAction func editDestinationAddress(_ sender: UIButton) {
         destinationAddressTextField.becomeFirstResponder()
     }
-
-    // Save preferences
     @objc func savePreferences() {
-        let homeAddress = homeAddressTextField.text ?? ""
-        let destinationAddress = destinationAddressTextField.text ?? ""
+            let homeAddress = homeAddressTextField.text ?? ""
+            let destinationAddress = destinationAddressTextField.text ?? ""
+            let selectedStartTime = startTimePicker.date  // Get selected start time
+            let selectedEndTime = endTimePicker.date      // Get selected end time
 
-        if homeAddress.isEmpty || destinationAddress.isEmpty {
-            let alert = UIAlertController(title: "Error", message: "Please fill in all the fields.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
-        } else {
-            // Save preferences to UserDefaults
-            let defaults = UserDefaults.standard
-            defaults.set(homeAddress, forKey: "homeAddress")
-            defaults.set(destinationAddress, forKey: "destinationAddress")
+            if homeAddress.isEmpty || destinationAddress.isEmpty {
+                let alert = UIAlertController(title: "Error", message: "Please fill in all the fields.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            } else {
+                // Save preferences to UserDefaults
+                let defaults = UserDefaults.standard
+                defaults.set(homeAddress, forKey: "homeAddress")
+                defaults.set(destinationAddress, forKey: "destinationAddress")
+                defaults.set(selectedStartTime, forKey: "startTime")  // Save start time
+                defaults.set(selectedEndTime, forKey: "endTime")      // Save end time
 
-            // Show confirmation message
-            let alert = UIAlertController(title: "Preferences Saved", message: "Your preferences have been saved successfully.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                // Optionally pop the view controller
-                self.navigationController?.popViewController(animated: true)
-            }))
-            present(alert, animated: true, completion: nil)
+                // Show confirmation message
+                let alert = UIAlertController(title: "Preferences Saved", message: "Your preferences have been saved successfully.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    // Optionally pop the view controller
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                present(alert, animated: true, completion: nil)
+            }
         }
-    }
+    
+    func setupTapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        }
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }
