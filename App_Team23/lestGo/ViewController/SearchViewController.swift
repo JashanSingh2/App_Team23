@@ -31,7 +31,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var seatLabel: UILabel!
     
+    @IBOutlet weak var dateAndTimePicker: UIDatePicker!
     
+    
+    //var rideSearch: RideSearch?
+    var source = ""
+    var destination = ""
+    var numberOfSeats: Int = 1
     
     
     
@@ -42,13 +48,15 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return view.bounds.height * 0.3
         }
         private var modalHiddenHeight: CGFloat {
-            return view.bounds.height * 0.6
+            return view.bounds.height * 0.58
         }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        dateAndTimePicker.minimumDate = Date.now
         //seatStackvView.layer.cornerRadius = 10
         
         searchRideButton.isEnabled = false
@@ -66,8 +74,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         
         
-        pickUpSearchBar.searchTextField.addTarget(self, action: #selector(pickUpTextFieldChanged(_:)), for: .editingChanged)
-        dropOffSearchBar.searchTextField.addTarget(self, action: #selector(pickUpTextFieldChanged(_:)), for: .editingChanged)
+        pickUpSearchBar.searchTextField.addTarget(self, action: #selector(pickupTextFieldChanged(_:)), for: .editingChanged)
+        dropOffSearchBar.searchTextField.addTarget(self, action: #selector(dropoffTextFieldChanged(_:)), for: .editingChanged)
         
         
         
@@ -166,7 +174,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         private func updateCollectionViewTopConstraint(for modalPosition: CGFloat) {
             // Get the safe area inset
-            let safeAreaTop = view.safeAreaInsets.top
+            _ = view.safeAreaInsets.top
         }
          
     
@@ -194,13 +202,27 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
-    @objc func pickUpTextFieldChanged(_ sender: UITextField){
+    @objc func pickupTextFieldChanged(_ sender: UITextField){
         
         if !pickUpSearchBar.text!.isEmpty && !dropOffSearchBar.text!.isEmpty {
             searchRideButton.isEnabled = true
         }
         openModal()
-
+        
+        source = sender.text!
+        
+    }
+    
+    
+    @objc func dropoffTextFieldChanged(_ sender: UITextField){
+        
+        if !pickUpSearchBar.text!.isEmpty && !dropOffSearchBar.text!.isEmpty {
+            searchRideButton.isEnabled = true
+        }
+        openModal()
+        
+        destination = sender.text!
+        
     }
     
     @objc func searchBarTapped(_ sender: UITextField){
@@ -209,11 +231,38 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    var ridesAvail: [(RideAvailable,Schedule,Schedule, Int)] = []
+    
     @IBAction func searchButtonTapped() {
-        performSegue(withIdentifier: "SearchToAvailableRides", sender: self)
+        print(dateAndTimePicker.date.description)
+        
+        if let time{
+            ridesAvail = RidesDataController.shared.ride(from: source, to: destination, on: time)!
+        }
+        
+        if ridesAvail.count > 0 {
+            performSegue(withIdentifier: "SearchToAvailableRides", sender: self)
+        }else{
+            showAlert()
+        }
+        
+        
         
     }
+    func showAlert(){
+        let alert = UIAlertController(
+        title: "No Rides Available",
+        message: "No ride are available for this route. Please try again later",
+        preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     
+    
+   
     
     @IBAction func stepperClicked(_ sender: UIStepper) {
         
@@ -221,6 +270,24 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
+    private var date: String?
+    private var time: String?
+    
+    @IBAction func dateEntered(_ sender: UIDatePicker) {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+        
+        date = dateFormatter.string(from: sender.date)
+        time = timeFormatter.string(from: sender.date)
+        
+        print("\(String(describing: date))   \(String(describing: time))")
+        
+        print("Hello")
+    }
     
     
     
@@ -229,7 +296,21 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
+    @IBAction func dateAndTimeSelected(_ sender: Any) {
+        
+        
+        
+        
+    }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? AvailableRidesViewController {
+            
+            //rideSearch = RideSearch(source: source, destination: destination, numberOfSeats: Int(seatLabel.text!)!, date: dateAndTimePicker.date)
+            
+            destVC.rides = ridesAvail
+        }
+    }
     
     
             

@@ -12,7 +12,6 @@ class UpdateEmailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addCloseButton()
-        // Do any additional setup after loading the view.
     }
     
     func addCloseButton() {

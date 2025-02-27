@@ -158,6 +158,7 @@
                 <outlet property="fareLabel" destination="OTk-Lp-WQM" id="TKg-32-CtO"/>
                 <outlet property="pickUpTimeLabel" destination="vLq-uD-RaL" id="nlx-jP-5hx"/>
                 <outlet property="seatsAvailableLabel" destination="C7e-gw-C2e" id="fv7-tn-KPU"/>
+                <outlet property="selectButton" destination="cWI-ON-IxN" id="25k-WF-6Zr"/>
                 <outlet property="sourceAddressLabel" destination="2X2-qe-DOf" id="zE7-gU-rdK"/>
             </connections>
             <point key="canvasLocation" x="-114.50381679389312" y="-194.36619718309859"/>

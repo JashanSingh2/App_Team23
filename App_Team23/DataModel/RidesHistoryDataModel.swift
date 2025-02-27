@@ -8,6 +8,7 @@
 import Foundation
 
 struct RideHistory{
+    
     var source: Schedule
     var destination: Schedule
     var serviceProvider: ServiceProvider
@@ -15,7 +16,7 @@ struct RideHistory{
     var Rating: Double?
     var review: String?
     let fare: Int
-    let seatNumber: Int?
+    let seatNumber: [Int]?
 }
 
 

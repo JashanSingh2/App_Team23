@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pSE-Af-Blt">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Seat Booking Car View Controller-->
+        <scene sceneID="8LL-Ga-ewH">
+            <objects>
+                <viewController storyboardIdentifier="carBookingVC" id="pSE-Af-Blt" customClass="SeatBookingCarViewController" customModule="App_Team23" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="R3f-L1-Ccp">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="s8r-Dt-Uhs">
+                                <rect key="frame" x="0.0" y="44" width="393" height="808"/>
+                                <color key="backgroundColor" red="0.99607843159999998" green="0.96470588450000005" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="njB-J7-VmR">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="HNE-uX-Ovw">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hy9-dp-fW8">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7cj-WG-gFo">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                <color key="barTintColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <items>
+                                    <navigationItem title="Ride Booking" id="GyK-Zb-1f5">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="WlR-Bu-N3o">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="pSE-Af-Blt" id="TFk-2W-XYk"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="3ta-Gd-VaF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="s8r-Dt-Uhs" firstAttribute="leading" secondItem="3ta-Gd-VaF" secondAttribute="leading" id="23a-2y-FTb"/>
+                            <constraint firstItem="s8r-Dt-Uhs" firstAttribute="top" secondItem="7cj-WG-gFo" secondAttribute="bottom" id="8NR-fm-R4Z"/>
+                            <constraint firstItem="7cj-WG-gFo" firstAttribute="leading" secondItem="R3f-L1-Ccp" secondAttribute="leading" id="AeM-MO-U8H"/>
+                            <constraint firstAttribute="trailing" secondItem="7cj-WG-gFo" secondAttribute="trailing" id="Ma6-Kz-LMl"/>
+                            <constraint firstItem="7cj-WG-gFo" firstAttribute="top" secondItem="R3f-L1-Ccp" secondAttribute="top" id="Qmr-Qv-JeK"/>
+                            <constraint firstAttribute="trailing" secondItem="s8r-Dt-Uhs" secondAttribute="trailing" id="ZzV-si-fxS"/>
+                            <constraint firstAttribute="bottom" secondItem="s8r-Dt-Uhs" secondAttribute="bottom" id="x2n-yd-XPS"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="s8r-Dt-Uhs" id="PyH-8K-LLq"/>
+                        <segue destination="LWd-tf-c9s" kind="presentation" identifier="carBookingConfirm" modalPresentationStyle="fullScreen" id="MC5-8E-qXV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M69-iN-h9n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="375" y="-139"/>
+        </scene>
+        <!--RideConfirmation-->
+        <scene sceneID="ArC-m9-0C0">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="confirmVC" storyboardName="RideConfirmation" id="LWd-tf-c9s" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KnM-wk-dxt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1331" y="-208"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
