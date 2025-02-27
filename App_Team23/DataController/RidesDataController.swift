@@ -26,7 +26,7 @@ protocol DataController {
     
     
     //for ride suggestions
-    func rideSuggestion(At index: Int)-> RidesAvailable
+    func rideSuggestion(At index: Int)-> RideAvailable
     
     //for myRides
     func numberOfUpcomingRides(for date: String)-> Int
@@ -38,13 +38,13 @@ protocol DataController {
     
     func previousRides(At index: Int)-> RideHistory
     
-    func ride(from source: String,to destination: String, on date: String)-> [(RidesAvailable, Schedule, Schedule)]?
+    func ride(from source: String,to destination: String, on date: String)-> [(RideAvailable, Schedule, Schedule, Int)]?
     
     func newRideHistory(with ride: RideHistory)
     
     func numberOfRidesAvailable()-> Int
     
-    func availableRide(At index: Int)-> RidesAvailable
+    func availableRide(At index: Int)-> RideAvailable
     
     func fareOfRide(from source: Schedule, to destination: Schedule, in serviceProvider: ServiceProvider) -> Int
 }
@@ -67,11 +67,11 @@ class RidesDataController: DataController {
     
     private var allServiceProviders: [ServiceProvider] = []
     
-    private var availableRides: [RidesAvailable] = []
+    private var availableRides: [RideAvailable] = []
     
     private var ridesHistory: [RideHistory] = []
     
-    
+    private var userProfile = UserData(name: "Jashan", email: "sample@gmail.com", source: Schedule(address: "Pari Chowk", time: "08:00"), destination: Schedule(address: "Botanical Garden", time: "09:10"), preferredRideType: .bus)
     
     var dateFormatter = DateFormatter()
     
@@ -96,7 +96,7 @@ class RidesDataController: DataController {
                 Schedule(address: "Akshardham", time: "07:40"),
                 Schedule(address: "Yamuna Bank", time: "07:50"),
                 Schedule(address: "Mayur Vihar", time: "08:00"),
-                Schedule(address: "Ashok Nagar", time: "08:05"),
+                Schedule(address: "New Ashok Nagar", time: "08:05"),
                 Schedule(address: "Noida Sec-15", time: "08:15"),
                 Schedule(address: "Noida Sec-18", time: "08:25"),
                 Schedule(address: "Botanical Garden", time: "08:30"),
@@ -109,7 +109,7 @@ class RidesDataController: DataController {
                 Schedule(address: "Akshardham", time: "07:40"),
                 Schedule(address: "Yamuna Bank", time: "07:50"),
                 Schedule(address: "Mayur Vihar", time: "08:00"),
-                Schedule(address: "Ashok Nagar", time: "08:05"),
+                Schedule(address: "New Ashok Nagar", time: "08:05"),
                 Schedule(address: "Noida Sec-15", time: "08:15"),
                 Schedule(address: "Noida Sec-18", time: "08:25"),
                 Schedule(address: "Botanical Garden", time: "08:30"),
@@ -123,7 +123,7 @@ class RidesDataController: DataController {
                 Schedule(address: "Akshardham", time: "07:40"),
                 Schedule(address: "Yamuna Bank", time: "07:50"),
                 Schedule(address: "Mayur Vihar 1", time: "08:00"),
-                Schedule(address: "Ashok Nagar", time: "08:05"),
+                Schedule(address: "New Ashok Nagar", time: "08:05"),
                 Schedule(address: "Noida Sec-15", time: "08:15"),
                 Schedule(address: "Noida Sec-18", time: "08:25"),
                 Schedule(address: "Botanical Garden", time: "08:30"),
@@ -179,13 +179,13 @@ class RidesDataController: DataController {
             ]
         
         availableRides = [
-            RidesAvailable(date: today, seatsAvailable: 30, serviceProvider: allServiceProviders[0]),
-            RidesAvailable(date: today, seatsAvailable: 3, serviceProvider: allServiceProviders[2]),
-            RidesAvailable(date: tomorrow, seatsAvailable: 40, serviceProvider: allServiceProviders[3]),
-            RidesAvailable(date: tomorrow, seatsAvailable: 4, serviceProvider: allServiceProviders[4]),
-            RidesAvailable(date: later, seatsAvailable: 35, serviceProvider: allServiceProviders[5]),
-            RidesAvailable(date: later, seatsAvailable: 3, serviceProvider: allServiceProviders[6]),
-            RidesAvailable(date: later, seatsAvailable: 33, serviceProvider: allServiceProviders[3])
+            RideAvailable(date: today, seatsAvailable: 30, serviceProvider: allServiceProviders[0]),
+            RideAvailable(date: today, seatsAvailable: 3, serviceProvider: allServiceProviders[2]),
+            RideAvailable(date: tomorrow, seatsAvailable: 40, serviceProvider: allServiceProviders[3]),
+            RideAvailable(date: tomorrow, seatsAvailable: 4, serviceProvider: allServiceProviders[4]),
+            RideAvailable(date: later, seatsAvailable: 35, serviceProvider: allServiceProviders[5]),
+            RideAvailable(date: later, seatsAvailable: 3, serviceProvider: allServiceProviders[6]),
+            RideAvailable(date: later, seatsAvailable: 33, serviceProvider: allServiceProviders[3])
         ]
         
         ridesHistory = [
@@ -251,7 +251,7 @@ class RidesDataController: DataController {
     
     
     //for ride suggestions
-    func rideSuggestion(At index: Int)-> RidesAvailable{
+    func rideSuggestion(At index: Int)-> RideAvailable{
         return availableRides[index]
         
     }
@@ -307,7 +307,7 @@ class RidesDataController: DataController {
             
     }
     
-    func ride(of serviceProvider: ServiceProvider)-> RidesAvailable?{
+    func ride(of serviceProvider: ServiceProvider)-> RideAvailable?{
         for ride in availableRides {
             if ride.serviceProvider == serviceProvider{
                 return ride
@@ -316,30 +316,83 @@ class RidesDataController: DataController {
         return nil
     }
     
-    func ride(from source: String,to destination: String, on date: String)-> [(RidesAvailable, Schedule, Schedule)]?{
+    func levenshtein(_ lhs: String, _ rhs: String) -> Int {
+        let lhsCount = lhs.count
+        let rhsCount = rhs.count
         
-        var ridesAvail: [(RidesAvailable, Schedule, Schedule)] = []
+        guard lhsCount != 0 else { return rhsCount }
+        guard rhsCount != 0 else { return lhsCount }
+        
+        var matrix = Array(repeating: Array(repeating: 0, count: rhsCount + 1), count: lhsCount + 1)
+
+        for i in 0...lhsCount { matrix[i][0] = i }
+        for j in 0...rhsCount { matrix[0][j] = j }
+
+        let lhsArray = Array(lhs)
+        let rhsArray = Array(rhs)
+
+        for i in 1...lhsCount {
+            for j in 1...rhsCount {
+                let cost = lhsArray[i - 1] == rhsArray[j - 1] ? 0 : 1
+                matrix[i][j] = min(
+                    matrix[i - 1][j] + 1,  // Deletion
+                    matrix[i][j - 1] + 1,  // Insertion
+                    matrix[i - 1][j - 1] + cost // Substitution
+                )
+            }
+        }
+        return matrix[lhsCount][rhsCount]
+    }
+
+    func similarityScore(userInput: String, storedString: String) -> Double {
+        let distance = levenshtein(userInput.lowercased(), storedString.lowercased())
+        let maxLength = max(userInput.count, storedString.count)
+        return (1.0 - (Double(distance) / Double(maxLength))) * 100
+    }
+
+    func isFuzzyMatch(userInput: String, storedString: String, threshold: Double = 70.0) -> Bool {
+        return similarityScore(userInput: userInput, storedString: storedString) >= threshold
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func ride(from source: String,to destination: String, on date: String)-> [(RideAvailable, Schedule, Schedule, Int)]?{
+        
+        var ridesAvail: [(RideAvailable, Schedule, Schedule, Int)] = []
         
         var sourceFound: Bool = false
         var sourceAdd: Schedule = Schedule(address: "", time: "")
-        var destinationAdd: Schedule
+        var destinationAdd: Schedule = Schedule(address: "", time: "")
         //var destinationFound: Bool = false
         
         for ride in availableRides{
             for schedule in ride.serviceProvider.route{
-                if cosineSimilarity(source, schedule.address) > 0.6 && onTime(date, comparedTo: schedule.time) && !sourceFound{
+                if (isFuzzyMatch(userInput: source, storedString: schedule.address) && onTime(date, comparedTo: schedule.time) && !sourceFound){
+                    
+                    print("\(schedule.address)   \(source)   \(cosineSimilarity(source, schedule.address))")
+                    
                     sourceAdd = schedule
                     sourceFound = true
                 }
-                if cosineSimilarity(destination, schedule.address) > 0.6 && onTime(date, comparedTo: schedule.time) && sourceFound{
+                if isFuzzyMatch(userInput: destination, storedString: schedule.address) && onTime(date, comparedTo: schedule.time) && sourceFound{
                     //destinationFound = true
+                    print("\(schedule.address)   \(destination)   \(cosineSimilarity(source, schedule.address))")
                     destinationAdd = schedule
                     if sourceFound{
-                        ridesAvail.append((ride, sourceAdd, destinationAdd))
+                        let fare = fareOfRide(from: sourceAdd, to: destinationAdd, in: ride.serviceProvider)
+                        ridesAvail.append((ride, sourceAdd, destinationAdd, fare))
+                        break
                     }
                 }
             }
-            print(ridesAvail)
+            for ride in ridesAvail{
+                print("\(ride.1)")
+            }
             return ridesAvail
         }
         return nil
@@ -410,7 +463,7 @@ class RidesDataController: DataController {
         return availableRides.count
     }
     
-    func availableRide(At index: Int) -> RidesAvailable {
+    func availableRide(At index: Int) -> RideAvailable {
         return availableRides[index]
     }
     
@@ -439,10 +492,16 @@ class RidesDataController: DataController {
                 routeMatch = false
             }
         }
+        if Int((stops/serviceProvider.route.count) * serviceProvider.fare) < 10{
+            return 10
+        }
+        
         return Int((stops/serviceProvider.route.count) * serviceProvider.fare)
     }
     
-    
+    func rideSuggestion() -> [(RideAvailable,Schedule,Schedule, Int)]? {
+        return ride(from: userProfile.source.address, to: userProfile.destination.address, on: userProfile.source.time)
+    }
     
     
 }

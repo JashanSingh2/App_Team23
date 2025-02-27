@@ -14,7 +14,7 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    
+    var rides: [(RideAvailable, Schedule, Schedule,Int)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +39,20 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return RidesDataController.shared.numberOfRidesAvailable()
+        return rides.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AllSuggestedRidesCollectionViewCell
-        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
-        cell.updateAllSuggestedRidesCell(with: ride)
+        let ride = rides[indexPath.row].0
+        let source = rides[indexPath.row].1
+        let destination = rides[indexPath.row].2
+        let fare = rides[indexPath.row].3
+        
+        
+        
+        
+        cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
         cell.layer.cornerRadius = 10
         return cell
     }

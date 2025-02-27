@@ -27,7 +27,7 @@ class CarServiceProviderDetailCollectionViewCell: UICollectionViewCell {
 //        
 //    }
     
-    func updateCarServiceProviderCell(with Ride: RidesAvailable){
+    func updateCarServiceProviderCell(with Ride: RideAvailable){
         serviceProviderNameLabel.text = Ride.serviceProvider.name
         serviceProviderRatingLabel.text = "\(Ride.serviceProvider.rating)"
         rideFareLabel.text = "\(Ride.serviceProvider.fare)"

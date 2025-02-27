@@ -49,3 +49,11 @@ struct RideSearch{
     var date: Date
 }
 
+struct UserData{
+    var name: String
+    var email: String
+    var source: Schedule
+    var destination: Schedule
+    var preferredRideType: VehicleType
+}
+

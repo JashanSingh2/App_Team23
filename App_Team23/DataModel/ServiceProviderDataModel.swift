@@ -10,7 +10,11 @@ import Foundation
 
 struct ServiceProvider: Equatable{
     static func == (lhs: ServiceProvider, rhs: ServiceProvider) -> Bool {
-        true
+        if lhs.name == rhs.name && lhs.vehicleNumber == rhs.vehicleNumber && lhs.maxSeats == rhs.maxSeats && lhs.fare == rhs.fare && lhs.route == rhs.route && lhs.rating == rhs.rating{
+            return true
+        }else{
+            return false
+        }
     }
     
     var name: String
