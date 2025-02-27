@@ -359,7 +359,9 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
         let selectedRide = RidesDataController.shared.previousRides(At: button.tag)
         
-        viewController.selectedRide = RidesDataController.shared.ride(from: selectedRide.source.address, to: selectedRide.destination.address, on: today)
+        
+        
+        (viewController.selectedRide, viewController.source, viewController.destination) = (RidesDataController.shared.ride(of: selectedRide.serviceProvider),selectedRide.source,selectedRide.destination)
         navigationController?.present(viewController, animated: true)
     }
     

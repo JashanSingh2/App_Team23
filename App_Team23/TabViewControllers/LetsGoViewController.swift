@@ -18,6 +18,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     private let letsGoSectionHeaderTitles: [String] = ["Recent Rides", "Suggested Rides"]
     
+    var suggestedRides: [(RideAvailable,Schedule,Schedule, Int)]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         //Adding xib files to collection view
         let firstNib = UINib(nibName: "PreviousRides", bundle: nil)
         let secondNib = UINib(nibName: "SuggestedRides", bundle: nil)
@@ -64,6 +66,8 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         if let dataController{
             print(dataController.numberOfBusRidesInHistory())
         }
+        
+        suggestedRides = RidesDataController.shared.rideSuggestion() 
     }
     
     
@@ -81,7 +85,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             case 0:
                 return RidesDataController.shared.numberOfBusRidesInHistory()
             case 1:
-                return 4
+                return suggestedRides!.count
             default:
                 return 1
         }
@@ -174,8 +178,8 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(185), heightDimension: .absolute(175))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-        group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
+        group.interItemSpacing = .fixed(15)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         return section
@@ -190,8 +194,8 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(400))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 4)
         
-        group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        group.interItemSpacing = .fixed(15)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 1, bottom: 8, trailing: 1)
         
         let section = NSCollectionLayoutSection(group: group)
         return section
@@ -218,22 +222,29 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let seatVC = segue.destination as? SeatBookingViewController{
+        if let busVC = segue.destination as? SeatBookingViewController{
             
             if let selectedRide{
-                seatVC.selectedRide = selectedRide
+                busVC.selectedRide = selectedRide
             }
         }
         
         
         if let carVC = segue.destination as? SeatBookingCarViewController{
-            print(selectedRide)
+            //print(selectedRide!)
             carVC.selectedRide = selectedRide
+            
+        }
+        
+        if let suggestedRidesVC = segue.destination as? SuggestedRidesViewController{
+            if let suggestedRides{
+                suggestedRidesVC.rides = suggestedRides
+            }
             
         }
     }
      
-    var selectedRide: RidesAvailable?
+    var selectedRide: RideAvailable?
     
     @objc func selectButtonTapped(_ button : UIButton) {
         selectedRide = RidesDataController.shared.rideSuggestion(At: button.tag)
@@ -256,7 +267,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         if let selectedRecentRide{
-            selectedRide = RidesDataController.shared.ride(from: selectedRecentRide.source.address, to: selectedRecentRide.destination.address, on: RidesDataController.shared.today)
+            selectedRide = RidesDataController.shared.ride(from: selectedRecentRide.source.address, to: selectedRecentRide.destination.address, on: RidesDataController.shared.today)![0].0
             
             if let selectedRide{
                 performSegue(withIdentifier: "seatReBooking", sender: self)

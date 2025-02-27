@@ -87,7 +87,7 @@ class RideDetailViewController: UIViewController {
                 vehicleTypeimageView.image = UIImage(systemName: "car.fill")
                 seatNumberLabel.text = "Not Applicable"
             }else{
-                seatNumberLabel.text = "Seat No: \(rideHistory.seatNumber ?? 1)"
+                seatNumberLabel.text = "Seat No: \(rideHistory.seatNumber ?? [1])"
                 vehicleTypeimageView.image = UIImage(systemName: "bus.fill")
             }
             

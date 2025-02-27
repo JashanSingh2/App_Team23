@@ -10,22 +10,36 @@ import MapKit
 
 
 
-class AvailableRidesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class AvailableRidesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
 
     
 
     //@IBOutlet weak var bottomView: UIView!
+    
+    
+    
     
     @IBOutlet weak var routeMapView: MKMapView!
     
     
     @IBOutlet weak var availableRidesCollectionView: UICollectionView!
     
+    
+    
     var numberOfSeats: Int?
+    
+    var source: String = ""
+    var destination: String = ""
+    
+    var rides: [(RideAvailable, Schedule, Schedule,Int)] = []
+    let locationManager = CLLocationManager()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //print("Source \(ride!.source)")
+        //print("Destination \(ride!.destination)")
         //routeMapView.layer.cornerRadius = 18
         
         availableRidesCollectionView.layer.cornerRadius = 18
@@ -41,6 +55,24 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
         availableRidesCollectionView.dataSource = self
         availableRidesCollectionView.delegate = self
         
+        
+        
+        routeMapView.delegate = self
+        locationManager.delegate = self
+
+        searchRide()
+        
+        // Request location permissions
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+
+        // Disable search button initially
+        //searchButton.isEnabled = false
+
+        // Add target for text field changes
+//        sourceTextField.addTarget(self, action: #selector(textFieldsUpdated), for: .editingChanged)
+//        destinationTextField.addTarget(self, action: #selector(textFieldsUpdated), for: .editingChanged)
+        
     }
     
     
@@ -50,32 +82,43 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return RidesDataController.shared.numberOfRidesAvailable()
+        return rides.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
         
-        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
-        cell.updateAllSuggestedRidesCell(with: ride)
+        let ride = rides[indexPath.row].0
+        let source = rides[indexPath.row].1
+        let destination = rides[indexPath.row].2
+        let fare = rides[indexPath.row].3
+        
+        cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
         
         return cell
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+        let ride = rides[indexPath.row].0
+        let source = rides[indexPath.row].1
+        let destination = rides[indexPath.row].2
+        
         
         if ride.serviceProvider.rideType.vehicleType == .bus{
             let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
             let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
             viewController.selectedRide = ride
+            viewController.source = source
+            viewController.destination = destination
             viewController.maxSeatsAllowed = numberOfSeats
             navigationController?.present(viewController, animated: true)
         }else{
             let storyBoard = UIStoryboard(name: "CarBooking", bundle: nil)
             let viewController = storyBoard.instantiateViewController(withIdentifier: "carBookingVC") as! SeatBookingCarViewController
             viewController.selectedRide = ride
+            viewController.source = source
+            viewController.destination = destination
             navigationController?.present(viewController, animated: true)
         }
         
@@ -109,7 +152,91 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     }
     
     
-    
-    
+    //for mapView
 
+
+    // Enable search button only when both text fields have input
+
+    func searchRide() {
+        getCoordinates(for: rides[0].1.address) { sourcePlacemark in
+            guard let sourcePlacemark = sourcePlacemark else { return }
+
+            self.getCoordinates(for: self.rides[0].2.address) { destinationPlacemark in
+                guard let destinationPlacemark = destinationPlacemark else { return }
+
+                self.showRoute(source: sourcePlacemark, destination: destinationPlacemark)
+            }
+        }
+    }
+
+    // Function to convert address to coordinates
+    func getCoordinates(for address: String, completion: @escaping (MKPlacemark?) -> Void) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = address
+
+        let search = MKLocalSearch(request: request)
+        search.start { response, error in
+            guard let response = response, let firstPlacemark = response.mapItems.first?.placemark else {
+                completion(nil)
+                return
+            }
+            completion(firstPlacemark)
+        }
+    }
+
+    // Function to show route on map
+    func showRoute(source: MKPlacemark, destination: MKPlacemark) {
+        let sourceAnnotation = MKPointAnnotation()
+        sourceAnnotation.coordinate = source.coordinate
+        sourceAnnotation.title = rides[0].1.address
+
+        let destinationAnnotation = MKPointAnnotation()
+        destinationAnnotation.coordinate = destination.coordinate
+        destinationAnnotation.title = rides[0].2.address
+
+        routeMapView.showAnnotations([sourceAnnotation, destinationAnnotation], animated: true)
+
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = MKMapItem(placemark: source)
+        directionRequest.destination = MKMapItem(placemark: destination)
+        directionRequest.transportType = .automobile
+
+        let directions = MKDirections(request: directionRequest)
+        directions.calculate { response, error in
+            guard let route = response?.routes.first else { return }
+            self.routeMapView.addOverlay(route.polyline, level: .aboveRoads)
+            self.routeMapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+        }
+    }
+
+    // Function to render route line
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polyline = overlay as? MKPolyline {
+            let renderer = MKPolylineRenderer(polyline: polyline)
+            renderer.strokeColor = .blue
+            renderer.lineWidth = 4
+            return renderer
+        }
+        return MKOverlayRenderer()
+    }
+
+    // Handle location updates
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let userLocation = locations.last {
+            let region = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+            routeMapView.setRegion(region, animated: true)
+            locationManager.stopUpdatingLocation() // Stop updating to save battery
+        }
+    }
+    
+    
+    
 }
+
+
+
+
+
+
+
+

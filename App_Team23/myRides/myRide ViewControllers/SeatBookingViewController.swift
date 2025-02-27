@@ -39,7 +39,10 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var isButtonSelected = false
     
-    var selectedRide: RidesAvailable?
+    var selectedRide: RideAvailable?
+    var source: Schedule?
+    var destination: Schedule?
+    
     
     var selectedSeats: [UIButton] = []
     var maxSeatsAllowed: Int?
@@ -75,15 +78,15 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func updateUI(){
-        if let selectedRide{
+        if let selectedRide,let source,let destination{
             startingLocationLabel.text = selectedRide.serviceProvider.route.first?.address
-            sourceLocationLabel.text = selectedRide.source.address
-            destinationLocationLabel.text = selectedRide.destination.address
+            sourceLocationLabel.text = source.address
+            destinationLocationLabel.text = destination.address
             endingLocationLabel.text = selectedRide.serviceProvider.route.last?.address
             
             startingTimeLabel.text = selectedRide.serviceProvider.route.first?.time
-            sourceTimeLabel.text = selectedRide.source.time
-            destinationTimeLabel.text = selectedRide.destination.time
+            sourceTimeLabel.text = source.time
+            destinationTimeLabel.text = destination.time
             endingTimeLabel.text = selectedRide.serviceProvider.route.last?.time
             
             vehicleNumberLabel.text = selectedRide.serviceProvider.vehicleNumber
@@ -149,7 +152,14 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
             destinationVC.route = (selectedRide?.serviceProvider.route)!
         }
         if let destinationVC = segue.destination as? SeatConfirmDeatilsViewController{
-            destinationVC.ride = selectedRide
+            for seat in selectedSeats {
+                selectedSeat.append(Int((seat.titleLabel?.text)!)!)
+            }
+            
+            let ride = RideHistory(source: source!, destination: destination!, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: (RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide!.serviceProvider) * selectedSeats.count), seatNumber: selectedSeat)
+            
+            RidesDataController.shared.newRideHistory(with: ride)
+            destinationVC.ride = ride
             destinationVC.seat = selectedSeat
         }
     }
@@ -180,38 +190,15 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         //dismiss(animated: true, completion: nil)
         
         
-        showAlert()
         
-        
-        
-    }
-    
-    func showAlert(){
-        let alert = UIAlertController(
-        title: "Are you sure?",
-        message: "You want to book this ride",
-        preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-        
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.confirmRide() } ))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func confirmRide(){
-     
-        for seat in selectedSeats {
-            selectedSeat.append(Int((seat.titleLabel?.text)!)!)
-        }
-        
-        let ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: selectedRide!.fare * selectedSeats.count, seatNumber: selectedSeat.first)
-        
-        RidesDataController.shared.newRideHistory(with: ride)
         
         performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
+        
+        
+        
     }
+    
+    
     
     
     @objc func seatButtonTapped(_ sender: UIButton) {

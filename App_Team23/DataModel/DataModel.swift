@@ -42,3 +42,18 @@ struct RouteStop {
 }
 
 
+struct RideSearch{
+    var source: String
+    var destination: String
+    var numberOfSeats: Int
+    var date: Date
+}
+
+struct UserData{
+    var name: String
+    var email: String
+    var source: Schedule
+    var destination: Schedule
+    var preferredRideType: VehicleType
+}
+

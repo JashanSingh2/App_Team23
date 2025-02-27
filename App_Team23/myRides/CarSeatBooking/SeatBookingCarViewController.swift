@@ -13,7 +13,9 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
     
     var passengerCount: Int = 1
     
-    var selectedRide: RidesAvailable?
+    var selectedRide: RideAvailable?
+    var source: Schedule?
+    var destination: Schedule?
     
     var sectionHeaderNames: [String] =
     ["",
@@ -87,8 +89,8 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! CarSourceDestinationCollectionViewCell
             
                 
-                if let selectedRide{
-                    cell.updateUI(with: selectedRide.serviceProvider.route, source: selectedRide.source, destination: selectedRide.destination)
+            if let selectedRide,let source,let destination{
+                    cell.updateUI(with: selectedRide.serviceProvider.route, source: source, destination: destination)
                 }
                 
                 
@@ -287,8 +289,9 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let VC = segue.destination as? SeatConfirmDeatilsViewController {
             if let selectedRide{
-                VC.ride = selectedRide
-                let ride = RideHistory(source: selectedRide.source, destination: selectedRide.destination, serviceProvider: selectedRide.serviceProvider, date: selectedRide.date, fare: selectedRide.fare, seatNumber: nil)
+                
+                let ride = RideHistory(source: source!, destination: destination!, serviceProvider: selectedRide.serviceProvider, date: selectedRide.date, fare: RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide.serviceProvider), seatNumber: nil)
+                VC.ride = ride
                 RidesDataController.shared.newRideHistory(with: ride)
             }
             
