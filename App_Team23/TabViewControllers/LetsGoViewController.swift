@@ -96,7 +96,12 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 cell.reBookButton.tag = indexPath.row
                 cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped), for: .touchUpInside)
                 cell.updatePreviousRideCell(with: RideHistory)
-                cell.layer.cornerRadius = 14
+                cell.layer.cornerRadius = 14.0
+                cell.layer.shadowColor = UIColor.black.cgColor
+                cell.layer.shadowOpacity = 0.5
+                cell.layer.shadowRadius = 5
+                cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+                cell.layer.masksToBounds = false
                 return cell
             case 1:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! HomeScreenSuggestedRidesCollectionViewCell
@@ -106,7 +111,13 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
                 cell.updateSuggestedRideCell(with: rideSuggestion)
-                cell.layer.cornerRadius = 14
+                cell.layer.cornerRadius = 14.0
+                cell.layer.shadowColor = UIColor.black.cgColor
+                cell.layer.shadowOpacity = 0.5
+                cell.layer.shadowRadius = 5
+                cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+                cell.layer.masksToBounds = false
+
                 return cell
             default:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
@@ -174,8 +185,8 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(245), heightDimension: .absolute(245))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-        group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
+        //group.interItemSpacing = .fixed(8)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 11, bottom: 8, trailing: 5)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         return section
@@ -184,14 +195,14 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     func generateSuggestedRidesLayout()-> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/3))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(400))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 4)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(186))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
         
-        group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        //group.interItemSpacing = .fixed(8)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 11, bottom: 0, trailing: 11)
         
         let section = NSCollectionLayoutSection(group: group)
         return section

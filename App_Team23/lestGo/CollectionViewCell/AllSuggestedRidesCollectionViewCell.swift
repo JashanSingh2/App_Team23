@@ -22,6 +22,7 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
 //    @IBOutlet weak var availableSeatsLabel: UIView!
     
     @IBOutlet weak var seatsAvailableLabel: UILabel!
+    @IBOutlet weak var seatsAvailableButton: UIButton!
     
     @IBOutlet weak var serviceProviderNameLabel: UILabel!
     
@@ -40,9 +41,9 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
     func updateAllSuggestedRidesCell(with ride: RidesAvailable){
-        seatsAvailableStackView.layer.borderWidth = 1
-        seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
-        seatsAvailableStackView.layer.cornerRadius = 5
+//        seatsAvailableStackView.layer.borderWidth = 1
+//        seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
+//        seatsAvailableStackView.layer.cornerRadius = 5
         
         cellContentview.layer.cornerRadius = 10
         
@@ -51,7 +52,7 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
         pickupTimeLabel.text = ride.source.time
         dropoffTimeLabel.text = ride.destination.time
         fareLabel.text = "\(ride.fare)"
-        seatsAvailableLabel.text = "\(ride.seatsAvailable) Seats Available"
+        seatsAvailableButton.setTitle("\(ride.seatsAvailable) Seats", for: .normal)
         serviceProviderNameLabel.text = "\(ride.serviceProvider.name)"
         serviceProviderRatingLabel.text = "\(ride.rating)"
         if ride.serviceProvider.rideType.vehicleType == .car{
