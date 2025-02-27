@@ -18,6 +18,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     private let letsGoSectionHeaderTitles: [String] = ["Recent Rides", "Suggested Rides"]
     
+    var suggestedRides: [(RideAvailable,Schedule,Schedule, Int)]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +66,8 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         if let dataController{
             print(dataController.numberOfBusRidesInHistory())
         }
+        
+        suggestedRides = RidesDataController.shared.rideSuggestion() 
     }
     
     
@@ -82,7 +85,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             case 0:
                 return RidesDataController.shared.numberOfBusRidesInHistory()
             case 1:
-                return 4
+                return suggestedRides!.count
             default:
                 return 1
         }
@@ -219,10 +222,10 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let seatVC = segue.destination as? SeatBookingViewController{
+        if let busVC = segue.destination as? SeatBookingViewController{
             
             if let selectedRide{
-                seatVC.selectedRide = selectedRide
+                busVC.selectedRide = selectedRide
             }
         }
         
@@ -232,9 +235,16 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             carVC.selectedRide = selectedRide
             
         }
+        
+        if let suggestedRidesVC = segue.destination as? SuggestedRidesViewController{
+            if let suggestedRides{
+                suggestedRidesVC.rides = suggestedRides
+            }
+            
+        }
     }
      
-    var selectedRide: RidesAvailable?
+    var selectedRide: RideAvailable?
     
     @objc func selectButtonTapped(_ button : UIButton) {
         selectedRide = RidesDataController.shared.rideSuggestion(At: button.tag)

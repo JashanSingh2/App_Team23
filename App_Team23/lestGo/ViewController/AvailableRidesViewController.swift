@@ -31,7 +31,7 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     var source: String = ""
     var destination: String = ""
     
-    var rides: [(RidesAvailable, Schedule, Schedule)] = []
+    var rides: [(RideAvailable, Schedule, Schedule,Int)] = []
     let locationManager = CLLocationManager()
     
     
@@ -89,7 +89,11 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
         let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
         
         let ride = rides[indexPath.row].0
-        cell.updateAllSuggestedRidesCell(with: ride)
+        let source = rides[indexPath.row].1
+        let destination = rides[indexPath.row].2
+        let fare = rides[indexPath.row].3
+        
+        cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
         
         return cell
         

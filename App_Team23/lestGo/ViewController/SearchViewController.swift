@@ -231,7 +231,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    var ridesAvail: [(RidesAvailable,Schedule,Schedule)] = []
+    var ridesAvail: [(RideAvailable,Schedule,Schedule, Int)] = []
     
     @IBAction func searchButtonTapped() {
         print(dateAndTimePicker.date.description)
@@ -262,14 +262,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destVC = segue.destination as? AvailableRidesViewController {
-            
-            //rideSearch = RideSearch(source: source, destination: destination, numberOfSeats: Int(seatLabel.text!)!, date: dateAndTimePicker.date)
-            
-            destVC.rides = ridesAvail
-        }
-    }
+   
     
     @IBAction func stepperClicked(_ sender: UIStepper) {
         
@@ -310,6 +303,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? AvailableRidesViewController {
+            
+            //rideSearch = RideSearch(source: source, destination: destination, numberOfSeats: Int(seatLabel.text!)!, date: dateAndTimePicker.date)
+            
+            destVC.rides = ridesAvail
+        }
+    }
     
     
             

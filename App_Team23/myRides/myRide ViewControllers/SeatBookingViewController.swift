@@ -39,7 +39,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var isButtonSelected = false
     
-    var selectedRide: RidesAvailable?
+    var selectedRide: RideAvailable?
     var source: Schedule?
     var destination: Schedule?
     

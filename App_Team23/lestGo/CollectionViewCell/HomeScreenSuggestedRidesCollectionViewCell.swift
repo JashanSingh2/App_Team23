@@ -28,7 +28,7 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var borderStack: UIStackView!
     
     
-    func updateSuggestedRideCell(with rideSuggestion: RidesAvailable){
+    func updateSuggestedRideCell(with rideSuggestion: RideAvailable){
         borderStack.layer.borderColor = UIColor.black.cgColor
         borderStack.layer.borderWidth = 1.0
         borderStack.layer.cornerRadius = 5.0

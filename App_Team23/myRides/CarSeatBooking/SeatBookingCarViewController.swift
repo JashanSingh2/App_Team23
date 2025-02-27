@@ -13,7 +13,7 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
     
     var passengerCount: Int = 4
     
-    var selectedRide: RidesAvailable?
+    var selectedRide: RideAvailable?
     var source: Schedule?
     var destination: Schedule?
     
