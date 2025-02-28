@@ -96,12 +96,12 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 cell.reBookButton.tag = indexPath.row
                 cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped), for: .touchUpInside)
                 cell.updatePreviousRideCell(with: RideHistory)
-                cell.layer.cornerRadius = 14.0
-                cell.layer.shadowColor = UIColor.black.cgColor
-                cell.layer.shadowOpacity = 0.5
-                cell.layer.shadowRadius = 5
-                cell.layer.shadowOffset = CGSize(width: 2, height: 2)
-                cell.layer.masksToBounds = false
+            cell.layer.cornerRadius = 12.0
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 2.5
+            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.masksToBounds = false
                 return cell
             case 1:
                 let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! HomeScreenSuggestedRidesCollectionViewCell
@@ -111,12 +111,12 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
                 cell.updateSuggestedRideCell(with: rideSuggestion)
-                cell.layer.cornerRadius = 14.0
-                cell.layer.shadowColor = UIColor.black.cgColor
-                cell.layer.shadowOpacity = 0.5
-                cell.layer.shadowRadius = 5
-                cell.layer.shadowOffset = CGSize(width: 2, height: 2)
-                cell.layer.masksToBounds = false
+            cell.layer.cornerRadius = 12.0
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 2.5
+            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.masksToBounds = false
 
                 return cell
             default:

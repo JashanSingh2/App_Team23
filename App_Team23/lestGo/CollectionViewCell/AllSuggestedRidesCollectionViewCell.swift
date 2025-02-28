@@ -19,9 +19,6 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var fareLabel: UILabel!
     
-//    @IBOutlet weak var availableSeatsLabel: UIView!
-    
-    @IBOutlet weak var seatsAvailableLabel: UILabel!
     @IBOutlet weak var seatsAvailableButton: UIButton!
     
     @IBOutlet weak var serviceProviderNameLabel: UILabel!
@@ -41,10 +38,7 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
     func updateAllSuggestedRidesCell(with ride: RidesAvailable){
-//        seatsAvailableStackView.layer.borderWidth = 1
-//        seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
-//        seatsAvailableStackView.layer.cornerRadius = 5
-        
+
         cellContentview.layer.cornerRadius = 10
         
         sourceAddressLabel.text = ride.source.address
@@ -69,8 +63,6 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
         }
         
     }
-    
-    
     
     
 }

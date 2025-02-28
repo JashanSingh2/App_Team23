@@ -41,10 +41,10 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
         
         cell.selectButton.addTarget(self, action: #selector(selectButtonTapped(_:)), for: .touchUpInside)
         
-        cell.layer.cornerRadius = 14.0
+        cell.layer.cornerRadius = 12.0
         cell.layer.shadowColor = UIColor.black.cgColor
         cell.layer.shadowOpacity = 0.5
-        cell.layer.shadowRadius = 5
+        cell.layer.shadowRadius = 2.5
         cell.layer.shadowOffset = CGSize(width: 2, height: 2)
         cell.layer.masksToBounds = false
         
@@ -57,7 +57,7 @@ class ResheduleViewController: UIViewController, UICollectionViewDelegate, UICol
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(120))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
             
             group.interItemSpacing = .fixed(10)

@@ -23,17 +23,16 @@ class PreviousSectionCollectionViewCell: UICollectionViewCell {
         func updatePreviousData(with rideHistory: RideHistory){
             sourceLocationLabel.text = rideHistory.source.address
             destinationLocationLabel.text = rideHistory.destination.address
-//            sourceDateLabel.text = rideHistory.date
+
             rideFareLabel.text = "\(rideHistory.fare)"
             if rideHistory.serviceProvider.rideType.vehicleType == .bus{
-//                vehicleLogoImage.image = UIImage(systemName: "bus.fill")
+
                 
                 vehicleLogoButton.setImage(UIImage(systemName: "bus.fill"), for: .normal)
                 
                 vehicleLogoButton.setTitle("Bus", for: .normal)
                 
             }else{
- //               vehicleLogoImage.image = UIImage(systemName: "car.fill")
                 
                 vehicleLogoButton.setImage(UIImage(systemName: "car.fill"), for: .normal)
                 

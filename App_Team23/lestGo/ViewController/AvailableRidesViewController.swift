@@ -56,10 +56,10 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
         
-        cell.layer.cornerRadius = 14.0
+        cell.layer.cornerRadius = 12.0
         cell.layer.shadowColor = UIColor.black.cgColor
         cell.layer.shadowOpacity = 0.5
-        cell.layer.shadowRadius = 5
+        cell.layer.shadowRadius = 2.5
         cell.layer.shadowOffset = CGSize(width: 2, height: 2)
         cell.layer.masksToBounds = false
 
