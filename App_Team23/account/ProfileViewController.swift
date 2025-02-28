@@ -3,9 +3,7 @@
 
 import UIKit
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
     @IBOutlet weak var profileTableView: UITableView!
-
     var profileInfo = [
         ("Image", "profileImage"),
         ("First Name", "John"),
@@ -14,7 +12,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         ("Email", "john.doe@example.com")
     ]
     var selectedImage: UIImage?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Profile"
@@ -24,8 +21,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         loadProfileData()
 
         addCloseButton()
-        
-        
     }
     func loadProfileData() {
         let savedFirstName = UserDefaults.standard.string(forKey: "firstName") ?? profileInfo[1].1

@@ -16,7 +16,6 @@ class LoginSecurityViewController: UIViewController {
         self.title = "Login & Security"
         updateButton.layer.cornerRadius = 15
         updateButton.clipsToBounds = true
-
         deactivateButton.layer.cornerRadius = 15
         deactivateButton.clipsToBounds = true
     }

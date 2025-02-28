@@ -11,7 +11,6 @@ class UpdateMobileViewController: UIViewController {
         addCloseButton()
         setupTapGesture()
     }
-
     @objc func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }

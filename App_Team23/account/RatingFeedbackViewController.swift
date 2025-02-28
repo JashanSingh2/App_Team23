@@ -1,7 +1,6 @@
 
 
 import UIKit
-
 class RatingFeedbackViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var starsStackView: UIStackView!
     @IBOutlet weak var reviewTextView: UITextView!
@@ -122,8 +121,6 @@ class RatingFeedbackViewController: UIViewController, UITextViewDelegate {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
             view.addGestureRecognizer(tapGesture)
         }
-        
-        // Dismiss keyboard when user taps outside of the text field
         @objc func dismissKeyboard() {
             view.endEditing(true)
         }

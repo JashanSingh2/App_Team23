@@ -4,8 +4,6 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var accountNameLabel: UILabel!
-    
-  
     var fullName: String? = "John Doe" // Default name
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -24,7 +22,6 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Observe notifications for name updates
         NotificationCenter.default.addObserver(self, selector: #selector(updateName(_:)), name: Notification.Name("NameUpdated"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateProfileImage(_:)), name: Notification.Name("ProfileImageUpdated"), object: nil)
-           // Load saved name and image
            loadSavedName()
            loadSavedProfileImage()
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
@@ -53,10 +50,8 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let userInfo = notification.userInfo,
            let firstName = userInfo["firstName"] as? String,
            let lastName = userInfo["lastName"] as? String {
-            // Update the full name
             fullName = "\(firstName) \(lastName)"
             accountNameLabel.text = fullName
-            // Save the updated name in UserDefaults
             UserDefaults.standard.set(fullName, forKey: "fullName")
         }
     }
@@ -110,10 +105,8 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             cell.textLabel?.text = support[indexPath.row]
         }
-        // Configure the image for the cell
         let iconName: String
         if indexPath.section == 0 {
-            // Icons for the settings section
             switch indexPath.row {
             case 0:
                 iconName = "car"
@@ -127,7 +120,6 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             iconName = "envelope"
         }
-        // Assign the image to the cell
         cell.imageView?.image = UIImage(systemName: iconName)
         cell.imageView?.tintColor = .black
 
@@ -135,7 +127,6 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         return cell
     }
-    // MARK: - Log Out Button
     func addLogOutButton() {
         let logOutButton = UIButton(type: .system)
         logOutButton.setTitle("Log Out", for: .normal)
@@ -171,7 +162,6 @@ class AccountViewController: UIViewController, UITableViewDelegate, UITableViewD
            let updatedImage = UIImage(data: imageData) {
             profileImageView.image = updatedImage
             
-            // Save image to UserDefaults
             UserDefaults.standard.set(imageData, forKey: "profileImageData")
         }
     }
