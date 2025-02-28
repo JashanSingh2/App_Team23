@@ -149,16 +149,37 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVC = segue.destination as? TrackingViewController{
-            destinationVC.route = (selectedRide?.serviceProvider.route)!
+        if let destinationVC = segue.destination as? TrackingViewController,
+           let selectedRide = selectedRide {
+            destinationVC.route = selectedRide.serviceProvider.route
         }
-        if let destinationVC = segue.destination as? SeatConfirmDeatilsViewController{
+        
+        if let destinationVC = segue.destination as? SeatConfirmDeatilsViewController,
+           let selectedRide = selectedRide,
+           let source = source,
+           let destination = destination {
+            
             for seat in selectedSeats {
-                selectedSeat.append(Int((seat.titleLabel?.text)!)!)
+                if let seatText = seat.titleLabel?.text,
+                   let seatNumber = Int(seatText) {
+                    selectedSeat.append(seatNumber)
+                }
             }
             
+            let fare = RidesDataController.shared.fareOfRide(
+                from: source,
+                to: destination,
+                in: selectedRide.serviceProvider
+            ) * selectedSeats.count
             
-            let ride = RidesHistory(source: source!, destination: destination!, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: (RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide!.serviceProvider) * selectedSeats.count), seatNumber: selectedSeat)
+            let ride = RidesHistory(
+                source: source,
+                destination: destination,
+                serviceProvider: selectedRide.serviceProvider,
+                date: RidesDataController.shared.getTodayDate(),
+                fare: fare,
+                seatNumber: selectedSeat
+            )
             
             RidesDataController.shared.newRideHistory(with: ride)
             destinationVC.ride = ride

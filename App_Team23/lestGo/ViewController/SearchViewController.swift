@@ -236,8 +236,16 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func searchButtonTapped() {
         print(dateAndTimePicker.date.description)
         
-        if let time{
-            ridesAvail = RidesDataController.shared.ride(from: source, to: destination, on: time)!
+        if let time {
+            if let availableRides = RidesDataController.shared.ride(
+                from: source, 
+                to: destination, 
+                on: time
+            ) {
+                ridesAvail = availableRides
+            } else {
+                showAlert()
+            }
         }
         
         if ridesAvail.count > 0 {
