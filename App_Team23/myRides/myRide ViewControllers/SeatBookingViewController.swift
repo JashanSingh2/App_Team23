@@ -271,5 +271,16 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
+    func bookRide(ride: RidesHistory, seats: [Int]) {
+        let updatedRide = RidesHistory(
+            source: ride.source,
+            destination: ride.destination,
+            serviceProvider: ride.serviceProvider,
+            date: ride.date,
+            fare: ride.fare,
+            seatNumber: seats
+        )
+        RidesDataController.shared.newRideHistory(with: updatedRide)
+    }
 
 }

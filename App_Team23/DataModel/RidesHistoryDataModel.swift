@@ -7,30 +7,33 @@
 
 import Foundation
 
-//struct RidesHistory{
-//    
-//    var source: Schedule
-//    var destination: Schedule
-//    var serviceProvider: ServiceProviders
-//    let date: String
-//    var Rating: Double?
-//    var review: String?
-//    let fare: Int
-//    let seatNumber: [Int]?
-//}
 
 struct RideHistory: Codable {
-    let id: UUID  // Primary key
+    let id: Int
     var source: String
-    var sourceTime: String
+    var source_time: String
     var destination: String
-    var destinationTime: String
-    let serviceProviderID: UUID  // Foreign key to ServiceProvider
+    var destination_time: String
+    let service_provider_id: Int
     let date: String
     var rating: Double?
     var review: String?
     let fare: Int
-    let seatNumber: [Int]?
+    let seat_number: [Int]?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case source
+        case source_time
+        case destination
+        case destination_time
+        case service_provider_id
+        case date
+        case rating
+        case review
+        case fare
+        case seat_number
+    }
 }
 
 // Add public if needed

@@ -28,8 +28,9 @@ class RideDetailViewController: UIViewController {
     @IBOutlet weak var cancelRideButton: UIButton!
     @IBOutlet weak var trackButton: UIButton!
     
+    static var sender: Int = 0
     static var rideHistory: RidesHistory?
-    static var sender: Int?
+    private var serviceProvider: ServiceProviderDB?
     
 //    init?(coder: NSCoder, rideHistory: RideHistory) {
 //        //print(rideHistory)
@@ -45,38 +46,24 @@ class RideDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         cardView.layer.cornerRadius = 10
         
-        if RideDetailViewController.sender == 1{
+        if RideDetailViewController.sender == 1 {
             cancelRideButton.isHidden = true
             trackButton.isHidden = true
         }
         
         UpdateCard()
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         UpdateCard()
     }
     
-    func UpdateCard(){
+    func UpdateCard() {
+        setupCardStyle()
         
-        vehicleNumberLabel.layer.borderWidth = 1
-        vehicleNumberLabel.layer.borderColor = view.backgroundColor?.cgColor
-        vehicleNumberLabel.layer.cornerRadius = 5
-      
-        seatNumberStack.layer.borderWidth = 1
-        seatNumberStack.layer.borderColor = view.backgroundColor?.cgColor
-        seatNumberStack.layer.cornerRadius = 5
-        
-        fareStack.layer.borderWidth = 1
-        fareStack.layer.borderColor = view.backgroundColor?.cgColor
-        fareStack.layer.cornerRadius = 5
-        
-        if let rideHistory = RideDetailViewController.rideHistory{
-            
+        if let rideHistory = RideDetailViewController.rideHistory {
             vehicleNumberLabel.text = rideHistory.serviceProvider.vehicleNumber
             rideDateLabel.text = rideHistory.date
             sourceLocationLabel.text = rideHistory.source.address
@@ -84,20 +71,29 @@ class RideDetailViewController: UIViewController {
             rideSourceTimeLabel.text = rideHistory.source.time
             rideDestinationTimeLabel.text = rideHistory.destination.time
             rideFareLabel.text = "\(rideHistory.fare)"
-            if rideHistory.serviceProvider.rideType.vehicleType == .car{
+            
+            if rideHistory.serviceProvider.rideType.vehicleType == .car {
                 vehicleTypeimageView.image = UIImage(systemName: "car.fill")
                 seatNumberLabel.text = "Not Applicable"
-            }else{
+            } else {
                 seatNumberLabel.text = "Seat No: \(rideHistory.seatNumber ?? [1])"
                 vehicleTypeimageView.image = UIImage(systemName: "bus.fill")
             }
-            
         }
+    }
+    
+    private func setupCardStyle() {
+        vehicleNumberLabel.layer.borderWidth = 1
+        vehicleNumberLabel.layer.borderColor = view.backgroundColor?.cgColor
+        vehicleNumberLabel.layer.cornerRadius = 5
         
-       
+        seatNumberStack.layer.borderWidth = 1
+        seatNumberStack.layer.borderColor = view.backgroundColor?.cgColor
+        seatNumberStack.layer.cornerRadius = 5
         
-        
-        
+        fareStack.layer.borderWidth = 1
+        fareStack.layer.borderColor = view.backgroundColor?.cgColor
+        fareStack.layer.cornerRadius = 5
     }
     
     @IBAction func doneButtonTapped(_ sender: Any) {

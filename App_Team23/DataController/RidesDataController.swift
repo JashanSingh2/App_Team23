@@ -11,40 +11,24 @@ import Supabase
 import App_Team23
 
 protocol DataController {
-    func rideHistoryAddress(At index: Int)-> String
-    
-    func rideHistory(At index: Int)-> RidesHistory
+    func rideHistoryAddress(At index: Int) -> String
+    func rideHistory(At index: Int) -> RideHistory
+    func rideHistoryOfBus(At index: Int) -> RidesHistory
+    func numberOfRidesInHistory() -> Int
+    func numberOfBusRidesInHistory() -> Int
+    func rideSuggestion(At index: Int) -> RideAvailable
+    func numberOfUpcomingRides(for date: String) -> Int
+    func upcomingRides(At index: Int, for date: String) -> RidesHistory
+    func numberOfPreviousRides() -> Int
+    func previousRides(At index: Int) -> RidesHistory
+    func ride(from source: String, to destination: String, on date: String) -> [(RideAvailable, Schedule, Schedule, Int)]?
+    func newRideHistory(with ride: RidesHistory)
     
     //private func filterRideHistory(by type: VehicleType) -> [RideHistory]
     
-
-    func rideHistoryOfBus(At index: Int) -> RidesHistory
+    func numberOfRidesAvailable() -> Int
     
-    func numberOfRidesInHistory()-> Int
-    
-    func numberOfBusRidesInHistory()-> Int
-    
-    
-    //for ride suggestions
-    func rideSuggestion(At index: Int)-> RideAvailable
-    
-    //for myRides
-    func numberOfUpcomingRides(for date: String)-> Int
-    
-    
-    func upcomingRides(At index: Int, for date: String)-> RidesHistory
-    
-    func numberOfPreviousRides()-> Int
-    
-    func previousRides(At index: Int)-> RidesHistory
-    
-    func ride(from source: String,to destination: String, on date: String)-> [(RideAvailable, Schedule, Schedule, Int)]?
-    
-    func newRideHistory(with ride: RidesHistory)
-    
-    func numberOfRidesAvailable()-> Int
-    
-    func availableRide(At index: Int)-> RideAvailable
+    func availableRide(At index: Int) -> RideAvailable
     
     func fareOfRide(from source: Schedule, to destination: Schedule, in serviceProvider: ServiceProviders) -> Int
 }
@@ -86,25 +70,25 @@ struct RideSharingDB: Codable {
 struct RideHistoryDB: Codable {
     let id: Int
     let source: String
-    let sourceTime: String
+    let source_time: String
     let destination: String
-    let destinationTime: String
-    let serviceProviderId: Int
+    let destination_time: String
+    let service_provider_id: Int
     let date: String
     let fare: Int
-    let seatNumber: [Int]?
+    let seat_number: [Int]?
     var serviceProvider: ServiceProviderDB?
     
     enum CodingKeys: String, CodingKey {
         case id
         case source
-        case sourceTime = "source_time"
+        case source_time
         case destination
-        case destinationTime = "destination_time"
-        case serviceProviderId = "service_provider_id"
+        case destination_time
+        case service_provider_id
         case date
         case fare
-        case seatNumber = "seat_number"
+        case seat_number
         case serviceProvider = "ridesharing"
     }
 }
@@ -144,7 +128,7 @@ class RidesDataController: DataController {
     
     private var allServiceProviders: [ServiceProviders] = []
     private var availableRides: [RideAvailable] = []
-    private var ridesHistory: [RidesHistory] = []
+    private var ridesHistory: [RideHistory] = []
     private var userProfile = UserData(name: "Jashan", email: "sample@gmail.com", source: Schedule(address: "Pari Chowk", time: "08:00"), destination: Schedule(address: "Botanical Garden", time: "09:10"), preferredRideType: .bus)
     
     var dateFormatter = DateFormatter()
@@ -177,49 +161,13 @@ class RidesDataController: DataController {
         availableRides = try await fetchAvailableRidesFromSupabase()
     }
     
-    func fetchRidesFromSupabase() async throws -> [RidesHistory] {
-        let response: PostgrestResponse<[RideHistoryDB]> = try await supabase.database
+    func fetchRidesFromSupabase() async throws -> [RideHistory] {
+        let response: PostgrestResponse<[RideHistory]> = try await supabase.database
             .from("ridehistory")
-            .select("""
-                *,
-                ridesharing (
-                    id,
-                    name,
-                    vehicle_number,
-                    max_seats,
-                    fare,
-                    rating,
-                    vehicle_model,
-                    vehicle_type,
-                    facility
-                )
-            """)
+            .select()
             .execute()
         
-        return try response.value.compactMap { rideHistoryDB in
-            guard let rideSharing = rideHistoryDB.serviceProvider else { return nil }
-            
-            return RidesHistory(
-                source: Schedule(address: rideHistoryDB.source, time: rideHistoryDB.sourceTime),
-                destination: Schedule(address: rideHistoryDB.destination, time: rideHistoryDB.destinationTime),
-                serviceProvider: ServiceProviders(
-                    name: rideSharing.name,
-                    vehicleNumber: rideSharing.vehicleNumber,
-                    rideType: RideType(
-                        vehicleModelName: rideSharing.vehicleModel,
-                        vehicleType: rideSharing.vehicleType == "bus" ? .bus : .car,
-                        facility: rideSharing.facility == "ac" ? .ac : .nonAc
-                    ),
-                    maxSeats: rideSharing.maxSeats,
-                    fare: rideSharing.fare,
-                    route: [],
-                    rating: rideSharing.rating
-                ),
-                date: rideHistoryDB.date,
-                fare: rideHistoryDB.fare,
-                seatNumber: rideHistoryDB.seatNumber
-            )
-        }
+        return response.value
     }
     
     func fetchServiceProvidersFromSupabase() async throws -> [ServiceProviders] {
@@ -275,66 +223,11 @@ class RidesDataController: DataController {
         }
     }
     
-    func saveRideToSupabase(_ ride: RidesHistory) async throws {
-        // First, find or create the service provider
-        let serviceProviderId = try await findOrCreateServiceProvider(ride.serviceProvider)
-        
-        // Create the ride history record
-        let rideHistoryData = RideHistoryDB(
-            id: 0,
-            source: ride.source.address,
-            sourceTime: ride.source.time,
-            destination: ride.destination.address,
-            destinationTime: ride.destination.time,
-            serviceProviderId: serviceProviderId,
-            date: ride.date,
-            fare: ride.fare,
-            seatNumber: ride.seatNumber
-        )
-        
-        try await supabase.database
-            .from("RideHistory")
-            .insert(rideHistoryData)
+    func saveRideToSupabase(_ ride: RideHistory) async throws {
+        let response: PostgrestResponse<[RideHistory]> = try await supabase.database
+            .from("ridehistory")
+            .insert(ride)
             .execute()
-        
-        ridesHistory.append(ride)
-    }
-    
-    private func findOrCreateServiceProvider(_ provider: ServiceProviders) async throws -> Int {
-        let response: PostgrestResponse<[RideSharingDB]> = try await supabase.database
-            .from("RideSharing")
-            .select()
-            .eq("vehicle_number", value: provider.vehicleNumber)
-            .execute()
-        
-        if let existingProvider = response.value.first {
-            return existingProvider.id
-        }
-        
-        // Create new provider
-        let newProvider = RideSharingDB(
-            id: 0,
-            name: provider.name,
-            vehicleNumber: provider.vehicleNumber,
-            maxSeats: provider.maxSeats,
-            fare: provider.fare,
-            rating: provider.rating,
-            vehicleModel: provider.rideType.vehicleModelName,
-            vehicleType: provider.rideType.vehicleType == .bus ? "bus" : "car",
-            facility: provider.rideType.facility == .ac ? "ac" : "nonAc",
-            source: "",
-            sourceTime: "",
-            destination: "",
-            destinationTime: ""
-        )
-        
-        let insertResponse: PostgrestResponse<[RideSharingDB]> = try await supabase.database
-            .from("RideSharing")
-            .insert(newProvider)
-            .single()
-            .execute()
-        
-        return insertResponse.value[0].id
     }
     
     // Existing helper functions
@@ -345,20 +238,47 @@ class RidesDataController: DataController {
     
     // Existing query functions
     func rideHistoryAddress(At index: Int) -> String {
-        return ridesHistory[index].destination.address
+        return ridesHistory[index].destination
     }
     
-    func rideHistory(At index: Int) -> RidesHistory {
+    func rideHistory(At index: Int) -> RideHistory {
         return ridesHistory[index]
     }
     
-    private func filterRideHistory(by type: VehicleType) -> [RidesHistory] {
-        return ridesHistory.filter { $0.serviceProvider.rideType.vehicleType == type }
+    private func filterRideHistory(by type: VehicleType) -> [RideHistory] {
+        let group = DispatchGroup()
+        var filteredRides: [RideHistory] = []
+        
+        for ride in ridesHistory {
+            group.enter()
+            Task {
+                if let provider = try? await fetchServiceProvider(id: ride.service_provider_id) {
+                    if provider.vehicleType == type.rawValue {
+                        filteredRides.append(ride)
+                    }
+                }
+                group.leave()
+            }
+        }
+        
+        group.wait()
+        return filteredRides
     }
     
     func rideHistoryOfBus(At index: Int) -> RidesHistory {
-        let rideHistoryOfBus = filterRideHistory(by: .bus)
-        return rideHistoryOfBus[index]
+        let group = DispatchGroup()
+        var result: RidesHistory?
+        
+        group.enter()
+        Task {
+            let rideHistoryOfBus = filterRideHistory(by: .bus)
+            let ride = rideHistoryOfBus[index]
+            result = try? await convertToRidesHistory(ride)
+            group.leave()
+        }
+        
+        group.wait()
+        return result!
     }
     
     func numberOfRidesInHistory() -> Int {
@@ -366,8 +286,24 @@ class RidesDataController: DataController {
     }
     
     func numberOfBusRidesInHistory() -> Int {
-        let count = ridesHistory.filter { $0.serviceProvider.rideType.vehicleType == .bus }.count
-        return min(count, 3)
+        let group = DispatchGroup()
+        var busRidesCount = 0
+        let localRides = ridesHistory // Create local copy
+        
+        for ride in localRides {
+            group.enter()
+            Task {
+                if let provider = try? await fetchServiceProvider(id: ride.service_provider_id) {
+                    if provider.vehicleType == "bus" {
+                        busRidesCount += 1
+                    }
+                }
+                group.leave()
+            }
+        }
+        
+        group.wait()
+        return min(busRidesCount, 3)
     }
     
     func rideSuggestion(At index: Int) -> RideAvailable {
@@ -378,12 +314,23 @@ class RidesDataController: DataController {
         return ridesHistory.filter { $0.date == date }.count
     }
     
-    private func upcomingRides(for date: String) -> [RidesHistory] {
+    private func upcomingRides(for date: String) -> [RideHistory] {
         return ridesHistory.filter { $0.date == date }
     }
     
     func upcomingRides(At index: Int, for date: String) -> RidesHistory {
-        return upcomingRides(for: date)[index]
+        let group = DispatchGroup()
+        var result: RidesHistory?
+        
+        group.enter()
+        Task {
+            let ride = upcomingRides(for: date)[index]
+            result = try? await convertToRidesHistory(ride)
+            group.leave()
+        }
+        
+        group.wait()
+        return result!
     }
     
     func numberOfPreviousRides() -> Int {
@@ -391,8 +338,19 @@ class RidesDataController: DataController {
     }
     
     func previousRides(At index: Int) -> RidesHistory {
-        let previousRides = ridesHistory.filter { $0.date != today && $0.date != tomorrow && $0.date != later }
-        return previousRides[index]
+        let group = DispatchGroup()
+        var result: RidesHistory?
+        
+        group.enter()
+        Task {
+            let previousRides = ridesHistory.filter { $0.date != today && $0.date != tomorrow && $0.date != later }
+            let ride = previousRides[index]
+            result = try? await convertToRidesHistory(ride)
+            group.leave()
+        }
+        
+        group.wait()
+        return result!
     }
     
     func ride(from source: String, to destination: String, on date: String) -> [(RideAvailable, Schedule, Schedule, Int)]? {
@@ -517,23 +475,46 @@ class RidesDataController: DataController {
     }
     
     func newRideHistory(with ride: RidesHistory) {
+        let convertedRide = convertToRideHistory(ride)
         Task {
             do {
-                try await saveRideToSupabase(ride)
+                try await saveRideToSupabase(convertedRide)
             } catch {
                 print("Error saving ride to Supabase: \(error)")
             }
         }
     }
     
-    func cancelRide(rideHistory: RidesHistory){
+    private func cancelRide(rideHistory: RideHistory) {
         var index: Int = 0
-        for ride in ridesHistory{
-            if ride.source.address == rideHistory.source.address && ride.destination.address == rideHistory.destination.address && ride.date == rideHistory.date && ride.serviceProvider == rideHistory.serviceProvider{
+        for ride in ridesHistory {
+            if ride.source == rideHistory.source && 
+               ride.destination == rideHistory.destination && 
+               ride.date == rideHistory.date && 
+               ride.service_provider_id == rideHistory.service_provider_id {
                 ridesHistory.remove(at: index)
                 return
             }
             index += 1
+        }
+    }
+    
+    func cancelRide(rideHistory: RidesHistory) {
+        let convertedRide = convertToRideHistory(rideHistory)
+        cancelRide(rideHistory: convertedRide)
+        
+        // Also delete from Supabase
+        Task {
+            do {
+                let response: PostgrestResponse<[RideHistory]> = try await supabase.database
+                    .from("ridehistory")
+                    .delete()
+                    .eq("service_provider_id", value: convertedRide.service_provider_id)
+                    .eq("date", value: convertedRide.date)
+                    .execute()
+            } catch {
+                print("Error deleting ride from Supabase: \(error)")
+            }
         }
     }
     
@@ -549,6 +530,78 @@ class RidesDataController: DataController {
                 print("Error fetching data: \(error)")
             }
         }
+    }
+    
+    func fetchServiceProvider(id: Int) async throws -> ServiceProviderDB {
+        let response: PostgrestResponse<[ServiceProviderDB]> = try await supabase.database
+            .from("ridesharing")
+            .select()
+            .eq("id", value: id)
+            .execute()
+        
+        guard let provider = response.value.first else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Provider not found"])
+        }
+        return provider
+    }
+    
+    private func convertToRidesHistory(_ rideHistory: RideHistory) async throws -> RidesHistory {
+        let provider = try await fetchServiceProvider(id: rideHistory.service_provider_id)
+        
+        return RidesHistory(
+            source: Schedule(address: rideHistory.source, time: rideHistory.source_time),
+            destination: Schedule(address: rideHistory.destination, time: rideHistory.destination_time),
+            serviceProvider: ServiceProviders(
+                name: provider.name,
+                vehicleNumber: provider.vehicleNumber,
+                rideType: RideType(
+                    vehicleModelName: provider.vehicleModel,
+                    vehicleType: provider.vehicleType == "bus" ? .bus : .car,
+                    facility: provider.facility == "ac" ? .ac : .nonAc
+                ),
+                maxSeats: provider.maxSeats,
+                fare: provider.fare,
+                route: [],
+                rating: provider.rating
+            ),
+            date: rideHistory.date,
+            fare: rideHistory.fare,
+            seatNumber: rideHistory.seat_number
+        )
+    }
+    
+    func convertToRideHistory(_ ridesHistory: RidesHistory) -> RideHistory {
+        let group = DispatchGroup()
+        var providerID: Int?
+        
+        group.enter()
+        Task {
+            if let response: PostgrestResponse<[ServiceProviderDB]> = try? await supabase.database
+                .from("ridesharing")
+                .select()
+                .eq("vehicle_number", value: ridesHistory.serviceProvider.vehicleNumber)
+                .execute(),
+               let provider = response.value.first {
+                providerID = provider.id
+            }
+            group.leave()
+        }
+        
+        group.wait()
+        
+        return RideHistory(
+            id: Int.random(in: 1...1000000),  // Generate random ID
+            source: ridesHistory.source.address,
+            source_time: ridesHistory.source.time,
+            destination: ridesHistory.destination.address,
+            destination_time: ridesHistory.destination.time,
+            service_provider_id: providerID ?? Int.random(in: 1...1000000),
+            date: ridesHistory.date,
+            rating: nil,
+            review: nil,
+            fare: ridesHistory.fare,
+            seat_number: ridesHistory.seatNumber
+        )
     }
 }
 
