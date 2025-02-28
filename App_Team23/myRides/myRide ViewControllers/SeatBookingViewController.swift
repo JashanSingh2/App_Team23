@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import App_Team23
 
 class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
     
@@ -155,6 +156,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
             for seat in selectedSeats {
                 selectedSeat.append(Int((seat.titleLabel?.text)!)!)
             }
+            
             
             let ride = RidesHistory(source: source!, destination: destination!, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: (RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide!.serviceProvider) * selectedSeats.count), seatNumber: selectedSeat)
             

@@ -262,20 +262,17 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     @objc func reBookButtonTapped(_ button : UIButton) {
         selectedRecentRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
         
-        
-        //print("\(selectedRide!.serviceProvider)\n\n")
-        
-        
-        if let selectedRecentRide{
-            selectedRide = RidesDataController.shared.ride(from: selectedRecentRide.source.address, to: selectedRecentRide.destination.address, on: RidesDataController.shared.today)![0].0
-            
-            if let selectedRide{
+        if let selectedRecentRide {
+            if let availableRides = RidesDataController.shared.ride(
+                from: selectedRecentRide.source.address, 
+                to: selectedRecentRide.destination.address, 
+                on: RidesDataController.shared.today
+            ), !availableRides.isEmpty {
+                selectedRide = availableRides[0].0
                 performSegue(withIdentifier: "seatReBooking", sender: self)
-            }else{
+            } else {
                 showAlert()
             }
-            
-            
         }
     }
     

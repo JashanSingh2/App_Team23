@@ -361,8 +361,27 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         
         
-        (viewController.selectedRide, viewController.source, viewController.destination) = (RidesDataController.shared.ride(of: selectedRide.serviceProvider),selectedRide.source,selectedRide.destination)
-        navigationController?.present(viewController, animated: true)
+        Task {
+            do {
+                await RidesDataController.shared.ensureDataLoaded()
+                if let availableRides = RidesDataController.shared.ride(
+                    from: selectedRide.source.address,
+                    to: selectedRide.destination.address,
+                    on: selectedRide.date
+                )?.first {
+                    viewController.selectedRide = availableRides.0
+                    viewController.source = availableRides.1
+                    viewController.destination = availableRides.2
+                } else {
+                    viewController.selectedRide = nil
+                    viewController.source = nil
+                    viewController.destination = nil
+                }
+                navigationController?.present(viewController, animated: true)
+            } catch {
+                print("Error loading rides: \(error)")
+            }
+        }
     }
     
     @objc func ResheduleButtonTapped(_ button : UIButton) {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import App_Team23
 
 class RideDetailViewController: UIViewController {
     @IBOutlet weak var vehicleNumberLabel: UILabel!
