@@ -26,16 +26,12 @@ class MKMapViewController: UIViewController, MKMapViewDelegate, CLLocationManage
         mapView.addGestureRecognizer(tapGesture)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .done, target: self, action: #selector(confirmLocation))
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Save the original navigation bar appearance
         originalNavBarBackgroundImage = navigationController?.navigationBar.backgroundImage(for: .default)
         originalNavBarShadowImage = navigationController?.navigationBar.shadowImage
         originalNavBarIsTranslucent = navigationController?.navigationBar.isTranslucent ?? false
         originalNavBarBackgroundColor = navigationController?.navigationBar.backgroundColor
-
-        // Make the navigation bar background transparent
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
@@ -44,7 +40,6 @@ class MKMapViewController: UIViewController, MKMapViewDelegate, CLLocationManage
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // Restore the original navigation bar appearance
         navigationController?.navigationBar.setBackgroundImage(originalNavBarBackgroundImage, for: .default)
         navigationController?.navigationBar.shadowImage = originalNavBarShadowImage
         navigationController?.navigationBar.isTranslucent = originalNavBarIsTranslucent
