@@ -18,7 +18,7 @@ class PreviousSectionCollectionViewCell: UICollectionViewCell {
     
     
     
-        func updatePreviousData(with rideHistory: RideHistory){
+        func updatePreviousData(with rideHistory: RidesHistory){
             sourceLocationLabel.text = rideHistory.source.address
             destinationLocationLabel.text = rideHistory.destination.address
             sourceDateLabel.text = rideHistory.date

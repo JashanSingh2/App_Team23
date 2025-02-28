@@ -85,7 +85,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             case 0:
                 return RidesDataController.shared.numberOfBusRidesInHistory()
             case 1:
-                return suggestedRides!.count
+            return RidesDataController.shared.numberOfRidesAvailable()
             default:
                 return 1
         }
@@ -108,7 +108,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 cell.selectButton.tag = indexPath.row
                 cell.selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
                 
-                let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
+            let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
                 cell.updateSuggestedRideCell(with: rideSuggestion)
                 cell.layer.cornerRadius = 14
                 return cell
@@ -256,7 +256,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
-    var selectedRecentRide: RideHistory?
+    var selectedRecentRide: RidesHistory?
     
     
     @objc func reBookButtonTapped(_ button : UIButton) {

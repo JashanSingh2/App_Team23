@@ -27,7 +27,7 @@ class RideDetailViewController: UIViewController {
     @IBOutlet weak var cancelRideButton: UIButton!
     @IBOutlet weak var trackButton: UIButton!
     
-    static var rideHistory: RideHistory?
+    static var rideHistory: RidesHistory?
     static var sender: Int?
     
 //    init?(coder: NSCoder, rideHistory: RideHistory) {

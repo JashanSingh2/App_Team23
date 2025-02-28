@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct RideHistory{
+struct RidesHistory{
     
     var source: Schedule
     var destination: Schedule
-    var serviceProvider: ServiceProvider
+    var serviceProvider: ServiceProviders
     let date: String
     var Rating: Double?
     var review: String?
@@ -19,5 +19,18 @@ struct RideHistory{
     let seatNumber: [Int]?
 }
 
+struct RideHistory: Codable {
+    let id: UUID  // Primary key
+    var source: String
+    var sourceTime: String
+    var destination: String
+    var destinationTime: String
+    let serviceProviderID: UUID  // Foreign key to ServiceProvider
+    let date: String
+    var rating: Double?
+    var review: String?
+    let fare: Int
+    let seatNumber: [Int]?
+}
 
 

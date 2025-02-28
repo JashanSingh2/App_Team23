@@ -8,8 +8,8 @@
 import Foundation
 
 
-struct ServiceProvider: Equatable{
-    static func == (lhs: ServiceProvider, rhs: ServiceProvider) -> Bool {
+struct ServiceProviders: Equatable{
+    static func == (lhs: ServiceProviders, rhs: ServiceProviders) -> Bool {
         if lhs.name == rhs.name && lhs.vehicleNumber == rhs.vehicleNumber && lhs.maxSeats == rhs.maxSeats && lhs.fare == rhs.fare && lhs.route == rhs.route && lhs.rating == rhs.rating{
             return true
         }else{
@@ -25,4 +25,20 @@ struct ServiceProvider: Equatable{
     var route: [Schedule]
     var rating: Double
 }
+
+struct ServiceProvider{
+    var name: String
+    var vehicleNumber: String
+    var vehicleModel: String
+    var vehicleType: VehicleType
+    var facility: Facility
+    var maxSeats: Int
+    var fare: Int
+    var rating: Double
+    var source: String
+    var sourceTime: String
+    var destination: String
+    var destinationTime: String
+}
+
 

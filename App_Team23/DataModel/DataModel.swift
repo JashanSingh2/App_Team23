@@ -8,15 +8,15 @@
 import Foundation
 
 
-enum VehicleType{
-    case bus
-    case car
+enum VehicleType: String{
+    case bus = "bus"
+    case car = "car"
 }
 
 
-enum Facility{
-    case ac
-    case nonAc
+enum Facility: String{
+    case ac = "ac"
+    case nonAc = "nonAc"
 }
 
 struct RideType{
@@ -30,6 +30,19 @@ struct Schedule: Equatable{
     var address: String
     var time: String
 }
+
+struct Route: Codable {
+    let address: String
+    let time: String
+    let vehicleNumber: String
+
+    enum CodingKeys: String, CodingKey {
+        case address = "Address"
+        case time = "Time"
+        case vehicleNumber = "VehicleNumber"
+    }
+}
+
 
 struct DateAndTime{
     var date: String
@@ -56,4 +69,7 @@ struct UserData{
     var destination: Schedule
     var preferredRideType: VehicleType
 }
+
+
+
 

@@ -20,7 +20,7 @@ class MyRideSection1CollectionViewCell: UICollectionViewCell {
 //        <#code#>
 //    }
     
-    func updateSection1Data(with rideHistory: RideHistory){
+    func updateSection1Data(with rideHistory: RidesHistory){
         sourceLocationLabel.text = rideHistory.source.address
         destinationLocationLabel.text = rideHistory.destination.address
         sourceTimeLabel.text = rideHistory.source.time
@@ -32,7 +32,7 @@ class MyRideSection1CollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func updateSection2Data(with rideHistory: RideHistory){
+    func updateSection2Data(with rideHistory: RidesHistory){
         sourceLocationLabel.text = rideHistory.source.address
         destinationLocationLabel.text = rideHistory.destination.address
         sourceTimeLabel.text = rideHistory.source.time
@@ -44,7 +44,7 @@ class MyRideSection1CollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func updateSection3Data(with rideHistory: RideHistory){
+    func updateSection3Data(with rideHistory: RidesHistory){
         sourceLocationLabel.text = rideHistory.source.address
         destinationLocationLabel.text = rideHistory.destination.address
         sourceTimeLabel.text = rideHistory.source.time

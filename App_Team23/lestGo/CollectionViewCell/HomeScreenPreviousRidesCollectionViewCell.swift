@@ -28,7 +28,7 @@ class HomeScreenPreviousRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dropOffTimeLabel: UILabel!
     
-    func updatePreviousRideCell(with rideHistory: RideHistory){
+    func updatePreviousRideCell(with rideHistory: RidesHistory){
         dateLabel.text = rideHistory.date
         fareLabel.text = "\(rideHistory.fare)"
         sourceAddress.text = rideHistory.source.address

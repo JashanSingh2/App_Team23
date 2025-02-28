@@ -327,7 +327,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBSegueAction func rideDetailSegue(_ coder: NSCoder, sender: Any?) -> RideDetailViewController? {
         
-        var rideHistory: RideHistory = RidesDataController.shared.previousRides(At: rideSelected.row)
+        var rideHistory: RidesHistory = RidesDataController.shared.previousRides(At: rideSelected.row)
         
         if segmentedControl.selectedSegmentIndex == 1 {
             rideHistory = RidesDataController.shared.previousRides(At: rideSelected.row)

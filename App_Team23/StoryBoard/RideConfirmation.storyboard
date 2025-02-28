@@ -213,7 +213,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="busOrCarImageView" destination="cIe-Oq-ojM" id="5Vz-aa-Han"/>
-                        <outlet property="confirmCardView" destination="4sn-gd-csV" id="edJ-TF-a2H"/>
                         <outlet property="dateLabel" destination="0u0-WH-LWc" id="3wG-p3-W8b"/>
                         <outlet property="destinationAddressLabel" destination="ua0-7s-fps" id="bca-sF-ZMs"/>
                         <outlet property="destinationTimeLabel" destination="iAc-Sn-kVh" id="MFP-N8-y6W"/>

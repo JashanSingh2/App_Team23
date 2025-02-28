@@ -11,6 +11,6 @@ import Foundation
 struct RideAvailable{
     var date: String
     var seatsAvailable: Int
-    var serviceProvider: ServiceProvider
+    var serviceProvider: ServiceProviders
 }
 

@@ -290,7 +290,7 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         if let VC = segue.destination as? SeatConfirmDeatilsViewController {
             if let selectedRide{
                 
-                let ride = RideHistory(source: source!, destination: destination!, serviceProvider: selectedRide.serviceProvider, date: selectedRide.date, fare: RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide.serviceProvider), seatNumber: nil)
+                let ride = RidesHistory(source: source!, destination: destination!, serviceProvider: selectedRide.serviceProvider, date: selectedRide.date, fare: RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide.serviceProvider), seatNumber: nil)
                 VC.ride = ride
                 RidesDataController.shared.newRideHistory(with: ride)
             }

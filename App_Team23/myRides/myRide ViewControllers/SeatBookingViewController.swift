@@ -156,7 +156,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
                 selectedSeat.append(Int((seat.titleLabel?.text)!)!)
             }
             
-            let ride = RideHistory(source: source!, destination: destination!, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: (RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide!.serviceProvider) * selectedSeats.count), seatNumber: selectedSeat)
+            let ride = RidesHistory(source: source!, destination: destination!, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: (RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide!.serviceProvider) * selectedSeats.count), seatNumber: selectedSeat)
             
             RidesDataController.shared.newRideHistory(with: ride)
             destinationVC.ride = ride
