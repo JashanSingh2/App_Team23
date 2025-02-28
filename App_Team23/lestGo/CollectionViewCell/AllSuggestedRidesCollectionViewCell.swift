@@ -19,9 +19,7 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var fareLabel: UILabel!
     
-//    @IBOutlet weak var availableSeatsLabel: UIView!
-    
-    @IBOutlet weak var seatsAvailableLabel: UILabel!
+    @IBOutlet weak var seatsAvailableButton: UIButton!
     
     @IBOutlet weak var serviceProviderNameLabel: UILabel!
     
@@ -39,37 +37,32 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
-    func updateAllSuggestedRidesCell(with ride: RideAvailable,source: Schedule, destination: Schedule,fare: Int){
-        seatsAvailableStackView.layer.borderWidth = 1
-        seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
-        seatsAvailableStackView.layer.cornerRadius = 5
-        
+    func updateAllSuggestedRidesCell(with ride: RidesAvailable){
+
         cellContentview.layer.cornerRadius = 10
         
-        sourceAddressLabel.text = source.address
-        destinationAddressLabel.text = destination.address
-        pickupTimeLabel.text = source.time
-        dropoffTimeLabel.text = destination.time
-        fareLabel.text = "\(fare)"
-        seatsAvailableLabel.text = "\(ride.seatsAvailable) Seats Available"
+        sourceAddressLabel.text = ride.source.address
+        destinationAddressLabel.text = ride.destination.address
+        pickupTimeLabel.text = ride.source.time
+        dropoffTimeLabel.text = ride.destination.time
+        fareLabel.text = "\(ride.fare)"
+        seatsAvailableButton.setTitle("\(ride.seatsAvailable) Seats", for: .normal)
         serviceProviderNameLabel.text = "\(ride.serviceProvider.name)"
-        serviceProviderRatingLabel.text = "\(ride.serviceProvider.rating)"
+        serviceProviderRatingLabel.text = "\(ride.rating)"
         if ride.serviceProvider.rideType.vehicleType == .car{
             vehicleTypeImageView.image = UIImage(systemName: "car.fill")
         }else {
             vehicleTypeImageView.image = UIImage(systemName: "bus.fill")
         }
         if ride.serviceProvider.rideType.facility == .ac{
-            //acNonAcLabel.text = "AC"
+            acNonAcLabel.text = "AC"
             acNonAcImageView.image = UIImage(systemName: "snowflake")
         }else {
-            //acNonAcLabel.text = "Non AC"
+            acNonAcLabel.text = "Non AC"
             acNonAcImageView.image = UIImage(systemName: "snowflake.slash")
         }
         
     }
-    
-    
     
     
 }

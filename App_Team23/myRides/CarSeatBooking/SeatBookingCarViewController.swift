@@ -11,7 +11,7 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var passengerCount: Int = 4
+    var passengerCount: Int = 1
     
     var selectedRide: RideAvailable?
     var source: Schedule?
@@ -259,11 +259,31 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
     @objc func bookNowTapped() {
         print("Hello")
         
-        performSegue(withIdentifier: "carBookingConfirm", sender: self)
+        //performSegue(withIdentifier: "carBookingConfirm", sender: self)
         //viewController.modalPresentationStyle = .fullScreen
+        showAlert()
         
         
+    }
+    
+    
+    func showAlert(){
+        let alert = UIAlertController(
+        title: "Are you sure?",
+        message: "You want to book this ride",
+        preferredStyle: .alert
+        )
         
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.confirmRide() } ))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func confirmRide(){
+     
+        performSegue(withIdentifier: "carBookingConfirm", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

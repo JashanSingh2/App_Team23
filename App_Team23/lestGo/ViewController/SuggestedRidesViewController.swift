@@ -44,16 +44,14 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AllSuggestedRidesCollectionViewCell
-        let ride = rides[indexPath.row].0
-        let source = rides[indexPath.row].1
-        let destination = rides[indexPath.row].2
-        let fare = rides[indexPath.row].3
-        
-        
-        
-        
-        cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
-        cell.layer.cornerRadius = 10
+        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+        cell.updateAllSuggestedRidesCell(with: ride)
+        cell.layer.cornerRadius = 12.0
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOpacity = 0.5
+        cell.layer.shadowRadius = 2.5
+        cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+        cell.layer.masksToBounds = false
         return cell
     }
     
@@ -64,11 +62,11 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(190))
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(236))
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
             
             group.interItemSpacing = .fixed(8)
-            group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+            group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 6, bottom: 0, trailing: 6)
             
             
             section = NSCollectionLayoutSection(group: group)

@@ -36,6 +36,9 @@ class SeatConfirmDeatilsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        confirmCardView.layer.cornerRadius = 10
+        
+        
         if let ride{
             updateUI()
         }
