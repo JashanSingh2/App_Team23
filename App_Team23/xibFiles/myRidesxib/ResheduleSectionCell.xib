@@ -12,7 +12,7 @@
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ResheduleCell" id="Ex1-0I-QDa" customClass="ResheduleCollectionViewCell" customModule="App_Team23" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="354" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="7pk-VB-gcV">
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="7pk-VB-gcV">
                 <rect key="frame" x="0.0" y="0.0" width="354" height="100"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
@@ -98,7 +98,7 @@
                         </buttonConfiguration>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTo-Fn-y1c">
-                        <rect key="frame" x="16" y="59" width="114" height="30"/>
+                        <rect key="frame" x="16" y="59" width="120" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="LbT-rN-awS"/>
                             <constraint firstAttribute="width" constant="120" id="kua-Ic-eY5"/>
@@ -111,6 +111,7 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="tTo-Fn-y1c" firstAttribute="top" secondItem="7pk-VB-gcV" secondAttribute="topMargin" id="0SV-JK-VUe"/>
                     <constraint firstItem="gfv-de-VvP" firstAttribute="top" secondItem="7pk-VB-gcV" secondAttribute="top" constant="10" id="3P4-gZ-Y6m"/>
                     <constraint firstAttribute="bottom" secondItem="tTo-Fn-y1c" secondAttribute="bottom" constant="10" id="Eq0-kh-CyL"/>
                     <constraint firstItem="gfv-de-VvP" firstAttribute="leading" secondItem="7pk-VB-gcV" secondAttribute="leading" constant="16" id="FKo-9R-XVf"/>
@@ -118,7 +119,6 @@
                     <constraint firstItem="tTo-Fn-y1c" firstAttribute="leading" secondItem="7pk-VB-gcV" secondAttribute="leading" constant="16" id="RU4-7r-Wbj"/>
                     <constraint firstItem="gfv-de-VvP" firstAttribute="top" secondItem="7pk-VB-gcV" secondAttribute="top" constant="10" id="Ry9-78-d0v"/>
                     <constraint firstAttribute="bottom" secondItem="Jrj-3I-IbS" secondAttribute="bottom" constant="33" id="ZV3-FX-N9J"/>
-                    <constraint firstAttribute="trailing" secondItem="tTo-Fn-y1c" secondAttribute="trailing" constant="224" id="c9S-uS-hXK"/>
                     <constraint firstAttribute="trailing" secondItem="Jrj-3I-IbS" secondAttribute="trailing" constant="16" id="i66-N2-BqP"/>
                     <constraint firstItem="gfv-de-VvP" firstAttribute="leading" secondItem="7pk-VB-gcV" secondAttribute="leading" constant="16" id="zYc-O0-f5k"/>
                 </constraints>

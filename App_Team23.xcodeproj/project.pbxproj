@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BCF336A92D6CD90900852734 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = BCF336A82D6CD90900852734 /* Auth */; };
-		BCF336AB2D6CD90900852734 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = BCF336AA2D6CD90900852734 /* Functions */; };
-		BCF336AD2D6CD90900852734 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = BCF336AC2D6CD90900852734 /* PostgREST */; };
-		BCF336AF2D6CD90900852734 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = BCF336AE2D6CD90900852734 /* Realtime */; };
-		BCF336B12D6CD90900852734 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = BCF336B02D6CD90900852734 /* Storage */; };
-		BCF336B32D6CD90900852734 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = BCF336B22D6CD90900852734 /* Supabase */; };
+		C484681D2D71C2E50089D334 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = C484681C2D71C2E50089D334 /* Auth */; };
+		C484681F2D71C2E50089D334 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = C484681E2D71C2E50089D334 /* Functions */; };
+		C48468212D71C2E50089D334 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = C48468202D71C2E50089D334 /* PostgREST */; };
+		C48468232D71C2E50089D334 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = C48468222D71C2E50089D334 /* Realtime */; };
+		C48468252D71C2E50089D334 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = C48468242D71C2E50089D334 /* Storage */; };
+		C48468272D71C2E50089D334 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = C48468262D71C2E50089D334 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,12 +45,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCF336AD2D6CD90900852734 /* PostgREST in Frameworks */,
-				BCF336AB2D6CD90900852734 /* Functions in Frameworks */,
-				BCF336B32D6CD90900852734 /* Supabase in Frameworks */,
-				BCF336A92D6CD90900852734 /* Auth in Frameworks */,
-				BCF336B12D6CD90900852734 /* Storage in Frameworks */,
-				BCF336AF2D6CD90900852734 /* Realtime in Frameworks */,
+				C48468212D71C2E50089D334 /* PostgREST in Frameworks */,
+				C484681F2D71C2E50089D334 /* Functions in Frameworks */,
+				C48468272D71C2E50089D334 /* Supabase in Frameworks */,
+				C484681D2D71C2E50089D334 /* Auth in Frameworks */,
+				C48468252D71C2E50089D334 /* Storage in Frameworks */,
+				C48468232D71C2E50089D334 /* Realtime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +101,12 @@
 			);
 			name = App_Team23;
 			packageProductDependencies = (
+				C484681C2D71C2E50089D334 /* Auth */,
+				C484681E2D71C2E50089D334 /* Functions */,
+				C48468202D71C2E50089D334 /* PostgREST */,
+				C48468222D71C2E50089D334 /* Realtime */,
+				C48468242D71C2E50089D334 /* Storage */,
+				C48468262D71C2E50089D334 /* Supabase */,
 			);
 			productName = App_Team23;
 			productReference = C40CA4D32D3128D000ADD31C /* App_Team23.app */;
@@ -130,6 +136,9 @@
 			);
 			mainGroup = C40CA4CA2D3128D000ADD31C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C484681B2D71C2CA0089D334 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C40CA4D42D3128D000ADD31C /* Products */;
 			projectDirPath = "";
@@ -360,7 +369,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BCF336A62D6CD8FC00852734 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+		C484681B2D71C2CA0089D334 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/supabase/supabase-swift.git";
 			requirement = {
@@ -371,34 +380,34 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BCF336A82D6CD90900852734 /* Auth */ = {
+		C484681C2D71C2E50089D334 /* Auth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BCF336A62D6CD8FC00852734 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = C484681B2D71C2CA0089D334 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Auth;
 		};
-		BCF336AA2D6CD90900852734 /* Functions */ = {
+		C484681E2D71C2E50089D334 /* Functions */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BCF336A62D6CD8FC00852734 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = C484681B2D71C2CA0089D334 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Functions;
 		};
-		BCF336AC2D6CD90900852734 /* PostgREST */ = {
+		C48468202D71C2E50089D334 /* PostgREST */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BCF336A62D6CD8FC00852734 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = C484681B2D71C2CA0089D334 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = PostgREST;
 		};
-		BCF336AE2D6CD90900852734 /* Realtime */ = {
+		C48468222D71C2E50089D334 /* Realtime */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BCF336A62D6CD8FC00852734 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = C484681B2D71C2CA0089D334 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Realtime;
 		};
-		BCF336B02D6CD90900852734 /* Storage */ = {
+		C48468242D71C2E50089D334 /* Storage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BCF336A62D6CD8FC00852734 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = C484681B2D71C2CA0089D334 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Storage;
 		};
-		BCF336B22D6CD90900852734 /* Supabase */ = {
+		C48468262D71C2E50089D334 /* Supabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BCF336A62D6CD8FC00852734 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = C484681B2D71C2CA0089D334 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
 		};
 /* End XCSwiftPackageProductDependency section */

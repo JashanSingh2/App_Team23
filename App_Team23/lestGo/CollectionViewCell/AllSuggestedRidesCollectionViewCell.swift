@@ -37,7 +37,7 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
-    func updateAllSuggestedRidesCell(with ride: RidesAvailable){
+    func updateAllSuggestedRidesCell(with ride: RideAvailable){
 
         cellContentview.layer.cornerRadius = 10
         
