@@ -71,29 +71,40 @@ class loginViewController: UIViewController,UITextFieldDelegate {
         Task {
             do {
                 // Step 1: Authenticate user
-                let session = try await supabase.auth.signIn(email: email, password: password)
+                let authResponse = try await supabase.auth.signIn(
+                    email: email,
+                    password: password
+                )
                 
-                // Step 2: Ensure authentication session is active
-                guard let user = session.user else {
-                    showAlert("Authentication failed. Please try again.")
-                    return
-                }
-                
+                let user = authResponse.user
                 print("✅ User authenticated successfully. User ID: \(user.id)")
-                print("✅ User Email: \(user.email ?? "No email found")")
 
-                // Step 3: Fetch user details from Supabase Database (Optional)
-                let userData = try await supabase.database
+                // Step 2: Fetch user details from Supabase Database
+                let response: PostgrestResponse<[User]> = try await supabase.database
                     .from("users")
                     .select()
                     .eq("email", value: email)
-                    .single()
                     .execute()
-
-                print("✅ User data from database: \(userData)")
-
-                // Step 4: Navigate to Landing Page
-                navigateToHome()
+                
+                if let userData = response.value.first {
+                    print("✅ User data from database: \(userData)")
+                    navigateToHome()
+                } else {
+                    // Create user record if it doesn't exist
+                    let userData = [
+                        "id": user.id.uuidString,
+                        "email": email,
+                        "preferred_vehicle": "bus",
+                        "work_time": "9:00 AM - 5:00 PM"
+                    ]
+                    
+                    try await supabase.database
+                        .from("users")
+                        .insert(userData)
+                        .execute()
+                    
+                    navigateToHome()
+                }
             } catch {
                 print("❌ Login failed: \(error.localizedDescription)")
                 showAlert("Invalid credentials. Please try again.")
@@ -113,8 +124,8 @@ class loginViewController: UIViewController,UITextFieldDelegate {
     
     func navigateToHome() {
         DispatchQueue.main.async {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let homeVC = storyboard.instantiateViewController(withIdentifier: "LetsGoViewController") as! LetsGoViewController
+            let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
+            let homeVC = storyboard.instantiateViewController(withIdentifier: "letsGoVC") as! LetsGoViewController
             
             if let navigationController = self.navigationController {
                 navigationController.setViewControllers([homeVC], animated: true)
