@@ -137,7 +137,7 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
     }
           @IBAction func phoneNumberVerifyButtonTapped(_ sender: UIButton) {
               print("Phone number verification requested for: \(confirmPasswordTextField.text ?? "")")
-              // Add your phone number verification logic here
+              
           }
     
     
@@ -195,13 +195,25 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
 
                 try await supabase.database.from("users").insert(userData).execute()
 
-                showAlert("Signup successful! Please verify your email and log in.")
-
-                // Step 4: Navigate to the Login screen
+                // Step 4: Show success alert and navigate to login
                 DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
+                    let alert = UIAlertController(
+                        title: "Signup Successful",
+                        message: "Your account has been created successfully. Please login to continue.",
+                        preferredStyle: .alert
+                    )
+                    
+                    alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+                        // Navigate to login screen
+                        let storyboard = UIStoryboard(name: "LogIn", bundle: nil)
+                        let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+                        self?.navigationController?.setViewControllers([loginVC], animated: true)
+                    })
+                    
+                    self.present(alert, animated: true)
                 }
             } catch {
+                print("❌ Signup failed: \(error.localizedDescription)")
                 showAlert("Signup failed: \(error.localizedDescription)")
             }
         }
@@ -211,50 +223,7 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
     
       }
 
-    // Number of Rows
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // Static rows + dynamic rows for Start and End Time
-//        return isTimeSlotExpanded ? 8 : 6
-//    }
-//
-//    // Cell Configuration
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        // Static Cells
-//        if indexPath.row < 6 {
-//            let cell = super.tableView(tableView, cellForRowAt: indexPath)
-//            return cell
-//        }
-//        // Dynamic Cells for Time Slot
-//        else if indexPath.row == 6 {
-//            let cell = UITableViewCell(style: .default, reuseIdentifier: "StartTimeCell")
-//            cell.textLabel?.text = "Select Start Time"
-//            cell.textLabel?.textColor = .gray
-//            return cell
-//        } else if indexPath.row == 7 {
-//            let cell = UITableViewCell(style: .default, reuseIdentifier: "EndTimeCell")
-//            cell.textLabel?.text = "Select End Time"
-//            cell.textLabel?.textColor = .gray
-//            return cell
-//        }
-//        return UITableViewCell()
-//    }
-//
-//    // Row Selection
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.row == 5 { // Work Timing Cell
-//            isTimeSlotExpanded.toggle() // Toggle the state
-//            tableView.reloadData() // Reload the table to show/hide Time Slot cells
-//        }
-//    }
-    
-    
-//    @IBAction func timeslotButtonPressed(_ sender: Any) {
-//        
-//        isTimeSlotExpanded.toggle()
-//        timeslotOutlet.isHidden = !isTimeSlotExpanded
-//        tableView.beginUpdates()
-//        tableView.endUpdates()
-//    }
+
     
   
     
