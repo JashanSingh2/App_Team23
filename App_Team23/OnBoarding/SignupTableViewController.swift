@@ -10,7 +10,7 @@ import Supabase
 
 
 
-class SignupTableViewController: UITableViewController, UITextFieldDelegate {
+class SignupTableViewController: UITableViewController, UITextFieldDelegate, MapLocationDelegate {
     var isTimeSlotExpanded = false // Tracks if the Time Slot is expanded
     let supabase = SupabaseClient(supabaseURL: URL(string: "https://nwjlijnbgvmvcowxyxfu.supabase.co")!,
                                          supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53amxpam5iZ3ZtdmNvd3h5eGZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkzNTI1OTgsImV4cCI6MjA1NDkyODU5OH0.Ie59yeseEc8A82gbJ56IVOq17bZOSjEkmzz-8qCPuPo")
@@ -34,16 +34,25 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
     
     @IBOutlet weak var imageViewOutlet: UIImageView!
     
+    @IBOutlet private weak var pickupLocationTextField: UITextField!
+    @IBOutlet private weak var dropoffLocationTextField: UITextField!
     
+    // Create text fields programmatically if outlets aren't connected
+   
     
+    private var currentLocationType: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Find text fields in the table view cells
+        if let pickupCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) {
+            pickupLocationTextField = pickupCell.viewWithTag(1) as? UITextField
+        }
         
-        
-        
-       
+        if let dropoffCell = tableView.cellForRow(at: IndexPath(row: 1, section: 1)) {
+            dropoffLocationTextField = dropoffCell.viewWithTag(2) as? UITextField
+        }
         
         workTimeTextField.isUserInteractionEnabled = false
         
@@ -141,6 +150,7 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
           }
     
     
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
            if textField == confirmPasswordTextField {
                // Allow only digits (0-9)
@@ -180,7 +190,15 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
                 let userResponse = try await supabase.auth.signUp(email: email, password: password)
 
                 // Step 2: Prepare additional user details
+                guard let fromTimePicker = fromTimePicker else {
+                    print("fromTimePicker is nil")
+                    return
+                }
                 let fromTimeString = DateFormatter.localizedString(from: fromTimePicker.date, dateStyle: .none, timeStyle: .short)
+                guard let toTimePicker = toTimePicker else {
+                    print("toTimePicker is nil")
+                    return
+                }
                 let toTimeString = DateFormatter.localizedString(from: toTimePicker.date, dateStyle: .none, timeStyle: .short)
                 let workTime = "\(fromTimeString) - \(toTimeString)"
                 let preferredVehicle = preferredVehicleTextField.text ?? ""
@@ -219,9 +237,74 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
 
-
+    @IBAction func pickupLocationButtonTapped(_ sender: UIButton) {
+        print("Opening map for pickup location")
+        openMapViewController(for: "pickup")
+    }
     
-      }
+    @IBAction func dropoffLocationButtonTapped(_ sender: UIButton) {
+        print("Opening map for dropoff location")
+        openMapViewController(for: "dropoff")
+    }
+    
+    private func openMapViewController(for type: String) {
+        print("Opening map view controller for: \(type)")
+        currentLocationType = type
+        let mapVC = MapLocationViewController()
+        mapVC.delegate = self
+        mapVC.modalPresentationStyle = .pageSheet
+        mapVC.isModalInPresentation = true
+        present(mapVC, animated: true, completion: nil)
+    }
+    
+    // MapLocationDelegate method
+    func didSelectLocation(_ location: String) {
+        print("Location selected: \(location) for type: \(currentLocationType ?? "unknown")")
+        
+        if currentLocationType == "pickup" {
+            print("Updating pickup location")
+            pickupLocationTextField?.text = location
+        } else if currentLocationType == "dropoff" {
+            print("Updating dropoff location")
+            dropoffLocationTextField?.text = location
+        }
+        
+        tableView.reloadData()
+        
+        // Dismiss the map view controller
+        if let presentedVC = presentedViewController {
+            presentedVC.dismiss(animated: true) {
+                print("Map view dismissed")
+                self.currentLocationType = nil
+            }
+        }
+    }
+    
+    // Override table view methods to ensure cells are properly configured
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                if let textField = cell.viewWithTag(1) as? UITextField {
+                    pickupLocationTextField = textField
+                }
+            } else if indexPath.row == 1 {
+                if let textField = cell.viewWithTag(2) as? UITextField {
+                    dropoffLocationTextField = textField
+                }
+            }
+        }
+        
+        return cell
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        tableView.reloadData()
+    }
+}
 
 
     

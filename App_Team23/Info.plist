@@ -4,6 +4,8 @@
 <dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>We need your location to show you on the map and help you select pickup/dropoff locations.</string>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
 		<key>UISceneConfigurations</key>
