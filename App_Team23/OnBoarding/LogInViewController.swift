@@ -124,11 +124,13 @@ class loginViewController: UIViewController,UITextFieldDelegate {
     
     func navigateToHome() {
         DispatchQueue.main.async {
-            let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
-            let homeVC = storyboard.instantiateViewController(withIdentifier: "letsGoVC") as! LetsGoViewController
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let homeVC = storyboard.instantiateViewController(withIdentifier: "tabBarVC")
+            
+            homeVC.modalPresentationStyle = .overFullScreen
             
             if let navigationController = self.navigationController {
-                navigationController.setViewControllers([homeVC], animated: true)
+                navigationController.present(homeVC, animated: true)
             } else {
                 if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                     let navController = UINavigationController(rootViewController: homeVC)
