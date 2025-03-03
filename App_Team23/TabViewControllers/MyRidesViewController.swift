@@ -21,9 +21,9 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         "All Other Rides"
     ]
     
-    private var today = "28/01/2025"
-    private var tomorrow = "29/01/2025"
-    private var later = "30/01/2025"
+    private var today = RidesDataController.shared.today
+    private var tomorrow = RidesDataController.shared.tomorrow
+    private var later = RidesDataController.shared.later
     
     static var preSelectedSegmentIndex: Int = 0
     

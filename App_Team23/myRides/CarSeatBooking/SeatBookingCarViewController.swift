@@ -304,11 +304,14 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
                 seatNumber: nil
             )
             VC.ride = ride
-            RidesDataController.shared.newRideHistory(with: ride)
+            Task{
+                try await RidesDataController.shared.newRideHistory(with: ride)
+            }
+            
         }
     }
     
-    func bookRide(ride: RidesHistory) {
-        RidesDataController.shared.newRideHistory(with: ride)
+    func bookRide(ride: RidesHistory) async throws{
+        try await RidesDataController.shared.newRideHistory(with: ride)
     }
 }

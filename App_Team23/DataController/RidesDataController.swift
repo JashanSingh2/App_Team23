@@ -22,7 +22,7 @@ protocol DataController {
     func numberOfPreviousRides() -> Int
     func previousRides(At index: Int) -> RidesHistory
     func ride(from source: String, to destination: String, on date: String) -> [(RideAvailable, Schedule, Schedule, Int)]?
-    func newRideHistory(with ride: RidesHistory)
+    func newRideHistory(with ride: RidesHistory) async throws
     
     //private func filterRideHistory(by type: VehicleType) -> [RideHistory]
     
@@ -148,6 +148,8 @@ class RidesDataController: DataController {
                 print("Error fetching data from Supabase: \(error)")
             }
         }
+        
+        print(loadFilteredBusData(for: "A1035"))
     }
     
     private func fetchAllData() async throws {
@@ -187,7 +189,7 @@ class RidesDataController: DataController {
                 ),
                 maxSeats: providerDB.maxSeats,
                 fare: providerDB.fare,
-                route: [],
+                route: loadFilteredBusData(for: providerDB.vehicleNumber) ?? [],
                 rating: providerDB.rating
             )
         }
@@ -211,7 +213,7 @@ class RidesDataController: DataController {
                 ),
                 maxSeats: rideSharingDB.maxSeats,
                 fare: rideSharingDB.fare,
-                route: [], // You might want to handle route separately
+                route: loadFilteredBusData(for: rideSharingDB.vehicleNumber) ?? [], // You might want to handle route separately
                 rating: rideSharingDB.rating
             )
             
@@ -223,11 +225,67 @@ class RidesDataController: DataController {
         }
     }
     
+    struct BusInfo: Codable {
+        let address: String
+        let time: String
+        let vehicleNumber: String
+
+        // Map JSON keys to Swift properties
+        enum CodingKeys: String, CodingKey {
+            case address = "Address"
+            case time = "Time"
+            case vehicleNumber = "VehicleNumber"
+        }
+    }
+
+    
+
+    func loadFilteredBusData(for vehicleNumber: String) -> [Schedule]? {
+        guard let url = Bundle.main.url(forResource: "merged_vehicle_routes", withExtension: "json") else {
+            print("🚨 JSON file not found")
+            return nil
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            
+            let fullBusData = try JSONDecoder().decode([BusInfo].self, from: data)
+            
+            let filteredBuses: [Schedule] = fullBusData
+                .filter { $0.vehicleNumber == vehicleNumber }
+                .map { Schedule(address: $0.address, time: $0.time) }
+
+            return filteredBuses.isEmpty ? nil : filteredBuses
+        } catch {
+            print("❌ Error decoding JSON: \(error)")
+            return nil
+        }
+    }
+
+    
+    func getBusDetails(for vehicleNumber: String) {
+        if let buses = loadFilteredBusData(for: vehicleNumber) {
+            for bus in buses {
+                print("✅ Address: \(bus.address), Time: \(bus.time)")
+            }
+        } else {
+            print("❌ No data found for bus number: \(vehicleNumber)")
+        }
+    }
+
+
+
+
+
+
+    
+    
     func saveRideToSupabase(_ ride: RideHistory) async throws {
         let response: PostgrestResponse<[RideHistory]> = try await supabase.database
             .from("ridehistory")
             .insert(ride)
             .execute()
+        print("📡 Sending data to Supabase...")
     }
     
     // Existing helper functions
@@ -474,7 +532,7 @@ class RidesDataController: DataController {
         return max(calculatedFare, 10)
     }
     
-    func newRideHistory(with ride: RidesHistory) {
+    func newRideHistory(with ride: RidesHistory) async throws {
         let convertedRide = convertToRideHistory(ride)
         Task {
             do {
@@ -483,6 +541,8 @@ class RidesDataController: DataController {
                 print("Error saving ride to Supabase: \(error)")
             }
         }
+        ridesHistory = try await fetchRidesFromSupabase()
+
     }
     
     private func cancelRide(rideHistory: RideHistory) {
@@ -499,7 +559,7 @@ class RidesDataController: DataController {
         }
     }
     
-    func cancelRide(rideHistory: RidesHistory) {
+    func cancelRide(rideHistory: RidesHistory) async throws{
         let convertedRide = convertToRideHistory(rideHistory)
         cancelRide(rideHistory: convertedRide)
         
@@ -516,6 +576,7 @@ class RidesDataController: DataController {
                 print("Error deleting ride from Supabase: \(error)")
             }
         }
+        ridesHistory = try await fetchRidesFromSupabase()
     }
     
     func rideSuggestion() -> [(RideAvailable,Schedule,Schedule, Int)]? {
@@ -574,6 +635,8 @@ class RidesDataController: DataController {
         let group = DispatchGroup()
         var providerID: Int?
         
+        
+        
         group.enter()
         Task {
             if let response: PostgrestResponse<[ServiceProviderDB]> = try? await supabase.database
@@ -590,12 +653,12 @@ class RidesDataController: DataController {
         group.wait()
         
         return RideHistory(
-            id: Int.random(in: 1...1000000),  // Generate random ID
+            id: numberOfRidesInHistory() + 1,  // Generate random ID
             source: ridesHistory.source.address,
             source_time: ridesHistory.source.time,
             destination: ridesHistory.destination.address,
             destination_time: ridesHistory.destination.time,
-            service_provider_id: providerID ?? Int.random(in: 1...1000000),
+            service_provider_id: providerID ?? 1000,
             date: ridesHistory.date,
             rating: nil,
             review: nil,

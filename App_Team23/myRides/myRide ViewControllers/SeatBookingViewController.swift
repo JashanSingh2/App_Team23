@@ -148,7 +148,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if let destinationVC = segue.destination as? TrackingViewController,
            let selectedRide = selectedRide {
             destinationVC.route = selectedRide.serviceProvider.route
@@ -181,7 +181,12 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
                 seatNumber: selectedSeat
             )
             
-            RidesDataController.shared.newRideHistory(with: ride)
+            
+            Task {
+                    try await RidesDataController.shared.newRideHistory(with: ride)
+            }
+            
+            
             destinationVC.ride = ride
             destinationVC.seat = selectedSeat
         }
@@ -271,7 +276,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
-    func bookRide(ride: RidesHistory, seats: [Int]) {
+    func bookRide(ride: RidesHistory, seats: [Int]) async throws{
         let updatedRide = RidesHistory(
             source: ride.source,
             destination: ride.destination,
@@ -280,7 +285,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
             fare: ride.fare,
             seatNumber: seats
         )
-        RidesDataController.shared.newRideHistory(with: updatedRide)
+        try await RidesDataController.shared.newRideHistory(with: updatedRide)
     }
 
 }

@@ -169,7 +169,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YCQSMY42RK;
+				DEVELOPMENT_TEAM = RBF26C6QKA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = App_Team23/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need your location to track your ride.";
@@ -199,7 +199,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YCQSMY42RK;
+				DEVELOPMENT_TEAM = RBF26C6QKA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = App_Team23/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need your location to track your ride.";

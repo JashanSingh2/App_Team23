@@ -34,9 +34,11 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
         borderStack.layer.cornerRadius = 5.0
         
         sourceAddressLabel.text = rideSuggestion.serviceProvider.route.first?.address
+        print(rideSuggestion.serviceProvider.route.first?.address ?? "No Address")
         destinationAddressLabel.text = rideSuggestion.serviceProvider.route.last?.address
         
         pickUpTimeLabel.text = rideSuggestion.serviceProvider.route.first?.time
+        print(rideSuggestion.serviceProvider.route.first?.time ?? "No Time")
         dropOffTimeLabel.text = rideSuggestion.serviceProvider.route.last?.time
         
         if rideSuggestion.serviceProvider.rideType.vehicleType == .bus{

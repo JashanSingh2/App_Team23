@@ -108,23 +108,29 @@ class RideDetailViewController: UIViewController {
         
     }
     
-    func showAlert(){
+    func showAlert() {
         let alert = UIAlertController(
-        title: "Are you sure?",
-        message: "You are about to cancel this ride",
-        preferredStyle: .alert
+            title: "Are you sure?",
+            message: "You are about to cancel this ride",
+            preferredStyle: .alert
         )
         
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.confirmCancel() } ))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            Task {
+                try await self.confirmCancel()
+            }
+        }))
+
         
         self.present(alert, animated: true, completion: nil)
     }
 
-    func confirmCancel(){
+
+    func confirmCancel() async throws{
      
-        RidesDataController.shared.cancelRide(rideHistory: RideDetailViewController.rideHistory!)
+        try await RidesDataController.shared.cancelRide(rideHistory: RideDetailViewController.rideHistory!)
 
         performSegue(withIdentifier: "unwindToMyrides", sender: self)
         
