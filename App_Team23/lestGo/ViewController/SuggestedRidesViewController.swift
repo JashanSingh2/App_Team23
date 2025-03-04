@@ -42,19 +42,31 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
         return rides.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AllSuggestedRidesCollectionViewCell
-        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
-        cell.updateAllSuggestedRidesCell(with: ride)
-        cell.layer.cornerRadius = 12.0
-        cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOpacity = 0.5
-        cell.layer.shadowRadius = 2.5
-        cell.layer.shadowOffset = CGSize(width: 2, height: 2)
-        cell.layer.masksToBounds = false
-        return cell
-    }
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AllSuggestedRidesCollectionViewCell
+//        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+//        cell.updateAllSuggestedRidesCell(with: ride)
+//        cell.layer.cornerRadius = 12.0
+//        cell.layer.shadowColor = UIColor.black.cgColor
+//        cell.layer.shadowOpacity = 0.5
+//        cell.layer.shadowRadius = 2.5
+//        cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+//        cell.layer.masksToBounds = false
+//        return cell
+//    }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AllSuggestedRidesCollectionViewCell
+            let ride = rides[indexPath.row].0
+            let source = rides[indexPath.row].1
+            let destination = rides[indexPath.row].2
+            let fare = rides[indexPath.row].3
+        
+            cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
+            cell.layer.cornerRadius = 10
+            return cell
+        }
+        
     
     func generateLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout {

@@ -27,15 +27,15 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var seatAvailableButton: UIButton!
     
-    func updateSuggestedRideCell(with rideSuggestion: RidesAvailable){
+    func updateSuggestedRideCell(with rideSuggestion: RideAvailable){
         
 
         sourceAddressLabel.text = rideSuggestion.serviceProvider.route.first?.address
-        print(rideSuggestion.serviceProvider.route.first?.address ?? "No Address")
+        //print(rideSuggestion.serviceProvider.route.first?.address ?? "No Address")
         destinationAddressLabel.text = rideSuggestion.serviceProvider.route.last?.address
         
         pickUpTimeLabel.text = rideSuggestion.serviceProvider.route.first?.time
-        print(rideSuggestion.serviceProvider.route.first?.time ?? "No Time")
+        //print(rideSuggestion.serviceProvider.route.first?.time ?? "No Time")
         dropOffTimeLabel.text = rideSuggestion.serviceProvider.route.last?.time
         
         if rideSuggestion.serviceProvider.rideType.vehicleType == .bus{
@@ -53,7 +53,7 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
         
         seatAvailableButton.setTitle("\(rideSuggestion.seatsAvailable) Seats", for: .normal)
         
-        fareLabel.text = "\(rideSuggestion.fare)"
+        fareLabel.text = "\(rideSuggestion.serviceProvider.fare)"
     
     }
     

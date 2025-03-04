@@ -85,23 +85,37 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
         return rides.count
     }
     
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
+//        
+//        cell.layer.cornerRadius = 12.0
+//        cell.layer.shadowColor = UIColor.black.cgColor
+//        cell.layer.shadowOpacity = 0.5
+//        cell.layer.shadowRadius = 2.5
+//        cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+//        cell.layer.masksToBounds = false
+//
+//        
+//        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
+//        cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
+//
+//        return cell
+//        
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
-        
-        cell.layer.cornerRadius = 12.0
-        cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOpacity = 0.5
-        cell.layer.shadowRadius = 2.5
-        cell.layer.shadowOffset = CGSize(width: 2, height: 2)
-        cell.layer.masksToBounds = false
-
-        
-        let ride = RidesDataController.shared.availableRide(At: indexPath.row)
-        cell.updateAllSuggestedRidesCell(with: ride)
-        
-        return cell
-        
-    }
+            let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
+            
+            let ride = rides[indexPath.row].0
+            let source = rides[indexPath.row].1
+            let destination = rides[indexPath.row].2
+            let fare = rides[indexPath.row].3
+            
+            cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
+            
+            return cell
+            
+        }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let ride = rides[indexPath.row].0

@@ -136,6 +136,8 @@ class RidesDataController: DataController {
     var tomorrow = ""
     var later = ""
     
+    var busRides: [RideHistory] = []
+    
     init() {
         today = getTodayDate()
         tomorrow = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 1, to: Date.now)!)
@@ -148,6 +150,10 @@ class RidesDataController: DataController {
                 print("Error fetching data from Supabase: \(error)")
             }
         }
+        
+        busRides = filterRideHistory(by: .bus)
+        
+        
     }
     
     private func fetchAllData() async throws {
@@ -157,6 +163,8 @@ class RidesDataController: DataController {
         // Fetch service providers
         allServiceProviders = try await fetchServiceProvidersFromSupabase()
         
+        
+        //print("\n\n\n\n\nservice providers:\n\n\(allServiceProviders)\n\n\n\n\n")
         // Fetch available rides
         availableRides = try await fetchAvailableRidesFromSupabase()
     }
@@ -171,26 +179,68 @@ class RidesDataController: DataController {
     }
     
     func fetchServiceProvidersFromSupabase() async throws -> [ServiceProviders] {
-        let response: PostgrestResponse<[ServiceProviderDB]> = try await supabase.database
-            .from("ridesharing")
-            .select()
-            .execute()
+        print("fetching Data for service providers")
         
-        return response.value.map { providerDB in
-            ServiceProviders(
-                name: providerDB.name,
-                vehicleNumber: providerDB.vehicleNumber,
-                rideType: RideType(
-                    vehicleModelName: providerDB.vehicleModel,
-                    vehicleType: providerDB.vehicleType == "bus" ? .bus : .car,
-                    facility: providerDB.facility == "ac" ? .ac : .nonAc
-                ),
-                maxSeats: providerDB.maxSeats,
-                fare: providerDB.fare,
-                route: loadFilteredBusData(for: providerDB.vehicleNumber) ?? [],
-                rating: providerDB.rating
-            )
+        do {
+            let response: PostgrestResponse<[ServiceProviderDB]> = try await supabase.database
+                .from("ridesharing")
+                .select()
+                .execute()
+
+            print("✅ JSON Data: \(response)")
+
+            let providers = response.value
+
+            // ✅ Ensure data can be mapped before returning
+            let serviceProviders = providers.map { providerDB in
+                return ServiceProviders(
+                    name: providerDB.name,
+                    vehicleNumber: providerDB.vehicleNumber,
+                    rideType: RideType(
+                        vehicleModelName: providerDB.vehicleModel,
+                        vehicleType: providerDB.vehicleType == "bus" ? .bus : .car,
+                        facility: providerDB.facility == "ac" ? .ac : .nonAc
+                    ),
+                    maxSeats: providerDB.maxSeats,
+                    fare: providerDB.fare,
+                    route: loadFilteredBusData(for: providerDB.vehicleNumber) ?? [],
+                    rating: providerDB.rating // ✅ Default to 0 if `nil`
+                )
+            }
+
+            print("✅ Mapped service providers: \(serviceProviders)")
+            return serviceProviders
+
+        } catch {
+            print("❌ Error decoding: \(error.localizedDescription)")
+            throw error
         }
+
+        
+//        let response: PostgrestResponse<[ServiceProviderDB]> = try await supabase.database
+//            .from("ridesharing")
+//            .select()
+//            .execute()
+//        
+//        let providers = response.value
+//        
+//        print(providers)
+//        
+//        return response.value.map { providerDB in
+//            ServiceProviders(
+//                name: providerDB.name,
+//                vehicleNumber: providerDB.vehicleNumber,
+//                rideType: RideType(
+//                    vehicleModelName: providerDB.vehicleModel,
+//                    vehicleType: providerDB.vehicleType == "bus" ? .bus : .car,
+//                    facility: providerDB.facility == "ac" ? .ac : .nonAc
+//                ),
+//                maxSeats: providerDB.maxSeats,
+//                fare: providerDB.fare,
+//                route: loadFilteredBusData(for: providerDB.vehicleNumber) ?? [],
+//                rating: providerDB.rating
+//            )
+//        }
     }
     
     func fetchAvailableRidesFromSupabase() async throws -> [RideAvailable] {
@@ -322,13 +372,15 @@ class RidesDataController: DataController {
     }
     
     func rideHistoryOfBus(At index: Int) -> RidesHistory {
+        busRides = filterRideHistory(by: .bus)
+        
         let group = DispatchGroup()
         var result: RidesHistory?
         
         group.enter()
         Task {
-            let rideHistoryOfBus = filterRideHistory(by: .bus)
-            let ride = rideHistoryOfBus[index]
+            //let rideHistoryOfBus = filterRideHistory(by: .bus)
+            let ride = busRides[index]
             result = try? await convertToRidesHistory(ride)
             group.leave()
         }
@@ -359,7 +411,9 @@ class RidesDataController: DataController {
         }
         
         group.wait()
-        return min(busRidesCount, 3)
+        
+        print("count \(busRides.count)")
+        return min(busRides.count, 3)
     }
     
     func rideSuggestion(At index: Int) -> RideAvailable {
@@ -430,10 +484,11 @@ class RidesDataController: DataController {
         var sourceSchedule: Schedule?
         
         for schedule in route {
-            if !sourceFound && isFuzzyMatch(userInput: source, storedString: schedule.address) && onTime(date, comparedTo: schedule.time) {
+            if !sourceFound && isFuzzyMatch(userInput: source, storedString: schedule.address) /*&& onTime(date, comparedTo: schedule.time)*/ {
                 sourceSchedule = schedule
                 sourceFound = true
-            } else if sourceFound && isFuzzyMatch(userInput: destination, storedString: schedule.address) && onTime(date, comparedTo: schedule.time) {
+            } else if sourceFound && isFuzzyMatch(userInput: destination, storedString: schedule.address)/* && onTime(date, comparedTo: schedule.time) */{
+                //print((sourceSchedule!, schedule))
                 return (sourceSchedule!, schedule)
             }
         }
@@ -450,7 +505,7 @@ class RidesDataController: DataController {
     }
     
     // Keep existing utility functions
-    func isFuzzyMatch(userInput: String, storedString: String, threshold: Double = 70.0) -> Bool {
+    func isFuzzyMatch(userInput: String, storedString: String, threshold: Double = 80.0) -> Bool {
         return similarityScore(userInput: userInput, storedString: storedString) >= threshold
     }
     
@@ -620,7 +675,7 @@ class RidesDataController: DataController {
                 ),
                 maxSeats: provider.maxSeats,
                 fare: provider.fare,
-                route: [],
+                route: loadFilteredBusData(for: provider.vehicleNumber) ?? [],
                 rating: provider.rating
             ),
             date: rideHistory.date,

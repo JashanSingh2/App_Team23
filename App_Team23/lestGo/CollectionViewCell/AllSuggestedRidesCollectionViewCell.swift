@@ -37,32 +37,37 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
-    func updateAllSuggestedRidesCell(with ride: RideAvailable){
-
+    func updateAllSuggestedRidesCell(with ride: RideAvailable,source: Schedule, destination: Schedule,fare: Int){
+        seatsAvailableStackView.layer.borderWidth = 1
+        seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
+        seatsAvailableStackView.layer.cornerRadius = 5
+        
         cellContentview.layer.cornerRadius = 10
         
-        sourceAddressLabel.text = ride.source.address
-        destinationAddressLabel.text = ride.destination.address
-        pickupTimeLabel.text = ride.source.time
-        dropoffTimeLabel.text = ride.destination.time
-        fareLabel.text = "\(ride.fare)"
+        sourceAddressLabel.text = source.address
+        destinationAddressLabel.text = destination.address
+        pickupTimeLabel.text = source.time
+        dropoffTimeLabel.text = destination.time
+        fareLabel.text = "\(fare)"
         seatsAvailableButton.setTitle("\(ride.seatsAvailable) Seats", for: .normal)
         serviceProviderNameLabel.text = "\(ride.serviceProvider.name)"
-        serviceProviderRatingLabel.text = "\(ride.rating)"
+        serviceProviderRatingLabel.text = "\(ride.serviceProvider.rating)"
         if ride.serviceProvider.rideType.vehicleType == .car{
             vehicleTypeImageView.image = UIImage(systemName: "car.fill")
         }else {
             vehicleTypeImageView.image = UIImage(systemName: "bus.fill")
         }
         if ride.serviceProvider.rideType.facility == .ac{
-            acNonAcLabel.text = "AC"
+            //acNonAcLabel.text = "AC"
             acNonAcImageView.image = UIImage(systemName: "snowflake")
         }else {
-            acNonAcLabel.text = "Non AC"
+            //acNonAcLabel.text = "Non AC"
             acNonAcImageView.image = UIImage(systemName: "snowflake.slash")
         }
         
     }
+    
+    
     
     
 }
