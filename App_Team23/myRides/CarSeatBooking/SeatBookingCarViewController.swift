@@ -287,16 +287,31 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let VC = segue.destination as? SeatConfirmDeatilsViewController {
-            if let selectedRide{
-                
-                let ride = RideHistory(source: source!, destination: destination!, serviceProvider: selectedRide.serviceProvider, date: selectedRide.date, fare: RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide.serviceProvider), seatNumber: nil)
-                VC.ride = ride
-                RidesDataController.shared.newRideHistory(with: ride)
+        if let VC = segue.destination as? SeatConfirmDeatilsViewController,
+           let selectedRide = selectedRide,
+           let source = source,
+           let destination = destination {
+            let ride = RidesHistory(
+                source: source,
+                destination: destination,
+                serviceProvider: selectedRide.serviceProvider,
+                date: RidesDataController.shared.getTodayDate(),
+                fare: RidesDataController.shared.fareOfRide(
+                    from: source,
+                    to: destination,
+                    in: selectedRide.serviceProvider
+                ),
+                seatNumber: nil
+            )
+            VC.ride = ride
+            Task{
+                try await RidesDataController.shared.newRideHistory(with: ride)
             }
             
         }
     }
     
-
+    func bookRide(ride: RidesHistory) async throws{
+        try await RidesDataController.shared.newRideHistory(with: ride)
+    }
 }

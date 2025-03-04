@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import App_Team23
 
 class SeatConfirmDeatilsViewController: UIViewController {
    
@@ -30,15 +31,15 @@ class SeatConfirmDeatilsViewController: UIViewController {
     
     @IBOutlet weak var seatNoStackView: UIStackView!
     
-    var ride: RideHistory?
+
+//    var ride: RideHistory?
+
+    var ride: RidesHistory?
     var seat: [Int]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        confirmCardView.layer.cornerRadius = 10
-        
-        
         if let ride{
             updateUI()
         }

@@ -85,7 +85,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             case 0:
                 return RidesDataController.shared.numberOfBusRidesInHistory()
             case 1:
-                return suggestedRides!.count
+            return RidesDataController.shared.numberOfRidesAvailable()
             default:
                 return 1
         }
@@ -113,7 +113,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 cell.selectButton.tag = indexPath.row
                 cell.selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
                 
-                let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
+            let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
                 cell.updateSuggestedRideCell(with: rideSuggestion)
             cell.layer.cornerRadius = 12.0
             cell.layer.shadowColor = UIColor.black.cgColor
@@ -267,26 +267,23 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
-    var selectedRecentRide: RideHistory?
+    var selectedRecentRide: RidesHistory?
     
     
     @objc func reBookButtonTapped(_ button : UIButton) {
         selectedRecentRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
         
-        
-        //print("\(selectedRide!.serviceProvider)\n\n")
-        
-        
-        if let selectedRecentRide{
-            selectedRide = RidesDataController.shared.ride(from: selectedRecentRide.source.address, to: selectedRecentRide.destination.address, on: RidesDataController.shared.today)![0].0
-            
-            if let selectedRide{
+        if let selectedRecentRide {
+            if let availableRides = RidesDataController.shared.ride(
+                from: selectedRecentRide.source.address, 
+                to: selectedRecentRide.destination.address, 
+                on: RidesDataController.shared.today
+            ), !availableRides.isEmpty {
+                selectedRide = availableRides[0].0
                 performSegue(withIdentifier: "seatReBooking", sender: self)
-            }else{
+            } else {
                 showAlert()
             }
-            
-            
         }
     }
     

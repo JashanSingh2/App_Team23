@@ -29,11 +29,14 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     func updateSuggestedRideCell(with rideSuggestion: RidesAvailable){
         
-        sourceAddressLabel.text = rideSuggestion.source.address
-        destinationAddressLabel.text = rideSuggestion.destination.address
+
+        sourceAddressLabel.text = rideSuggestion.serviceProvider.route.first?.address
+        print(rideSuggestion.serviceProvider.route.first?.address ?? "No Address")
+        destinationAddressLabel.text = rideSuggestion.serviceProvider.route.last?.address
         
-        pickUpTimeLabel.text = rideSuggestion.source.time
-        dropOffTimeLabel.text = rideSuggestion.destination.time
+        pickUpTimeLabel.text = rideSuggestion.serviceProvider.route.first?.time
+        print(rideSuggestion.serviceProvider.route.first?.time ?? "No Time")
+        dropOffTimeLabel.text = rideSuggestion.serviceProvider.route.last?.time
         
         if rideSuggestion.serviceProvider.rideType.vehicleType == .bus{
             let config = UIImage.SymbolConfiguration(scale: .medium) // Set symbol size to medium

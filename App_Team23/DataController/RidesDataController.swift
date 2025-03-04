@@ -7,313 +7,457 @@
 
 import Foundation
 import UIKit
-
-
+import Supabase
+import App_Team23
 
 protocol DataController {
-    func rideHistoryAddress(At index: Int)-> String
-    
-    func rideHistory(At index: Int)-> RideHistory
+    func rideHistoryAddress(At index: Int) -> String
+    func rideHistory(At index: Int) -> RideHistory
+    func rideHistoryOfBus(At index: Int) -> RidesHistory
+    func numberOfRidesInHistory() -> Int
+    func numberOfBusRidesInHistory() -> Int
+    func rideSuggestion(At index: Int) -> RideAvailable
+    func numberOfUpcomingRides(for date: String) -> Int
+    func upcomingRides(At index: Int, for date: String) -> RidesHistory
+    func numberOfPreviousRides() -> Int
+    func previousRides(At index: Int) -> RidesHistory
+    func ride(from source: String, to destination: String, on date: String) -> [(RideAvailable, Schedule, Schedule, Int)]?
+    func newRideHistory(with ride: RidesHistory) async throws
     
     //private func filterRideHistory(by type: VehicleType) -> [RideHistory]
     
-
-    func rideHistoryOfBus(At index: Int) -> RideHistory
+    func numberOfRidesAvailable() -> Int
     
-    func numberOfRidesInHistory()-> Int
+    func availableRide(At index: Int) -> RideAvailable
     
-    func numberOfBusRidesInHistory()-> Int
-    
-    
-    //for ride suggestions
-    func rideSuggestion(At index: Int)-> RideAvailable
-    
-    //for myRides
-    func numberOfUpcomingRides(for date: String)-> Int
-    
-    
-    func upcomingRides(At index: Int, for date: String)-> RideHistory
-    
-    func numberOfPreviousRides()-> Int
-    
-    func previousRides(At index: Int)-> RideHistory
-    
-    func ride(from source: String,to destination: String, on date: String)-> [(RideAvailable, Schedule, Schedule, Int)]?
-    
-    func newRideHistory(with ride: RideHistory)
-    
-    func numberOfRidesAvailable()-> Int
-    
-    func availableRide(At index: Int)-> RideAvailable
-    
-    func fareOfRide(from source: Schedule, to destination: Schedule, in serviceProvider: ServiceProvider) -> Int
+    func fareOfRide(from source: Schedule, to destination: Schedule, in serviceProvider: ServiceProviders) -> Int
 }
 
+// First, let's create a struct to match the RideSharing table
+struct RideSharingDB: Codable {
+    let id: Int
+    let name: String
+    let vehicleNumber: String
+    let maxSeats: Int
+    let fare: Int
+    let rating: Double
+    let vehicleModel: String
+    let vehicleType: String
+    let facility: String
+    let source: String
+    let sourceTime: String
+    let destination: String
+    let destinationTime: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case vehicleNumber = "vehicle_number"
+        case maxSeats = "max_seats"
+        case fare
+        case rating
+        case vehicleModel = "vehicle_model"
+        case vehicleType = "vehicle_type"
+        case facility
+        case source
+        case sourceTime = "source_time"
+        case destination
+        case destinationTime = "destination_time"
+    }
+}
+
+// Create a struct for RideHistory table
+struct RideHistoryDB: Codable {
+    let id: Int
+    let source: String
+    let source_time: String
+    let destination: String
+    let destination_time: String
+    let service_provider_id: Int
+    let date: String
+    let fare: Int
+    let seat_number: [Int]?
+    var serviceProvider: ServiceProviderDB?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case source
+        case source_time
+        case destination
+        case destination_time
+        case service_provider_id
+        case date
+        case fare
+        case seat_number
+        case serviceProvider = "ridesharing"
+    }
+}
+
+struct ServiceProviderDB: Codable {
+    let id: Int
+    let name: String
+    let vehicleNumber: String
+    let maxSeats: Int
+    let fare: Int
+    let rating: Double
+    let vehicleModel: String
+    let vehicleType: String
+    let facility: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case vehicleNumber = "vehicle_number"
+        case maxSeats = "max_seats"
+        case fare
+        case rating
+        case vehicleModel = "vehicle_model"
+        case vehicleType = "vehicle_type"
+        case facility
+    }
+}
 
 class RidesDataController: DataController {
     
+    private let supabase = SupabaseClient(
+        supabaseURL: URL(string: "https://nwjlijnbgvmvcowxyxfu.supabase.co")!,
+        supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53amxpam5iZ3ZtdmNvd3h5eGZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkzNTI1OTgsImV4cCI6MjA1NDkyODU5OH0.Ie59yeseEc8A82gbJ56IVOq17bZOSjEkmzz-8qCPuPo"
+    )
     
-
-    
-
     static var shared = RidesDataController()
     
-    init() {
-        loadDummyData()
-        today = getTodayDate()
-        tomorrow = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 1, to: Date.now)!)
-        later = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 2, to: Date.now)!)
-    }
-    
-    private var allServiceProviders: [ServiceProvider] = []
-    
+    private var allServiceProviders: [ServiceProviders] = []
     private var availableRides: [RideAvailable] = []
-    
     private var ridesHistory: [RideHistory] = []
-    
     private var userProfile = UserData(name: "Jashan", email: "sample@gmail.com", source: Schedule(address: "Pari Chowk", time: "08:00"), destination: Schedule(address: "Botanical Garden", time: "09:10"), preferredRideType: .bus)
     
     var dateFormatter = DateFormatter()
-    
-    func getTodayDate() -> String {
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let todayDate = dateFormatter.string(from: Date.now)
-        return todayDate
-    }
-    
-    
-    
-    
     var today = ""
     var tomorrow = ""
     var later = ""
     
+    init() {
+        today = getTodayDate()
+        tomorrow = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 1, to: Date.now)!)
+        later = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 2, to: Date.now)!)
+        
+        Task {
+            do {
+                try await fetchAllData()
+            } catch {
+                print("Error fetching data from Supabase: \(error)")
+            }
+        }
+    }
     
-    func loadDummyData() {
-
-        allServiceProviders = [
-            ServiceProvider(name: "Anuj", vehicleNumber: "A1035", rideType: RideType(vehicleModelName: "Force Traveller", vehicleType: .bus, facility: .nonAc), maxSeats: 35, fare: 55, route: [
-                Schedule(address: "Akshardham", time: "07:40"),
-                Schedule(address: "Yamuna Bank", time: "07:50"),
-                Schedule(address: "Mayur Vihar", time: "08:00"),
-                Schedule(address: "New Ashok Nagar", time: "08:05"),
-                Schedule(address: "Noida Sec-15", time: "08:15"),
-                Schedule(address: "Noida Sec-18", time: "08:25"),
-                Schedule(address: "Botanical Garden", time: "08:30"),
-                Schedule(address: "Noida City Centre", time: "08:40"),
-                Schedule(address: "Noida Sec-51", time: "08:45"),
-                Schedule(address: "Noida Sec-62", time: "09:10")
-                ], rating: 3.5
-            ),
-            ServiceProvider(name: "Firdosh", vehicleNumber: "A9999", rideType: RideType(vehicleModelName: "Volvo", vehicleType: .bus, facility: .ac), maxSeats: 45, fare: 65, route: [
-                Schedule(address: "Akshardham", time: "07:40"),
-                Schedule(address: "Yamuna Bank", time: "07:50"),
-                Schedule(address: "Mayur Vihar", time: "08:00"),
-                Schedule(address: "New Ashok Nagar", time: "08:05"),
-                Schedule(address: "Noida Sec-15", time: "08:15"),
-                Schedule(address: "Noida Sec-18", time: "08:25"),
-                Schedule(address: "Botanical Garden", time: "08:30"),
-                Schedule(address: "Noida City Centre", time: "08:40"),
-                Schedule(address: "Noida Sec-51", time: "08:45"),
-                Schedule(address: "Noida Sec-62", time: "09:10")
-                ] , rating: 4.9
-            ),
-            
-            ServiceProvider(name: "Aryan", vehicleNumber: "B1035", rideType: RideType(vehicleModelName: "Suzuki Dzire", vehicleType: .car, facility: .nonAc), maxSeats: 3, fare: 85, route: [
-                Schedule(address: "Akshardham", time: "07:40"),
-                Schedule(address: "Yamuna Bank", time: "07:50"),
-                Schedule(address: "Mayur Vihar 1", time: "08:00"),
-                Schedule(address: "New Ashok Nagar", time: "08:05"),
-                Schedule(address: "Noida Sec-15", time: "08:15"),
-                Schedule(address: "Noida Sec-18", time: "08:25"),
-                Schedule(address: "Botanical Garden", time: "08:30"),
-                Schedule(address: "Noida City Centre", time: "08:40"),
-                Schedule(address: "Noida Sec-51", time: "08:45"),
-                Schedule(address: "Noida Sec-62", time: "09:10")
-                ] , rating: 4.6
-            ),
-            ServiceProvider(name: "Firdosh", vehicleNumber: "A9999", rideType: RideType(vehicleModelName: "Volvo", vehicleType: .bus, facility: .ac), maxSeats: 45, fare: 65, route: [
-                Schedule(address: "Pari Chowk", time: "08:00"),
-                Schedule(address: "Knowledge Park-II", time: "08:05"),
-                Schedule(address: "ABC Business Park", time: "08:15"),
-                Schedule(address: "Adobe Sector 132", time: "08:25"),
-                Schedule(address: "Jaypee Hospital", time: "08:35"),
-                Schedule(address: "Axis Bank", time: "08:40"),
-                Schedule(address: "Amity University", time: "08:50"),
-                Schedule(address: "Okhla Bird Sanctuary", time: "09:00"),
-                Schedule(address: "Botanical Garden", time: "09:10")
-                ] , rating: 4.1
-            ),
-            ServiceProvider(name: "Jashan", vehicleNumber: "B5911", rideType: RideType(vehicleModelName: "XL6", vehicleType: .car, facility: .ac), maxSeats: 5, fare: 135, route: [
-                Schedule(address: "Pari Chowk", time: "08:00"),
-                Schedule(address: "Jaypee Hospital", time: "08:35"),
-                Schedule(address: "Axis Bank", time: "08:40"),
-                Schedule(address: "Amity University", time: "08:50"),
-                Schedule(address: "Okhla Bird Sanctuary", time: "09:00"),
-                Schedule(address: "Botanical Garden", time: "09:10")
-                ] , rating: 3.9
-            ),
-            ServiceProvider(name: "Vishal", vehicleNumber: "C9099", rideType: RideType(vehicleModelName: "Volvo", vehicleType: .bus, facility: .ac), maxSeats: 40, fare: 90, route: [
-                Schedule(address: "Sector 62", time: "07:50"),
-                Schedule(address: "Fortis Hospital", time: "08:05"),
-                Schedule(address: "Sector 52", time: "08:15"),
-                Schedule(address: "Sector 32", time: "08:25"),
-                Schedule(address: "Golf Course", time: "08:40"),
-                Schedule(address: "Sector 37", time: "08:50"),
-                Schedule(address: "Axis House", time: "09:15"),
-                Schedule(address: "Pari Chowk", time: "09:30")
-                ] , rating: 4.8
-            ),
-            ServiceProvider(name: "Lakshay", vehicleNumber: "B0101", rideType: RideType(vehicleModelName: "Nexon", vehicleType: .car, facility: .ac), maxSeats: 4, fare: 150, route: [
-                Schedule(address: "Sector 62", time: "07:50"),
-                Schedule(address: "Fortis Hospital", time: "08:05"),
-                Schedule(address: "Sector 52", time: "08:15"),
-                Schedule(address: "Sector 32", time: "08:25"),
-                Schedule(address: "Golf Course", time: "08:40"),
-                Schedule(address: "Sector 37", time: "08:50"),
-                Schedule(address: "Axis House", time: "09:15"),
-                Schedule(address: "Pari Chowk", time: "09:20")
-                ], rating: 4.6
+    private func fetchAllData() async throws {
+        // Fetch rides history
+        ridesHistory = try await fetchRidesFromSupabase()
+        
+        // Fetch service providers
+        allServiceProviders = try await fetchServiceProvidersFromSupabase()
+        
+        // Fetch available rides
+        availableRides = try await fetchAvailableRidesFromSupabase()
+    }
+    
+    func fetchRidesFromSupabase() async throws -> [RideHistory] {
+        let response: PostgrestResponse<[RideHistory]> = try await supabase.database
+            .from("ridehistory")
+            .select()
+            .execute()
+        
+        return response.value
+    }
+    
+    func fetchServiceProvidersFromSupabase() async throws -> [ServiceProviders] {
+        let response: PostgrestResponse<[ServiceProviderDB]> = try await supabase.database
+            .from("ridesharing")
+            .select()
+            .execute()
+        
+        return response.value.map { providerDB in
+            ServiceProviders(
+                name: providerDB.name,
+                vehicleNumber: providerDB.vehicleNumber,
+                rideType: RideType(
+                    vehicleModelName: providerDB.vehicleModel,
+                    vehicleType: providerDB.vehicleType == "bus" ? .bus : .car,
+                    facility: providerDB.facility == "ac" ? .ac : .nonAc
+                ),
+                maxSeats: providerDB.maxSeats,
+                fare: providerDB.fare,
+                route: loadFilteredBusData(for: providerDB.vehicleNumber) ?? [],
+                rating: providerDB.rating
+            )
+        }
+    }
+    
+    func fetchAvailableRidesFromSupabase() async throws -> [RideAvailable] {
+        let response: PostgrestResponse<[RideSharingDB]> = try await supabase.database
+            .from("ridesharing")
+            .select()
+            .execute()
+        
+        // Convert RideSharingDB to RideAvailable
+        return response.value.map { rideSharingDB in
+            let serviceProvider = ServiceProviders(
+                name: rideSharingDB.name,
+                vehicleNumber: rideSharingDB.vehicleNumber,
+                rideType: RideType(
+                    vehicleModelName: rideSharingDB.vehicleModel,
+                    vehicleType: rideSharingDB.vehicleType == "bus" ? .bus : .car,
+                    facility: rideSharingDB.facility == "ac" ? .ac : .nonAc
+                ),
+                maxSeats: rideSharingDB.maxSeats,
+                fare: rideSharingDB.fare,
+                route: loadFilteredBusData(for: rideSharingDB.vehicleNumber) ?? [], // You might want to handle route separately
+                rating: rideSharingDB.rating
             )
             
-            ]
-        
-        availableRides = [
-            RideAvailable(date: today, seatsAvailable: 30, serviceProvider: allServiceProviders[0]),
-            RideAvailable(date: today, seatsAvailable: 3, serviceProvider: allServiceProviders[2]),
-            RideAvailable(date: tomorrow, seatsAvailable: 40, serviceProvider: allServiceProviders[3]),
-            RideAvailable(date: tomorrow, seatsAvailable: 4, serviceProvider: allServiceProviders[4]),
-            RideAvailable(date: later, seatsAvailable: 35, serviceProvider: allServiceProviders[5]),
-            RideAvailable(date: later, seatsAvailable: 3, serviceProvider: allServiceProviders[6]),
-            RideAvailable(date: later, seatsAvailable: 33, serviceProvider: allServiceProviders[3])
-        ]
-        
-        ridesHistory = [
-            RideHistory(source: Schedule(address: "Sector 62", time: "7:50 AM"), destination: Schedule(address: "Pari Chowk", time: "9:20 AM"), serviceProvider: allServiceProviders[6], date: "2025-01-17", fare: 150, seatNumber: nil),
-            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-18", fare: 30, seatNumber: [21]),
-            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "2025-01-19", fare: 40, seatNumber: [1]),
-            RideHistory(source: Schedule(address: "Knowledge Park-II", time: "8:05 AM"), destination: Schedule(address: "Okhla Bird Sanctuary", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-20", fare: 45, seatNumber: [3]),
-            RideHistory(source: Schedule(address: "Sector 62", time: "7:50 AM"), destination: Schedule(address: "Pari Chowk", time: "9:20 AM"), serviceProvider: allServiceProviders[6], date: "2025-01-28", fare: 150, seatNumber: nil),
-            RideHistory(source: Schedule(address: "Pari Chowk", time: "8:00 AM"), destination: Schedule(address: "Botanical Garden", time: "9:00 AM"), serviceProvider: allServiceProviders[3], date: "2025-01-29", fare: 30, seatNumber: [17]),
-            RideHistory(source: Schedule(address: "Mayur Vihar", time: "8:00 AM"), destination: Schedule(address: "Noida Sector 51", time: "9:00 AM"), serviceProvider: allServiceProviders[0], date: "2025-01-30", fare: 40, seatNumber: [14])
-        ]
+            return RideAvailable(
+                date: getTodayDate(),
+                seatsAvailable: rideSharingDB.maxSeats,
+                serviceProvider: serviceProvider
+            )
+        }
     }
     
+    struct BusInfo: Codable {
+        let address: String
+        let time: String
+        let vehicleNumber: String
+
+        // Map JSON keys to Swift properties
+        enum CodingKeys: String, CodingKey {
+            case address = "Address"
+            case time = "Time"
+            case vehicleNumber = "VehicleNumber"
+        }
+    }
+
     
-    //for ride history
+
+    func loadFilteredBusData(for vehicleNumber: String) -> [Schedule]? {
+        guard let url = Bundle.main.url(forResource: "merged_vehicle_routes", withExtension: "json") else {
+            print("🚨 JSON file not found")
+            return nil
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            
+            let fullBusData = try JSONDecoder().decode([BusInfo].self, from: data)
+            
+            let filteredBuses: [Schedule] = fullBusData
+                .filter { $0.vehicleNumber == vehicleNumber }
+                .map { Schedule(address: $0.address, time: $0.time) }
+
+            return filteredBuses.isEmpty ? nil : filteredBuses
+        } catch {
+            print("❌ Error decoding JSON: \(error)")
+            return nil
+        }
+    }
+
     
-    func rideHistoryAddress(At index: Int)-> String{
-        return ridesHistory[index].destination.address
+    func getBusDetails(for vehicleNumber: String) {
+        if let buses = loadFilteredBusData(for: vehicleNumber) {
+            for bus in buses {
+                print("✅ Address: \(bus.address), Time: \(bus.time)")
+            }
+        } else {
+            print("❌ No data found for bus number: \(vehicleNumber)")
+        }
+    }
+
+
+
+
+
+
+    
+    
+    func saveRideToSupabase(_ ride: RideHistory) async throws {
+        let response: PostgrestResponse<[RideHistory]> = try await supabase.database
+            .from("ridehistory")
+            .insert(ride)
+            .execute()
+        print("📡 Sending data to Supabase...")
     }
     
-    func rideHistory(At index: Int)-> RideHistory{
+    // Existing helper functions
+    func getTodayDate() -> String {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: Date.now)
+    }
+    
+    // Existing query functions
+    func rideHistoryAddress(At index: Int) -> String {
+        return ridesHistory[index].destination
+    }
+    
+    func rideHistory(At index: Int) -> RideHistory {
         return ridesHistory[index]
     }
     
     private func filterRideHistory(by type: VehicleType) -> [RideHistory] {
+        let group = DispatchGroup()
         var filteredRides: [RideHistory] = []
+        
         for ride in ridesHistory {
-            if ride.serviceProvider.rideType.vehicleType == type {
-                filteredRides.append(ride)
+            group.enter()
+            Task {
+                if let provider = try? await fetchServiceProvider(id: ride.service_provider_id) {
+                    if provider.vehicleType == type.rawValue {
+                        filteredRides.append(ride)
+                    }
+                }
+                group.leave()
             }
         }
+        
+        group.wait()
         return filteredRides
     }
     
-    
-    
-    func rideHistoryOfBus(At index: Int) -> RideHistory {
-        let rideHistoryOfBus = filterRideHistory(by: .bus)
-        return rideHistoryOfBus[index]
+    func rideHistoryOfBus(At index: Int) -> RidesHistory {
+        let group = DispatchGroup()
+        var result: RidesHistory?
+        
+        group.enter()
+        Task {
+            let rideHistoryOfBus = filterRideHistory(by: .bus)
+            let ride = rideHistoryOfBus[index]
+            result = try? await convertToRidesHistory(ride)
+            group.leave()
+        }
+        
+        group.wait()
+        return result!
     }
     
-    func numberOfRidesInHistory()-> Int{
+    func numberOfRidesInHistory() -> Int {
         return ridesHistory.count
     }
     
-    func numberOfBusRidesInHistory()-> Int{
-        var count: Int = 0
-        for ride in ridesHistory{
-            if ride.serviceProvider.rideType.vehicleType == .bus{
-                count += 1
+    func numberOfBusRidesInHistory() -> Int {
+        let group = DispatchGroup()
+        var busRidesCount = 0
+        let localRides = ridesHistory // Create local copy
+        
+        for ride in localRides {
+            group.enter()
+            Task {
+                if let provider = try? await fetchServiceProvider(id: ride.service_provider_id) {
+                    if provider.vehicleType == "bus" {
+                        busRidesCount += 1
+                    }
+                }
+                group.leave()
             }
         }
         
-        if count < 3{
-            return count
-        }else{
-                return 3
-            
-        }
+        group.wait()
+        return min(busRidesCount, 3)
     }
     
-
-    
-    
-    //for ride suggestions
-    func rideSuggestion(At index: Int)-> RideAvailable{
+    func rideSuggestion(At index: Int) -> RideAvailable {
         return availableRides[index]
+    }
+    
+    func numberOfUpcomingRides(for date: String) -> Int {
+        return ridesHistory.filter { $0.date == date }.count
+    }
+    
+    private func upcomingRides(for date: String) -> [RideHistory] {
+        return ridesHistory.filter { $0.date == date }
+    }
+    
+    func upcomingRides(At index: Int, for date: String) -> RidesHistory {
+        let group = DispatchGroup()
+        var result: RidesHistory?
         
-    }
-    
-    
-    
-    //for myRides
-    func numberOfUpcomingRides(for date: String)-> Int{
-        var count: Int = 0
-        for ride in ridesHistory{
-            if ride.date == date{
-                count += 1
-            }
+        group.enter()
+        Task {
+            let ride = upcomingRides(for: date)[index]
+            result = try? await convertToRidesHistory(ride)
+            group.leave()
         }
-        return count
+        
+        group.wait()
+        return result!
     }
     
+    func numberOfPreviousRides() -> Int {
+        return ridesHistory.filter { $0.date != today && $0.date != tomorrow && $0.date != later }.count
+    }
     
-    private func upcomingRides(for date: String)-> [RideHistory]{
-        var upcomingRides: [RideHistory] = []
-        for ride in ridesHistory{
-            if ride.date == date{
-                upcomingRides.append(ride)
-            }
+    func previousRides(At index: Int) -> RidesHistory {
+        let group = DispatchGroup()
+        var result: RidesHistory?
+        
+        group.enter()
+        Task {
+            let previousRides = ridesHistory.filter { $0.date != today && $0.date != tomorrow && $0.date != later }
+            let ride = previousRides[index]
+            result = try? await convertToRidesHistory(ride)
+            group.leave()
         }
-        return upcomingRides
+        
+        group.wait()
+        return result!
     }
     
-    func upcomingRides(At index: Int, for date: String)-> RideHistory{
-        print(index)
-        let upcomingRides = upcomingRides(for: date)
-        return upcomingRides[index]
-            
-    }
-    
-    
-    func numberOfPreviousRides()-> Int{
-        var count: Int = 0
-        for ride in ridesHistory{
-            if ride.date != today && ride.date != tomorrow && ride.date != later {
-                count += 1
-            }
-        }
-        return count
-    }
-    
-    func previousRides(At index: Int)-> RideHistory{
-        if ridesHistory[index].date != today && ridesHistory[index].date != tomorrow && ridesHistory[index].date != later {
-            return ridesHistory[index]
-            }else {
-                return previousRides(At: index+1)
-            }
-            
-    }
-    
-    func ride(of serviceProvider: ServiceProvider)-> RideAvailable?{
+    func ride(from source: String, to destination: String, on date: String) -> [(RideAvailable, Schedule, Schedule, Int)]? {
+        var ridesAvail: [(RideAvailable, Schedule, Schedule, Int)] = []
+        
         for ride in availableRides {
-            if ride.serviceProvider == serviceProvider{
-                return ride
+            if let (sourceSchedule, destSchedule) = findMatchingRoute(in: ride.serviceProvider.route,
+                                                                     source: source,
+                                                                     destination: destination,
+                                                                     date: date) {
+                let fare = fareOfRide(from: sourceSchedule, to: destSchedule, in: ride.serviceProvider)
+                ridesAvail.append((ride, sourceSchedule, destSchedule, fare))
             }
         }
+        
+        return ridesAvail.isEmpty ? nil : ridesAvail
+    }
+    
+    private func findMatchingRoute(in route: [Schedule], source: String, destination: String, date: String) -> (Schedule, Schedule)? {
+        var sourceFound = false
+        var sourceSchedule: Schedule?
+        
+        for schedule in route {
+            if !sourceFound && isFuzzyMatch(userInput: source, storedString: schedule.address) && onTime(date, comparedTo: schedule.time) {
+                sourceSchedule = schedule
+                sourceFound = true
+            } else if sourceFound && isFuzzyMatch(userInput: destination, storedString: schedule.address) && onTime(date, comparedTo: schedule.time) {
+                return (sourceSchedule!, schedule)
+            }
+        }
+        
         return nil
+    }
+    
+    func numberOfRidesAvailable() -> Int {
+        return availableRides.count
+    }
+    
+    func availableRide(At index: Int) -> RideAvailable {
+        return availableRides[index]
+    }
+    
+    // Keep existing utility functions
+    func isFuzzyMatch(userInput: String, storedString: String, threshold: Double = 70.0) -> Bool {
+        return similarityScore(userInput: userInput, storedString: storedString) >= threshold
+    }
+    
+    func similarityScore(userInput: String, storedString: String) -> Double {
+        let distance = levenshtein(userInput.lowercased(), storedString.lowercased())
+        let maxLength = max(userInput.count, storedString.count)
+        return (1.0 - (Double(distance) / Double(maxLength))) * 100
     }
     
     func levenshtein(_ lhs: String, _ rhs: String) -> Int {
@@ -343,60 +487,6 @@ class RidesDataController: DataController {
         }
         return matrix[lhsCount][rhsCount]
     }
-
-    func similarityScore(userInput: String, storedString: String) -> Double {
-        let distance = levenshtein(userInput.lowercased(), storedString.lowercased())
-        let maxLength = max(userInput.count, storedString.count)
-        return (1.0 - (Double(distance) / Double(maxLength))) * 100
-    }
-
-    func isFuzzyMatch(userInput: String, storedString: String, threshold: Double = 70.0) -> Bool {
-        return similarityScore(userInput: userInput, storedString: storedString) >= threshold
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    func ride(from source: String,to destination: String, on date: String)-> [(RideAvailable, Schedule, Schedule, Int)]?{
-        
-        var ridesAvail: [(RideAvailable, Schedule, Schedule, Int)] = []
-        
-        var sourceFound: Bool = false
-        var sourceAdd: Schedule = Schedule(address: "", time: "")
-        var destinationAdd: Schedule = Schedule(address: "", time: "")
-        //var destinationFound: Bool = false
-        
-        for ride in availableRides{
-            for schedule in ride.serviceProvider.route{
-                if (isFuzzyMatch(userInput: source, storedString: schedule.address) && onTime(date, comparedTo: schedule.time) && !sourceFound){
-                    
-                    print("\(schedule.address)   \(source)   \(cosineSimilarity(source, schedule.address))")
-                    
-                    sourceAdd = schedule
-                    sourceFound = true
-                }
-                if isFuzzyMatch(userInput: destination, storedString: schedule.address) && onTime(date, comparedTo: schedule.time) && sourceFound{
-                    //destinationFound = true
-                    print("\(schedule.address)   \(destination)   \(cosineSimilarity(source, schedule.address))")
-                    destinationAdd = schedule
-                    if sourceFound{
-                        let fare = fareOfRide(from: sourceAdd, to: destinationAdd, in: ride.serviceProvider)
-                        ridesAvail.append((ride, sourceAdd, destinationAdd, fare))
-                        break
-                    }
-                }
-            }
-            for ride in ridesAvail{
-                print("\(ride.1)")
-            }
-            return ridesAvail
-        }
-        return nil
-    }
     
     func onTime(_ time1: String, comparedTo time2: String) -> Bool {
         let minutes: Int = 15
@@ -420,57 +510,46 @@ class RidesDataController: DataController {
         return (lowerBound...upperBound).contains(date1)
     }
     
-    func letterFrequency(_ str: String) -> [Character: Int] {
-        var frequency: [Character: Int] = [:]
-        for char in str.lowercased() {
-            frequency[char, default: 0] += 1
-        }
-        return frequency
-    }
-
-    func cosineSimilarity(_ str1: String, _ str2: String) -> Double {
-        let freq1 = letterFrequency(str1)
-        let freq2 = letterFrequency(str2)
-
-        let uniqueChars = Set(freq1.keys).union(Set(freq2.keys))
-
-        var dotProduct = 0
-        var magnitude1 = 0
-        var magnitude2 = 0
-
-        for char in uniqueChars {
-            let count1 = freq1[char, default: 0]
-            let count2 = freq2[char, default: 0]
-
-            dotProduct += count1 * count2
-            magnitude1 += count1 * count1
-            magnitude2 += count2 * count2
-        }
-
-        let denominator = sqrt(Double(magnitude1)) * sqrt(Double(magnitude2))
-        return denominator == 0 ? 0.0 : Double(dotProduct) / denominator
-    }
-
-    
-    func newRideHistory(with ride: RideHistory){
-        print(ridesHistory.count)
+    func fareOfRide(from source: Schedule, to destination: Schedule, in serviceProvider: ServiceProviders) -> Int {
+        var stops = 0
+        var routeMatch = false
         
-        ridesHistory.append(ride)
-        print(ridesHistory.count)
+        for stop in serviceProvider.route {
+            if stop == source {
+                routeMatch = true
+            }
+            if routeMatch {
+                stops += 1
+            }
+            if stop == destination {
+                routeMatch = false
+            }
+        }
+        
+        let calculatedFare = Int((Double(stops) / Double(serviceProvider.route.count)) * Double(serviceProvider.fare))
+        return max(calculatedFare, 10)
     }
     
-    func numberOfRidesAvailable() -> Int {
-        return availableRides.count
+    func newRideHistory(with ride: RidesHistory) async throws {
+        let convertedRide = convertToRideHistory(ride)
+        Task {
+            do {
+                try await saveRideToSupabase(convertedRide)
+            } catch {
+                print("Error saving ride to Supabase: \(error)")
+            }
+        }
+        ridesHistory = try await fetchRidesFromSupabase()
+
     }
     
-    func availableRide(At index: Int) -> RideAvailable {
-        return availableRides[index]
-    }
-    
-    func cancelRide(rideHistory: RideHistory){
+    private func cancelRide(rideHistory: RideHistory) {
         var index: Int = 0
-        for ride in ridesHistory{
-            if ride.source.address == rideHistory.source.address && ride.destination.address == rideHistory.destination.address && ride.date == rideHistory.date && ride.serviceProvider == rideHistory.serviceProvider{
+        for ride in ridesHistory {
+            if ride.source == rideHistory.source && 
+               ride.destination == rideHistory.destination && 
+               ride.date == rideHistory.date && 
+               ride.service_provider_id == rideHistory.service_provider_id {
                 ridesHistory.remove(at: index)
                 return
             }
@@ -478,31 +557,112 @@ class RidesDataController: DataController {
         }
     }
     
-    func fareOfRide(from source: Schedule, to destination: Schedule, in serviceProvider: ServiceProvider) -> Int {
-        var stops: Int = 0
-        var routeMatch: Bool = false
-        for stop in serviceProvider.route{
-            if stop == source{
-                routeMatch = true
-            }
-            if routeMatch{
-                stops += 1
-            }
-            if stop == destination{
-                routeMatch = false
-            }
-        }
-        if Int((stops/serviceProvider.route.count) * serviceProvider.fare) < 10{
-            return 10
-        }
+    func cancelRide(rideHistory: RidesHistory) async throws{
+        let convertedRide = convertToRideHistory(rideHistory)
+        cancelRide(rideHistory: convertedRide)
         
-        return Int((stops/serviceProvider.route.count) * serviceProvider.fare)
+        // Also delete from Supabase
+        Task {
+            do {
+                let response: PostgrestResponse<[RideHistory]> = try await supabase.database
+                    .from("ridehistory")
+                    .delete()
+                    .eq("service_provider_id", value: convertedRide.service_provider_id)
+                    .eq("date", value: convertedRide.date)
+                    .execute()
+            } catch {
+                print("Error deleting ride from Supabase: \(error)")
+            }
+        }
+        ridesHistory = try await fetchRidesFromSupabase()
     }
     
     func rideSuggestion() -> [(RideAvailable,Schedule,Schedule, Int)]? {
         return ride(from: userProfile.source.address, to: userProfile.destination.address, on: userProfile.source.time)
     }
     
+    func ensureDataLoaded() async {
+        if availableRides.isEmpty {
+            do {
+                try await fetchAllData()
+            } catch {
+                print("Error fetching data: \(error)")
+            }
+        }
+    }
     
+    func fetchServiceProvider(id: Int) async throws -> ServiceProviderDB {
+        let response: PostgrestResponse<[ServiceProviderDB]> = try await supabase.database
+            .from("ridesharing")
+            .select()
+            .eq("id", value: id)
+            .execute()
+        
+        guard let provider = response.value.first else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Provider not found"])
+        }
+        return provider
+    }
+    
+    private func convertToRidesHistory(_ rideHistory: RideHistory) async throws -> RidesHistory {
+        let provider = try await fetchServiceProvider(id: rideHistory.service_provider_id)
+        
+        return RidesHistory(
+            source: Schedule(address: rideHistory.source, time: rideHistory.source_time),
+            destination: Schedule(address: rideHistory.destination, time: rideHistory.destination_time),
+            serviceProvider: ServiceProviders(
+                name: provider.name,
+                vehicleNumber: provider.vehicleNumber,
+                rideType: RideType(
+                    vehicleModelName: provider.vehicleModel,
+                    vehicleType: provider.vehicleType == "bus" ? .bus : .car,
+                    facility: provider.facility == "ac" ? .ac : .nonAc
+                ),
+                maxSeats: provider.maxSeats,
+                fare: provider.fare,
+                route: [],
+                rating: provider.rating
+            ),
+            date: rideHistory.date,
+            fare: rideHistory.fare,
+            seatNumber: rideHistory.seat_number
+        )
+    }
+    
+    func convertToRideHistory(_ ridesHistory: RidesHistory) -> RideHistory {
+        let group = DispatchGroup()
+        var providerID: Int?
+        
+        
+        
+        group.enter()
+        Task {
+            if let response: PostgrestResponse<[ServiceProviderDB]> = try? await supabase.database
+                .from("ridesharing")
+                .select()
+                .eq("vehicle_number", value: ridesHistory.serviceProvider.vehicleNumber)
+                .execute(),
+               let provider = response.value.first {
+                providerID = provider.id
+            }
+            group.leave()
+        }
+        
+        group.wait()
+        
+        return RideHistory(
+            id: numberOfRidesInHistory() + 1,  // Generate random ID
+            source: ridesHistory.source.address,
+            source_time: ridesHistory.source.time,
+            destination: ridesHistory.destination.address,
+            destination_time: ridesHistory.destination.time,
+            service_provider_id: providerID ?? 1000,
+            date: ridesHistory.date,
+            rating: nil,
+            review: nil,
+            fare: ridesHistory.fare,
+            seat_number: ridesHistory.seatNumber
+        )
+    }
 }
 

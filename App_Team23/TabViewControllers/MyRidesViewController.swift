@@ -21,9 +21,9 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         "All Other Rides"
     ]
     
-    private var today = "28/01/2025"
-    private var tomorrow = "29/01/2025"
-    private var later = "30/01/2025"
+    private var today = RidesDataController.shared.today
+    private var tomorrow = RidesDataController.shared.tomorrow
+    private var later = RidesDataController.shared.later
     
     static var preSelectedSegmentIndex: Int = 0
     
@@ -115,10 +115,10 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             if history.serviceProvider.rideType.vehicleType == .car {
                 cell.reBookButton.isEnabled = false
-                print("car")
+                
             }else{
                 cell.reBookButton.isEnabled = true
-                print("bus")
+                
             }
             
             return cell
@@ -328,7 +328,7 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBSegueAction func rideDetailSegue(_ coder: NSCoder, sender: Any?) -> RideDetailViewController? {
         
-        var rideHistory: RideHistory = RidesDataController.shared.previousRides(At: rideSelected.row)
+        var rideHistory: RidesHistory = RidesDataController.shared.previousRides(At: rideSelected.row)
         
         if segmentedControl.selectedSegmentIndex == 1 {
             rideHistory = RidesDataController.shared.previousRides(At: rideSelected.row)
@@ -362,8 +362,27 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         
         
-        (viewController.selectedRide, viewController.source, viewController.destination) = (RidesDataController.shared.ride(of: selectedRide.serviceProvider),selectedRide.source,selectedRide.destination)
-        navigationController?.present(viewController, animated: true)
+        Task {
+            do {
+                await RidesDataController.shared.ensureDataLoaded()
+                if let availableRides = RidesDataController.shared.ride(
+                    from: selectedRide.source.address,
+                    to: selectedRide.destination.address,
+                    on: selectedRide.date
+                )?.first {
+                    viewController.selectedRide = availableRides.0
+                    viewController.source = availableRides.1
+                    viewController.destination = availableRides.2
+                } else {
+                    viewController.selectedRide = nil
+                    viewController.source = nil
+                    viewController.destination = nil
+                }
+                navigationController?.present(viewController, animated: true)
+            } catch {
+                print("Error loading rides: \(error)")
+            }
+        }
     }
     
     @objc func ResheduleButtonTapped(_ button : UIButton) {

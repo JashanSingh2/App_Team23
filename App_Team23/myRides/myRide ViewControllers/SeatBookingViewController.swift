@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import App_Team23
 
 class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
     
@@ -147,18 +148,45 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationVC = segue.destination as? TrackingViewController{
-            destinationVC.route = (selectedRide?.serviceProvider.route)!
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if let destinationVC = segue.destination as? TrackingViewController,
+           let selectedRide = selectedRide {
+            destinationVC.route = selectedRide.serviceProvider.route
         }
-        if let destinationVC = segue.destination as? SeatConfirmDeatilsViewController{
+        
+        if let destinationVC = segue.destination as? SeatConfirmDeatilsViewController,
+           let selectedRide = selectedRide,
+           let source = source,
+           let destination = destination {
+            
             for seat in selectedSeats {
-                selectedSeat.append(Int((seat.titleLabel?.text)!)!)
+                if let seatText = seat.titleLabel?.text,
+                   let seatNumber = Int(seatText) {
+                    selectedSeat.append(seatNumber)
+                }
             }
             
-            let ride = RideHistory(source: source!, destination: destination!, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: (RidesDataController.shared.fareOfRide(from: source!, to: destination!, in: selectedRide!.serviceProvider) * selectedSeats.count), seatNumber: selectedSeat)
+            let fare = RidesDataController.shared.fareOfRide(
+                from: source,
+                to: destination,
+                in: selectedRide.serviceProvider
+            ) * selectedSeats.count
             
-            RidesDataController.shared.newRideHistory(with: ride)
+            let ride = RidesHistory(
+                source: source,
+                destination: destination,
+                serviceProvider: selectedRide.serviceProvider,
+                date: RidesDataController.shared.getTodayDate(),
+                fare: fare,
+                seatNumber: selectedSeat
+            )
+            
+            
+            Task {
+                    try await RidesDataController.shared.newRideHistory(with: ride)
+            }
+            
+            
             destinationVC.ride = ride
             destinationVC.seat = selectedSeat
         }
@@ -188,40 +216,13 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     var selectedSeat: [Int] = []
     @IBAction func bookNowButtonTapped() {
         //dismiss(animated: true, completion: nil)
-        
-        
+
         showAlert()
-        
-        
-        
-    }
-    
-    func showAlert(){
-        let alert = UIAlertController(
-        title: "Are you sure?",
-        message: "You want to book this ride",
-        preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-        
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in self.confirmRide() } ))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func confirmRide(){
-     
-        for seat in selectedSeats {
-            selectedSeat.append(Int((seat.titleLabel?.text)!)!)
-        }
-        
-        let ride = RideHistory(source: selectedRide!.source, destination: selectedRide!.destination, serviceProvider: selectedRide!.serviceProvider, date: "28/01/2025", fare: selectedRide!.fare * selectedSeats.count, seatNumber: selectedSeat.first)
-        
-        RidesDataController.shared.newRideHistory(with: ride)
-        
         performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
+
     }
+    
+    
     
     
     @objc func seatButtonTapped(_ sender: UIButton) {
@@ -271,5 +272,16 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
+    func bookRide(ride: RidesHistory, seats: [Int]) async throws{
+        let updatedRide = RidesHistory(
+            source: ride.source,
+            destination: ride.destination,
+            serviceProvider: ride.serviceProvider,
+            date: ride.date,
+            fare: ride.fare,
+            seatNumber: seats
+        )
+        try await RidesDataController.shared.newRideHistory(with: updatedRide)
+    }
 
 }
