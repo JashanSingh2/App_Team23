@@ -21,28 +21,29 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var seatsAvailableButton: UIButton!
     
+    @IBOutlet weak var vehicleTypeButton: UIButton!
+    
+    @IBOutlet weak var selectButton: UIButton!
+
     @IBOutlet weak var serviceProviderNameLabel: UILabel!
     
     @IBOutlet weak var serviceProviderRatingLabel: UILabel!
     
-    @IBOutlet weak var vehicleTypeImageView: UIImageView!
-    
+//    @IBOutlet weak var vehicleTypeImageView: UIImageView!
     
     @IBOutlet weak var acNonAcImageView: UIImageView!
-    
-    @IBOutlet weak var acNonAcLabel: UILabel!
-    
-    
     @IBOutlet weak var cellContentview: UIView!
-    
-    @IBOutlet weak var seatsAvailableStackView: UIStackView!
+       
+//    @IBOutlet weak var acNonAcLabel: UILabel!
+
+//    @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
     func updateAllSuggestedRidesCell(with ride: RideAvailable,source: Schedule, destination: Schedule,fare: Int){
         //seatsAvailableStackView.layer.borderWidth = 1
         //seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
         //seatsAvailableStackView.layer.cornerRadius = 5
         
-        cellContentview.layer.cornerRadius = 10
+        cellContentview.layer.cornerRadius = 12
         
         sourceAddressLabel.text = source.address
         destinationAddressLabel.text = destination.address
@@ -53,9 +54,12 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
         serviceProviderNameLabel.text = "\(ride.serviceProvider.name)"
         serviceProviderRatingLabel.text = "\(ride.serviceProvider.rating)"
         if ride.serviceProvider.rideType.vehicleType == .car{
-            vehicleTypeImageView.image = UIImage(systemName: "car.fill")
+            vehicleTypeButton.setImage(UIImage(systemName: "car.fill"), for: .normal)
+            vehicleTypeButton.setTitle("Car", for: .normal)
         }else {
-            vehicleTypeImageView.image = UIImage(systemName: "bus.fill")
+            vehicleTypeButton.setImage(UIImage(systemName: "bus.fill"), for: .normal)
+            vehicleTypeButton.setTitle("Bus", for: .normal)
+            
         }
         if ride.serviceProvider.rideType.facility == .ac{
             //acNonAcLabel.text = "AC"
@@ -66,8 +70,5 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
         }
         
     }
-    
-    
-    
     
 }

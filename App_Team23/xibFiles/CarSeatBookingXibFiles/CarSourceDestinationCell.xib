@@ -40,7 +40,7 @@
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <imageReference key="image" image="circle" catalog="system" symbolScale="small"/>
                                                     </imageView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="4JX-Q2-xMv">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dottedline1" translatesAutoresizingMaskIntoConstraints="NO" id="4JX-Q2-xMv">
                                                         <rect key="frame" x="0.0" y="70.333333333333329" width="50" height="39.333333333333329"/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="thin"/>
                                                     </imageView>
@@ -59,29 +59,29 @@
                                                     <constraint firstAttribute="width" constant="50" id="UgG-W1-hIv"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="DVO-UV-quM">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DVO-UV-quM">
                                                 <rect key="frame" x="60" y="0.0" width="143" height="180"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Delhi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxA-jt-Ah9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="143" height="41.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="143" height="39"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pari Chowk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jul-2s-qjH">
-                                                        <rect key="frame" x="0.0" y="46.333333333333329" width="143" height="41.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="47" width="143" height="39"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sector 51" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sqo-dd-rVK">
-                                                        <rect key="frame" x="0.0" y="92.666666666666671" width="143" height="41.000000000000014"/>
+                                                        <rect key="frame" x="0.0" y="94" width="143" height="39"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sector 62" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMK-rM-nEr">
-                                                        <rect key="frame" x="0.0" y="138.66666666666666" width="143" height="41.333333333333343"/>
+                                                        <rect key="frame" x="0.0" y="141" width="143" height="39"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -155,7 +155,7 @@
                     <constraint firstAttribute="trailing" secondItem="Elf-sG-mh7" secondAttribute="trailing" id="qjz-vv-clR"/>
                 </constraints>
             </collectionViewCellContentView>
-            <color key="backgroundColor" red="0.98039215800000001" green="0.88235294819999999" blue="0.54901963470000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color key="backgroundColor" red="0.97647058959999999" green="0.85882353779999998" blue="0.5176470876" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <connections>
                 <outlet property="destinationLocationLabel" destination="sqo-dd-rVK" id="D3f-fj-Nrz"/>
                 <outlet property="destinationTimeLabel" destination="NPj-Ro-L7D" id="Cg7-h4-bDg"/>
@@ -174,6 +174,6 @@
         <image name="capsule.portrait.fill" catalog="system" width="112" height="128"/>
         <image name="circle" catalog="system" width="128" height="123"/>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
-        <image name="line" width="661" height="1023"/>
+        <image name="dottedline1" width="512" height="512"/>
     </resources>
 </document>

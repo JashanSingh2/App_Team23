@@ -115,7 +115,7 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
         cell.layer.shadowColor = UIColor.black.cgColor
         cell.layer.shadowOpacity = 0.5
         cell.layer.shadowRadius = 2.5
-        cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
         cell.layer.masksToBounds = false
         
             cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)

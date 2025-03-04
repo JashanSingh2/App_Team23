@@ -22,7 +22,14 @@ class TrackingViewController: UIViewController,UITableViewDataSource, UITableVie
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        mainviewOutlet.layer.cornerRadius = 20
+        mainviewOutlet.layer.cornerRadius = 12
+        mainviewOutlet.layer.cornerRadius = 12.0
+        mainviewOutlet.layer.shadowColor = UIColor.black.cgColor
+        mainviewOutlet.layer.shadowOpacity = 0.5
+        mainviewOutlet.layer.shadowRadius = 2.5
+        mainviewOutlet.layer.shadowOffset = CGSize(width: 0, height: 2)
+        mainviewOutlet.layer.masksToBounds = false
+        
         BusNumberOutlet.layer.borderWidth = 1
         BusNumberOutlet.layer.borderColor = UIColor.black.cgColor
         BusNumberOutlet.layer.cornerRadius = 5

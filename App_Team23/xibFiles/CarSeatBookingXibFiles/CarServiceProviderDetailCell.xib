@@ -208,7 +208,7 @@
                     <constraint firstAttribute="trailing" secondItem="ErJ-bM-g7d" secondAttribute="trailing" id="qbO-Bj-nsq"/>
                 </constraints>
             </collectionViewCellContentView>
-            <color key="backgroundColor" red="0.98039215800000001" green="0.88235294819999999" blue="0.54901963470000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color key="backgroundColor" red="0.97647058959999999" green="0.85882353779999998" blue="0.5176470876" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <connections>
                 <outlet property="bookingTimeLabel" destination="9pn-lj-BBY" id="SOM-Cx-tLa"/>
                 <outlet property="rideFareLabel" destination="c2J-0X-9RP" id="oLc-a0-NZn"/>

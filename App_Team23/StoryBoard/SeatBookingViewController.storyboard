@@ -57,7 +57,7 @@
                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <imageReference key="image" image="circle" catalog="system" symbolScale="small"/>
                                                             </imageView>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="Kwk-9g-8mg">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dottedline1" translatesAutoresizingMaskIntoConstraints="NO" id="Kwk-9g-8mg">
                                                                 <rect key="frame" x="0.0" y="54.33333333333335" width="50" height="31.333333333333336"/>
                                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="thin"/>
                                                             </imageView>
@@ -76,29 +76,29 @@
                                                             <constraint firstAttribute="width" constant="50" id="rRs-Rb-Sdu"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Cbi-2W-NP4">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Cbi-2W-NP4">
                                                         <rect key="frame" x="60" y="0.0" width="133" height="140"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Delhi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5J-HA-CrO">
-                                                                <rect key="frame" x="0.0" y="0.0" width="133" height="31.333333333333332"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="133" height="29"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pari Chowk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1HD-9f-Z5Q">
-                                                                <rect key="frame" x="0.0" y="36.333333333333329" width="133" height="31.333333333333329"/>
+                                                                <rect key="frame" x="0.0" y="37" width="133" height="29"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sector 51" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pl-7f-OI9">
-                                                                <rect key="frame" x="0.0" y="72.666666666666657" width="133" height="31"/>
+                                                                <rect key="frame" x="0.0" y="74" width="133" height="29"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sector 62" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PCx-MZ-kVv">
-                                                                <rect key="frame" x="0.0" y="108.66666666666666" width="133" height="31.333333333333343"/>
+                                                                <rect key="frame" x="0.0" y="111" width="133" height="29"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -153,7 +153,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oov-Sj-lCg">
                                                 <rect key="frame" x="0.0" y="148" width="293" height="32"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" image="map" catalog="system" title="Show Route">
+                                                <buttonConfiguration key="configuration" style="filled" image="map" catalog="system" title="Show Route" imagePadding="2">
                                                     <color key="baseForegroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
@@ -217,8 +217,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cR7-K6-9Zy">
-                                                <rect key="frame" x="198" y="-0.33333333333333215" width="35" height="36"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="steeringwheel" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cR7-K6-9Zy">
+                                                <rect key="frame" x="198" y="0.66666666666666785" width="35" height="33.666666666666657"/>
                                                 <color key="tintColor" red="0.109803915" green="0.109803915" blue="0.1176470518" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="1kL-Rc-z3J"/>
@@ -310,12 +310,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bus.fill" catalog="system" width="128" height="122"/>
         <image name="capsule.portrait" catalog="system" width="112" height="128"/>
         <image name="capsule.portrait.fill" catalog="system" width="112" height="128"/>
         <image name="circle" catalog="system" width="128" height="123"/>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
-        <image name="line" width="661" height="1023"/>
+        <image name="dottedline1" width="512" height="512"/>
         <image name="map" catalog="system" width="128" height="112"/>
+        <image name="steeringwheel" catalog="system" width="128" height="123"/>
     </resources>
 </document>

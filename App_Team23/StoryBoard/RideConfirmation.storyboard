@@ -217,6 +217,7 @@
                         <outlet property="destinationAddressLabel" destination="ua0-7s-fps" id="bca-sF-ZMs"/>
                         <outlet property="destinationTimeLabel" destination="iAc-Sn-kVh" id="MFP-N8-y6W"/>
                         <outlet property="fareLabel" destination="S8c-94-aqd" id="b7m-HC-QUV"/>
+                        <outlet property="rideConfirmCardView" destination="4sn-gd-csV" id="Yie-c8-aLI"/>
                         <outlet property="seatNoLabel" destination="Fva-c2-prF" id="ceN-cr-JLb"/>
                         <outlet property="seatNoStackView" destination="kXe-vb-vM9" id="Vsv-4K-9FS"/>
                         <outlet property="sourceAddressLabel" destination="XVJ-cK-Fjb" id="p1X-pp-iGP"/>

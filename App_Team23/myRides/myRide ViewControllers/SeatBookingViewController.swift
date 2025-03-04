@@ -59,11 +59,22 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         }
         
         
+        
         bookButton.isEnabled = false
         
-        routeView.layer.cornerRadius = 10
+        routeView.layer.cornerRadius = 12.0
+        routeView.layer.shadowColor = UIColor.black.cgColor
+        routeView.layer.shadowOpacity = 0.5
+        routeView.layer.shadowRadius = 2.5
+        routeView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        routeView.layer.masksToBounds = false
         
-        collectionViewOuterView.layer.cornerRadius = 8
+        collectionViewOuterView.layer.cornerRadius = 12.0
+        collectionViewOuterView.layer.shadowColor = UIColor.black.cgColor
+        collectionViewOuterView.layer.shadowOpacity = 0.5
+        collectionViewOuterView.layer.shadowRadius = 2.5
+        collectionViewOuterView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        collectionViewOuterView.layer.masksToBounds = false
         
         let nib = UINib(nibName: "SeatSectionCell", bundle: nil)
         seatCollectionView.register(nib, forCellWithReuseIdentifier: "SeatSectionCell")
@@ -115,6 +126,13 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         cell.updateSeatButton(with: indexPath)
         cell.seatButton.addTarget(self, action: #selector(seatButtonTapped(_:)), for: .touchUpInside)
         
+        cell.layer.cornerRadius = 12.0
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOpacity = 0.5
+        cell.layer.shadowRadius = 2.5
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.layer.masksToBounds = false
+        
         return cell
     }
     
@@ -132,7 +150,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
             
             group.interItemSpacing = .fixed(10)
             
-            group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
+            group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 2.5, bottom: 5, trailing: 2.5)
             
             section = NSCollectionLayoutSection(group: group)
             

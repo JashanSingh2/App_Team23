@@ -105,7 +105,7 @@
                         </constraints>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="gray" image="carseat.right.fill" catalog="system" title="25 Seats">
+                        <buttonConfiguration key="configuration" style="gray" image="carseat.right.fill" catalog="system" title="25 Seats" imagePadding="2">
                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium"/>
                         </buttonConfiguration>
                     </button>

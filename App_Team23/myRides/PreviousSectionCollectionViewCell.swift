@@ -10,17 +10,19 @@ import UIKit
 class PreviousSectionCollectionViewCell: UICollectionViewCell {
         @IBOutlet weak var sourceLocationLabel: UILabel!
         @IBOutlet weak var destinationLocationLabel: UILabel!
-        @IBOutlet weak var sourceDateLabel: UILabel!
+//      @IBOutlet weak var sourceDateLabel: UILabel!
+    
+    
         @IBOutlet weak var rideFareLabel: UILabel!
-        @IBOutlet weak var vehicleLogoImage: UIImageView!
-    @IBOutlet weak var vehicleLogoButton: UIButton!
-    @IBOutlet weak var rideDateButton: UIButton!
+//      @IBOutlet weak var vehicleLogoImage: UIImageView!
+        @IBOutlet weak var vehicleLogoButton: UIButton!
+        @IBOutlet weak var rideDateButton: UIButton!
     
         @IBOutlet weak var reBookButton: UIButton!
     
     
     
-        func updatePreviousData(with rideHistory: RidesHistory){
+            func updatePreviousData(with rideHistory: RidesHistory){
             sourceLocationLabel.text = rideHistory.source.address
             destinationLocationLabel.text = rideHistory.destination.address
             

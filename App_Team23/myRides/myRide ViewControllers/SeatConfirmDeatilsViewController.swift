@@ -30,6 +30,7 @@ class SeatConfirmDeatilsViewController: UIViewController {
     @IBOutlet weak var fareLabel: UILabel!
     
     @IBOutlet weak var seatNoStackView: UIStackView!
+    @IBOutlet weak var rideConfirmCardView: UIView!
     
 
 //    var ride: RideHistory?
@@ -48,6 +49,14 @@ class SeatConfirmDeatilsViewController: UIViewController {
         } else {
             seatNoStackView.isHidden = true
         }
+        
+        
+        rideConfirmCardView.layer.cornerRadius = 12.0
+        rideConfirmCardView.layer.shadowColor = UIColor.black.cgColor
+        rideConfirmCardView.layer.shadowOpacity = 0.5
+        rideConfirmCardView.layer.shadowRadius = 2.5
+        rideConfirmCardView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        rideConfirmCardView.layer.masksToBounds = false
         
         // Do any additional setup after loading the view.
     }
