@@ -148,8 +148,6 @@ class RidesDataController: DataController {
                 print("Error fetching data from Supabase: \(error)")
             }
         }
-        
-        print(loadFilteredBusData(for: "A1035"))
     }
     
     private func fetchAllData() async throws {

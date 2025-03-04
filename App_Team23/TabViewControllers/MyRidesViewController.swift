@@ -113,10 +113,10 @@ class MyRidesViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             if history.serviceProvider.rideType.vehicleType == .car {
                 cell.reBookButton.isEnabled = false
-                print("car")
+                
             }else{
                 cell.reBookButton.isEnabled = true
-                print("bus")
+                
             }
             
             
