@@ -38,9 +38,9 @@ class AllSuggestedRidesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var seatsAvailableStackView: UIStackView!
     
     func updateAllSuggestedRidesCell(with ride: RideAvailable,source: Schedule, destination: Schedule,fare: Int){
-        seatsAvailableStackView.layer.borderWidth = 1
-        seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
-        seatsAvailableStackView.layer.cornerRadius = 5
+        //seatsAvailableStackView.layer.borderWidth = 1
+        //seatsAvailableStackView.layer.borderColor = UIColor.black.cgColor
+        //seatsAvailableStackView.layer.cornerRadius = 5
         
         cellContentview.layer.cornerRadius = 10
         

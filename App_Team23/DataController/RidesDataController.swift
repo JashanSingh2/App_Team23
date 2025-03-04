@@ -136,7 +136,7 @@ class RidesDataController: DataController {
     var tomorrow = ""
     var later = ""
     
-    var busRides: [RideHistory] = []
+    //var busRides: [RideHistory] = []
     
     init() {
         today = getTodayDate()
@@ -151,7 +151,7 @@ class RidesDataController: DataController {
             }
         }
         
-        busRides = filterRideHistory(by: .bus)
+        //busRides = filterRideHistory(by: .bus)
         
         
     }
@@ -167,6 +167,8 @@ class RidesDataController: DataController {
         //print("\n\n\n\n\nservice providers:\n\n\(allServiceProviders)\n\n\n\n\n")
         // Fetch available rides
         availableRides = try await fetchAvailableRidesFromSupabase()
+        
+        //print("availableRides: \n\(availableRides)")
     }
     
     func fetchRidesFromSupabase() async throws -> [RideHistory] {
@@ -187,7 +189,7 @@ class RidesDataController: DataController {
                 .select()
                 .execute()
 
-            print("✅ JSON Data: \(response)")
+            //print("✅ JSON Data: \(response)")
 
             let providers = response.value
 
@@ -208,7 +210,7 @@ class RidesDataController: DataController {
                 )
             }
 
-            print("✅ Mapped service providers: \(serviceProviders)")
+            //print("✅ Mapped service providers: \(serviceProviders)")
             return serviceProviders
 
         } catch {
@@ -323,7 +325,9 @@ class RidesDataController: DataController {
 
 
 
-
+    func allRidesAvailable()-> [RideAvailable]{
+        return availableRides
+    }
 
 
     
@@ -372,15 +376,15 @@ class RidesDataController: DataController {
     }
     
     func rideHistoryOfBus(At index: Int) -> RidesHistory {
-        busRides = filterRideHistory(by: .bus)
+        //busRides = filterRideHistory(by: .bus)
         
         let group = DispatchGroup()
         var result: RidesHistory?
         
         group.enter()
         Task {
-            //let rideHistoryOfBus = filterRideHistory(by: .bus)
-            let ride = busRides[index]
+            let rideHistoryOfBus = filterRideHistory(by: .bus)
+            let ride = rideHistoryOfBus[index]
             result = try? await convertToRidesHistory(ride)
             group.leave()
         }
@@ -412,8 +416,8 @@ class RidesDataController: DataController {
         
         group.wait()
         
-        print("count \(busRides.count)")
-        return min(busRides.count, 3)
+        //print("count \(busRides.count)")
+        return min(busRidesCount, 3)
     }
     
     func rideSuggestion(At index: Int) -> RideAvailable {
@@ -505,7 +509,7 @@ class RidesDataController: DataController {
     }
     
     // Keep existing utility functions
-    func isFuzzyMatch(userInput: String, storedString: String, threshold: Double = 80.0) -> Bool {
+    func isFuzzyMatch(userInput: String, storedString: String, threshold: Double = 70.0) -> Bool {
         return similarityScore(userInput: userInput, storedString: storedString) >= threshold
     }
     

@@ -243,8 +243,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 on: time
             ) {
                 ridesAvail = availableRides
+                print("😂😂\n\n\n\n\n\n Available Rides:\(ridesAvail)")
             } else {
                 showAlert()
+                print("😂😂\n\n\n\n\n\n Available Rides:\(ridesAvail)")
             }
         }
         

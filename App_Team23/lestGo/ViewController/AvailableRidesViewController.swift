@@ -111,6 +111,13 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
             let destination = rides[indexPath.row].2
             let fare = rides[indexPath.row].3
             
+        cell.layer.cornerRadius = 12.0
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOpacity = 0.5
+        cell.layer.shadowRadius = 2.5
+        cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+        cell.layer.masksToBounds = false
+        
             cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
             
             return cell

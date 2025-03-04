@@ -34,11 +34,16 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.reloadData()
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("rides.count \(rides.count)")
         return rides.count
     }
     

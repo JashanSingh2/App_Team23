@@ -112,8 +112,9 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
                 cell.selectButton.tag = indexPath.row
                 cell.selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
-                
+            print(indexPath.row)
             let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
+            
                 cell.updateSuggestedRideCell(with: rideSuggestion)
             cell.layer.cornerRadius = 12.0
             cell.layer.shadowColor = UIColor.black.cgColor
@@ -221,9 +222,11 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     @objc func sectionButtonTapped(_ sender: UIButton) {
         if sender.tag == 1 {
-            let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
-            let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
-            navigationController?.pushViewController(viewController, animated: true)
+//            let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
+//            let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
+//            navigationController?.pushViewController(viewController, animated: true)
+            
+            performSegue(withIdentifier: "SRVC", sender: self)
         }
         
     }
@@ -248,9 +251,17 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
         
         if let suggestedRidesVC = segue.destination as? SuggestedRidesViewController{
-            if let suggestedRides{
-                suggestedRidesVC.rides = suggestedRides
+            
+            for ride in RidesDataController.shared.allRidesAvailable(){
+                suggestedRides?.append((ride, ride.serviceProvider.route.first!, ride.serviceProvider.route.last!,ride.serviceProvider.fare))
             }
+            print("suggestedRides?.count \(suggestedRides?.count)")
+            
+            suggestedRidesVC.rides = suggestedRides ?? []
+            
+//            if let suggestedRides{
+//                suggestedRidesVC.rides = suggestedRides
+//            }
             
         }
     }
