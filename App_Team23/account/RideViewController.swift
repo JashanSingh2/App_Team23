@@ -1,75 +1,101 @@
-//
-//  RideViewController.swift
-//  AccountSection
-//
-//  Created by Anand Pratap Singh on 15/01/25.
-//
-
 
 import UIKit
-
 class RideViewController: UIViewController {
     @IBOutlet weak var homeAddressTextField: UITextField!
     @IBOutlet weak var destinationAddressTextField: UITextField!
-    @IBOutlet weak var workTimingsLabel: UITextField!
-
+    @IBOutlet weak var startTimePicker: UIDatePicker!
+    @IBOutlet weak var endTimePicker: UIDatePicker!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Ensure the navigation bar is visible
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        
-        // Set custom title for the navigation bar
         self.title = "Ride Preferences"
         let saveButton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(savePreferences))
         saveButton.tintColor = .systemBlue
         self.navigationItem.rightBarButtonItem = saveButton
-        
-        // Restore saved preferences from UserDefaults
-        let defaults = UserDefaults.standard
-        homeAddressTextField.text = defaults.string(forKey: "homeAddress")
-        destinationAddressTextField.text = defaults.string(forKey: "destinationAddress")
-        workTimingsLabel.text = defaults.string(forKey: "workTimings")
+        loadPreferences()
+        setupTextFieldIcons()
+        setupTapGesture()
+    }    
+    private func loadPreferences() {
+            let defaults = UserDefaults.standard
+            homeAddressTextField.text = defaults.string(forKey: "homeAddress")
+            destinationAddressTextField.text = defaults.string(forKey: "destinationAddress")
+            if let savedStartTime = defaults.object(forKey: "startTime") as? Date {
+                startTimePicker.date = savedStartTime
+            }
+            if let savedEndTime = defaults.object(forKey: "endTime") as? Date {
+                endTimePicker.date = savedEndTime
+            }
+        }
+    private func setupTextFieldIcons() {
+        addIcon(to: homeAddressTextField, icon: "mappin.circle", selector: #selector(selectHomeAddressFromMap))
+        addIcon(to: destinationAddressTextField, icon: "mappin.circle", selector: #selector(selectDestinationAddressFromMap))
+    }
+    private func addIcon(to textField: UITextField, icon: String, selector: Selector) {
+        let imageView = UIImageView(image: UIImage(systemName: icon))
+        imageView.isUserInteractionEnabled = true
+        textField.rightView = imageView
+        textField.rightViewMode = .always
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: selector))
     }
 
-    // Action to clear the Home Address TextField
+    @objc func selectHomeAddressFromMap() {
+        openMap { [weak self] address in
+            self?.homeAddressTextField.text = address
+            UserDefaults.standard.set(address, forKey: "homeAddress")
+        }
+    }
+    @objc func selectDestinationAddressFromMap() {
+        openMap { [weak self] address in
+            self?.destinationAddressTextField.text = address
+            UserDefaults.standard.set(address, forKey: "destinationAddress")
+        }
+    }
+
+    func openMap(completion: @escaping (String) -> Void) {
+        let mapVC = MKMapViewController()
+        mapVC.completionHandler = completion
+        navigationController?.pushViewController(mapVC, animated: true)
+    }
+    
     @IBAction func clearHomeAddress(_ sender: UIButton) {
         homeAddressTextField.becomeFirstResponder()
     }
-
-    // Action to edit the Destination Address
     @IBAction func editDestinationAddress(_ sender: UIButton) {
-        // Code to edit destination address
         destinationAddressTextField.becomeFirstResponder()
     }
-
-    // Action to edit Work Timings
-    @IBAction func editWorkTimings(_ sender: UIButton) {
-        workTimingsLabel.becomeFirstResponder()
-    }
-
-  
     @objc func savePreferences() {
-        let homeAddress = homeAddressTextField.text ?? ""
-        let destinationAddress = destinationAddressTextField.text ?? ""
-        let workTimings = workTimingsLabel.text ?? ""
+            let homeAddress = homeAddressTextField.text ?? ""
+            let destinationAddress = destinationAddressTextField.text ?? ""
+            let selectedStartTime = startTimePicker.date
+            let selectedEndTime = endTimePicker.date
 
-        if homeAddress.isEmpty || destinationAddress.isEmpty {
-            let alert = UIAlertController(title: "Error", message: "Please fill all the fields", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
-        } else {
-            let defaults = UserDefaults.standard
-            defaults.set(homeAddress, forKey: "homeAddress")
-            defaults.set(destinationAddress, forKey: "destinationAddress")
-            defaults.set(workTimings, forKey: "workTimings")
+            if homeAddress.isEmpty || destinationAddress.isEmpty {
+                let alert = UIAlertController(title: "Error", message: "Please fill in all the fields.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            } else {
+                // Save preferences to UserDefaults
+                let defaults = UserDefaults.standard
+                defaults.set(homeAddress, forKey: "homeAddress")
+                defaults.set(destinationAddress, forKey: "destinationAddress")
+                defaults.set(selectedStartTime, forKey: "startTime")
+                defaults.set(selectedEndTime, forKey: "endTime")
 
-            let alert = UIAlertController(title: "Preferences Saved", message: "Your ride preferences have been saved.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                // Navigate back to the previous view controller
-                self.navigationController?.popViewController(animated: true)
-            }))
-            present(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "Preferences Saved", message: "Your preferences have been saved successfully.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                present(alert, animated: true, completion: nil)
+            }
         }
-    }
+    
+    func setupTapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        }
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }

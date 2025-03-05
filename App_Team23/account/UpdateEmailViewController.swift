@@ -1,19 +1,56 @@
-//
-//  UpdateEmailViewController.swift
-//  App_Team23
-//
-//  Created by Batch- 1 on 22/01/25.
-//
 
 import UIKit
-
+import Supabase
 class UpdateEmailViewController: UIViewController {
 
+    @IBOutlet weak var emailTextField: UITextField!
+    var supabaseClient: SupabaseClient!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addCloseButton()
+        // Initialize Supabase Client
+        supabaseClient = SupabaseClient(
+            supabaseURL: URL(string: "https://your-project-url.supabase.co")!,
+            supabaseKey: "your-supabase-key"
+        )
+        
+        setupTapGesture()
     }
-    
+
+    @IBAction func submitEmail(_ sender: UIButton) {
+        guard let newEmail = emailTextField.text, !newEmail.isEmpty else {
+            print("Please enter a valid email.")
+            return
+        }
+        
+        sendOTPToEmail(newEmail)
+    }
+
+    func sendOTPToEmail(_ newEmail: String) {
+        // Send OTP to the new email
+//        let attributes = UserAttributes(email: newEmail)
+//
+//        supabaseClient.auth.update(userAttributes: attributes) { [weak self] result in
+//            switch result {
+//            case .success:
+//                print("OTP sent to \(newEmail)")
+//                // Navigate to OTP Verification ViewController
+//                self?.navigateToOTPVerification(email: newEmail)
+//            case .failure(let error):
+//                print("Failed to send OTP: \(error.localizedDescription)")
+//            }
+//        }
+    }
+    func navigateToOTPVerification(email: String) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let otpVC = storyboard.instantiateViewController(withIdentifier: "EmailOTPVerificationViewController") as? EmailOTPVerificationViewController {
+            otpVC.email = email
+            otpVC.supabaseClient = supabaseClient // Pass the client to the next VC
+            navigationController?.pushViewController(otpVC, animated: true)
+        }
+    }
+
     func addCloseButton() {
         let closeButton = UIButton(type: .system)
         closeButton.setTitle("X", for: .normal)
@@ -31,4 +68,11 @@ class UpdateEmailViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func setupTapGesture() {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        }
+        @objc func dismissKeyboard() {
+            view.endEditing(true)
+        }
 }
