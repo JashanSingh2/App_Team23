@@ -48,15 +48,15 @@ class CheckInViewController: UIViewController {
         vehicleNumberLabel.layer.borderWidth = 1
         vehicleNumberLabel.layer.cornerRadius = 5
         
-        seatsAvailableStackView.layer.borderColor = view.backgroundColor?.cgColor
-        seatsAvailableStackView.layer.borderWidth = 1
-        seatsAvailableStackView.layer.cornerRadius = 5
+//        seatsAvailableStackView.layer.borderColor = view.backgroundColor?.cgColor
+//        seatsAvailableStackView.layer.borderWidth = 1
+//        seatsAvailableStackView.layer.cornerRadius = 5
         
         
-        fareStackView.layer.borderColor = view.backgroundColor?.cgColor
-        fareStackView.layer.borderWidth = 1
-        fareStackView.layer.cornerRadius = 5
-        
+//        fareStackView.layer.borderColor = view.backgroundColor?.cgColor
+//        fareStackView.layer.borderWidth = 1
+//        fareStackView.layer.cornerRadius = 5
+//        
         
         outerViewOfTicket.layer.cornerRadius = 10
         

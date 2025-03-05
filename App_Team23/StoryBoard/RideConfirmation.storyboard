@@ -49,16 +49,22 @@
                                                         <color key="tintColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A9823" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IkY-Vz-kuC">
-                                                        <rect key="frame" x="32.333333333333329" y="0.0" width="52" height="25"/>
+                                                        <rect key="frame" x="32.333333333333329" y="0.0" width="119.99999999999999" height="25"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="120" id="aNE-He-bGk"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDI-2q-ae1">
-                                                        <rect key="frame" x="94.333333333333343" y="0.0" width="112" height="25"/>
+                                                        <rect key="frame" x="162.33333333333334" y="0.0" width="20.666666666666657" height="25"/>
                                                     </stackView>
                                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Nov 2024" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0u0-WH-LWc">
-                                                        <rect key="frame" x="216.33333333333329" y="0.0" width="96.666666666666657" height="25"/>
+                                                        <rect key="frame" x="193" y="0.0" width="120" height="25"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="120" id="G83-i2-OEe"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.88235294819999999" green="0.85882353779999998" blue="0.73333334920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <nil key="highlightedColor"/>

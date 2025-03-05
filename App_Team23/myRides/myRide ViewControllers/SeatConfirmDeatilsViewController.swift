@@ -50,6 +50,9 @@ class SeatConfirmDeatilsViewController: UIViewController {
             seatNoStackView.isHidden = true
         }
         
+        vehicleNumLabel.layer.borderColor = view.backgroundColor?.cgColor
+        vehicleNumLabel.layer.borderWidth = 1
+        vehicleNumLabel.layer.cornerRadius = 5
         
         rideConfirmCardView.layer.cornerRadius = 12.0
         rideConfirmCardView.layer.shadowColor = UIColor.black.cgColor

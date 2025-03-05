@@ -53,6 +53,10 @@ class RideDetailViewController: UIViewController {
         cardView.layer.shadowOffset = CGSize(width: 0, height: 2)
         cardView.layer.masksToBounds = false
         
+        vehicleNumberLabel.layer.borderColor = view.backgroundColor?.cgColor
+        vehicleNumberLabel.layer.borderWidth = 1
+        vehicleNumberLabel.layer.cornerRadius = 5
+        
         if RideDetailViewController.sender == 1 {
             cancelRideButton.isHidden = true
             trackButton.isHidden = true
