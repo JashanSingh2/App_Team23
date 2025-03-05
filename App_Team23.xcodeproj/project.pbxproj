@@ -10,7 +10,7 @@
 		C4A910E22D76CAD9006115F5 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = C4A910E12D76CAD9006115F5 /* Auth */; };
 		C4A910E42D76CAD9006115F5 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = C4A910E32D76CAD9006115F5 /* Functions */; };
 		C4A910E62D76CAD9006115F5 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = C4A910E52D76CAD9006115F5 /* PostgREST */; };
-		C4A910E82D76CAD9006115F5 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = C4A910E72D76CAD9006115F5 /* Realtime */; };
+		C4A910E82D76CAD9006115F5 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = C4A910E72D76CAD9006115F5 /* Realtime */; settings = {ATTRIBUTES = (Required, ); }; };
 		C4A910EA2D76CAD9006115F5 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = C4A910E92D76CAD9006115F5 /* Storage */; };
 		C4A910ED2D76CAE8006115F5 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = C4A910EC2D76CAE8006115F5 /* Supabase */; };
 /* End PBXBuildFile section */
@@ -177,12 +177,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AV96Q89WQR;
+				DEVELOPMENT_TEAM = YCQSMY42RK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = App_Team23/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -190,7 +191,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "in.galgotias.App-Team23----";
+				PRODUCT_BUNDLE_IDENTIFIER = aubh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -205,12 +206,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AV96Q89WQR;
+				DEVELOPMENT_TEAM = YCQSMY42RK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = App_Team23/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -218,7 +220,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "in.galgotias.App-Team23----";
+				PRODUCT_BUNDLE_IDENTIFIER = aubh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

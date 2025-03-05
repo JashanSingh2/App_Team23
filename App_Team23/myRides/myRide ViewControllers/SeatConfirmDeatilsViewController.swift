@@ -40,14 +40,10 @@ class SeatConfirmDeatilsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let ride{
+        if ride != nil{
             updateUI()
         }
-        if let seat{
-            seatNoLabel.text = "Seat No : \(seat)"
-        } else {
-            seatNoStackView.isHidden = true
-        }
+       
         
         // Do any additional setup after loading the view.
     }
@@ -59,12 +55,20 @@ class SeatConfirmDeatilsViewController: UIViewController {
         dateLabel.text = ride!.date
         sourceTimeLabel.text = ride!.source.time
         destinationTimeLabel.text = ride!.destination.time
-        fareLabel.text = "\(ride!.fare * (seat?.count ?? 1))"
+        fareLabel.text = "\(ride!.fare)"
         
         if ride?.serviceProvider.rideType.vehicleType == .bus{
             busOrCarImageView.image = UIImage(systemName: "bus.fill")
         }else{
             busOrCarImageView.image = UIImage(systemName: "car.fill")
+        }
+        
+        print("Seat No : \(seat ?? [])")
+        
+        if let seat{
+            seatNoLabel.text = "Seat No : \(seat.map {"\($0)"}.joined(separator: ", "))"
+        } else {
+            seatNoStackView.isHidden = true
         }
     }
     

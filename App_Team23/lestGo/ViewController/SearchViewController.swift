@@ -243,10 +243,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 on: time
             ) {
                 ridesAvail = availableRides
-                print("😂😂\n\n\n\n\n\n Available Rides:\(ridesAvail)")
+//                print("😂😂\n\n\n\n\n\n Available Rides:\(ridesAvail)")
             } else {
                 showAlert()
-                print("😂😂\n\n\n\n\n\n Available Rides:\(ridesAvail)")
+//                print("😂😂\n\n\n\n\n\n Available Rides:\(ridesAvail)")
             }
         }
         
@@ -317,7 +317,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let destVC = segue.destination as? AvailableRidesViewController {
             
             //rideSearch = RideSearch(source: source, destination: destination, numberOfSeats: Int(seatLabel.text!)!, date: dateAndTimePicker.date)
-            
+            destVC.numberOfSeats = Int(seatLabel.text!)!
             destVC.rides = ridesAvail
         }
     }

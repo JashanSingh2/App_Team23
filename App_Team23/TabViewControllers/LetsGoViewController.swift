@@ -62,7 +62,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     
     override func viewWillAppear(_ animated: Bool) {
-        letsGoCollectionView.reloadData()
+        //letsGoCollectionView.reloadData()
         if let dataController{
             print(dataController.numberOfBusRidesInHistory())
         }
@@ -70,6 +70,9 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         suggestedRides = RidesDataController.shared.rideSuggestion() 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        letsGoCollectionView.reloadData()
+    }
     
     func willPresentSearchController(_ searchController: UISearchController) {
         performSegue(withIdentifier: "searchBar", sender: self)
@@ -240,6 +243,10 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             
             if let selectedRide{
                 busVC.selectedRide = selectedRide
+                print("Source: \n \(source) \n Destination: \n \(destination)")
+                
+                busVC.source = source
+                busVC.destination = destination
             }
         }
         
@@ -248,6 +255,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             //print(selectedRide!)
             carVC.selectedRide = selectedRide
             
+           
         }
         
         if let suggestedRidesVC = segue.destination as? SuggestedRidesViewController{
@@ -279,10 +287,13 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     var selectedRecentRide: RidesHistory?
-    
+    var source: Schedule?
+    var destination: Schedule?
     
     @objc func reBookButtonTapped(_ button : UIButton) {
         selectedRecentRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
+        
+        print("selectedRecentRide:         \(selectedRecentRide!)")
         
         if let selectedRecentRide {
             if let availableRides = RidesDataController.shared.ride(
@@ -291,6 +302,8 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
                 on: RidesDataController.shared.today),
                 !availableRides.isEmpty {
                 selectedRide = availableRides[0].0
+                source = availableRides[0].1
+                destination = availableRides[0].2
                 performSegue(withIdentifier: "seatReBooking", sender: self)
             } else {
                 showAlert()

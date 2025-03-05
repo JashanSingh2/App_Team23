@@ -103,13 +103,15 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
 //        
 //    }
     
+    var fare: Int?
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let cell = availableRidesCollectionView.dequeueReusableCell(withReuseIdentifier: "AvailableRides", for: indexPath) as! AllSuggestedRidesCollectionViewCell
             
             let ride = rides[indexPath.row].0
             let source = rides[indexPath.row].1
             let destination = rides[indexPath.row].2
-            let fare = rides[indexPath.row].3
+            fare = rides[indexPath.row].3
             
         cell.layer.cornerRadius = 12.0
         cell.layer.shadowColor = UIColor.black.cgColor
@@ -118,32 +120,34 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
         cell.layer.shadowOffset = CGSize(width: 2, height: 2)
         cell.layer.masksToBounds = false
         
-            cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
+            cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare!)
             
             return cell
             
         }
     
+    var ride: RideAvailable?
+    var sourceAdd: Schedule?
+    var destinationAdd: Schedule?
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let ride = rides[indexPath.row].0
-        let source = rides[indexPath.row].1
-        let destination = rides[indexPath.row].2
+        ride = rides[indexPath.row].0
+        sourceAdd = rides[indexPath.row].1
+        destinationAdd = rides[indexPath.row].2
         
         
-        if ride.serviceProvider.rideType.vehicleType == .bus{
-            let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
-            let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
-            viewController.selectedRide = ride
-            viewController.source = source
-            viewController.destination = destination
-            viewController.maxSeatsAllowed = numberOfSeats
-            navigationController?.present(viewController, animated: true)
+        if ride!.serviceProvider.rideType.vehicleType == .bus{
+            performSegue(withIdentifier: "availToSeatSel", sender: self)
+//            let storyBoard = UIStoryboard(name: "SeatBookingViewController", bundle: nil)
+//            let viewController = storyBoard.instantiateViewController(withIdentifier: "seatBookingVC") as! SeatBookingViewController
+            
+//            navigationController?.present(viewController, animated: true)
         }else{
             let storyBoard = UIStoryboard(name: "CarBooking", bundle: nil)
             let viewController = storyBoard.instantiateViewController(withIdentifier: "carBookingVC") as! SeatBookingCarViewController
             viewController.selectedRide = ride
-            viewController.source = source
-            viewController.destination = destination
+            viewController.source = sourceAdd
+            viewController.destination = destinationAdd
             navigationController?.present(viewController, animated: true)
         }
         
@@ -174,6 +178,18 @@ class AvailableRidesViewController: UIViewController, UICollectionViewDataSource
 
     @IBAction func unwindToRideSelection(_ unwindSegue: UIStoryboardSegue) {
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? SeatBookingViewController {
+            destVC.selectedRide = ride
+            destVC.source = sourceAdd
+            destVC.destination = destinationAdd
+            destVC.maxSeatsAllowed = numberOfSeats
+            destVC.fare = fare
+            print("numberOfSeats: \(String(describing: numberOfSeats))")
+            destVC.maxSeatsAllowed = numberOfSeats
+        }
     }
     
     

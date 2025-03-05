@@ -396,19 +396,19 @@
                                         <rect key="frame" x="15" y="10" width="363" height="50"/>
                                         <subviews>
                                             <datePicker contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="PQb-Ru-sgq">
-                                                <rect key="frame" x="0.0" y="0.0" width="248" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="247.33333333333334" height="50"/>
                                                 <connections>
                                                     <action selector="dateEntered:" destination="Mej-Sa-wgd" eventType="editingDidEnd" id="3gG-Ep-Oif"/>
                                                 </connections>
                                             </datePicker>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8md-aw-Cp6">
-                                                <rect key="frame" x="255.00000000000003" y="14.999999999999998" width="7.3333333333333428" height="20.333333333333329"/>
+                                                <rect key="frame" x="254.33333333333329" y="14.999999999999998" width="7.6666666666666572" height="20.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" autorepeat="NO" value="1" minimumValue="1" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="XFO-AI-ymq">
-                                                <rect key="frame" x="269.33333333333331" y="9" width="93.666666666666686" height="32"/>
+                                                <rect key="frame" x="269" y="9" width="94" height="32"/>
                                                 <connections>
                                                     <action selector="stepperClicked:" destination="Mej-Sa-wgd" eventType="valueChanged" id="id2-8e-Nu4"/>
                                                 </connections>
@@ -570,7 +570,7 @@
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cnc-yh-xTg">
-                                <rect key="frame" x="0.0" y="335" width="393" height="517"/>
+                                <rect key="frame" x="0.0" y="350" width="393" height="502"/>
                                 <color key="backgroundColor" red="0.99215686319999996" green="0.96078431610000004" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zxI-TP-PyH">
                                     <size key="itemSize" width="128" height="128"/>
@@ -599,18 +599,27 @@
                             <constraint firstItem="cnc-yh-xTg" firstAttribute="trailing" secondItem="Ina-vS-pC0" secondAttribute="trailing" id="jmd-ob-dul"/>
                             <constraint firstItem="0Sj-cn-oim" firstAttribute="trailing" secondItem="7bn-Ll-CT6" secondAttribute="trailing" id="lt1-T2-Ixa"/>
                             <constraint firstItem="7bn-Ll-CT6" firstAttribute="leading" secondItem="0Sj-cn-oim" secondAttribute="leading" id="oBR-VQ-XXu"/>
-                            <constraint firstItem="cnc-yh-xTg" firstAttribute="top" secondItem="7bn-Ll-CT6" secondAttribute="bottom" constant="-15" id="zhR-TW-nmo"/>
+                            <constraint firstItem="cnc-yh-xTg" firstAttribute="top" secondItem="7bn-Ll-CT6" secondAttribute="bottom" id="zhR-TW-nmo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Available Rides" id="LBt-ZC-aRX"/>
                     <connections>
                         <outlet property="availableRidesCollectionView" destination="cnc-yh-xTg" id="DW7-lq-y0T"/>
                         <outlet property="routeMapView" destination="7bn-Ll-CT6" id="HWU-s1-ep3"/>
+                        <segue destination="d3D-IV-KYC" kind="presentation" identifier="availToSeatSel" id="szz-GB-dAy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZhJ-nj-oyc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3649.6183206106871" y="728.87323943661977"/>
+        </scene>
+        <!--SeatBookingViewController-->
+        <scene sceneID="pZE-VN-5PB">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="seatBookingVC" storyboardName="SeatBookingViewController" id="d3D-IV-KYC" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jaX-ny-AdO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4344" y="742"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wKh-50-8bv">

@@ -35,8 +35,13 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        //collectionView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         collectionView.reloadData()
     }
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

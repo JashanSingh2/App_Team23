@@ -710,7 +710,7 @@ class RidesDataController: DataController {
         group.wait()
         
         return RideHistory(
-            id: numberOfRidesInHistory() + 1,  // Generate random ID
+            id: numberOfRidesInHistory() + 200,  // Generate random ID
             source: ridesHistory.source.address,
             source_time: ridesHistory.source.time,
             destination: ridesHistory.destination.address,

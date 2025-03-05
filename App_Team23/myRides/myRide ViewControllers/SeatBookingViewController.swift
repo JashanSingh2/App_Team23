@@ -43,7 +43,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     var selectedRide: RideAvailable?
     var source: Schedule?
     var destination: Schedule?
-    
+    var fare: Int?
     
     var selectedSeats: [UIButton] = []
     var maxSeatsAllowed: Int?
@@ -51,6 +51,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("Max Seats: \(maxSeatsAllowed ?? 0)")
         
         if let maxSeatsAllowed{
             
@@ -58,6 +59,9 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
             maxSeatsAllowed = 1
         }
         
+        print("Rides\n\n\(selectedRide!)\n\n")
+        print("\(source)\n\n")
+        print("\(destination)")
         
         bookButton.isEnabled = false
         
@@ -159,25 +163,35 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
            let source = source,
            let destination = destination {
             
-            for seat in selectedSeats {
-                if let seatText = seat.titleLabel?.text,
-                   let seatNumber = Int(seatText) {
-                    selectedSeat.append(seatNumber)
-                }
+//            for seat in selectedSeats {
+//                selectedSeat.append(Int((seat.titleLabel?.text)!)!)
+//                if let seatText = seat.titleLabel?.text,
+//                   let seatNumber = Int(seatText) {
+//                    print("\(seatNumber)")
+//                    selectedSeat.append(seatNumber)
+//                }
+//            }
+            
+            let fare1: Int
+            
+            if let fare{
+                fare1 = fare * selectedSeat.count
+            }else{
+                fare1 = RidesDataController.shared.fareOfRide(
+                    from: source,
+                    to: destination,
+                    in: selectedRide.serviceProvider
+                ) * selectedSeat.count
             }
             
-            let fare = RidesDataController.shared.fareOfRide(
-                from: source,
-                to: destination,
-                in: selectedRide.serviceProvider
-            ) * selectedSeats.count
+            
             
             let ride = RidesHistory(
                 source: source,
                 destination: destination,
                 serviceProvider: selectedRide.serviceProvider,
                 date: RidesDataController.shared.getTodayDate(),
-                fare: fare,
+                fare: fare1,
                 seatNumber: selectedSeat
             )
             
@@ -186,7 +200,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
                     try await RidesDataController.shared.newRideHistory(with: ride)
             }
             
-            
+            print(selectedSeat)
             destinationVC.ride = ride
             destinationVC.seat = selectedSeat
         }
@@ -220,6 +234,10 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         showAlert()
         performSegue(withIdentifier: "rideConfirmedSegue", sender: self)
 
+        for seat in selectedSeats {
+            selectedSeat.append(Int((seat.titleLabel?.text)!)!)
+        }
+        print(selectedSeat)
     }
     
     func showAlert(){
@@ -275,6 +293,11 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         seat.configuration?.baseBackgroundColor = .systemGreen
         seat.configuration?.baseForegroundColor = .white
         selectedSeats.append(seat)
+        
+        for seat in selectedSeats {
+            print("Selected seats: \(seat.titleLabel?.text ?? "Not Found")")
+        }
+        
        }
     
     @objc func deselectSeat(_ seat: UIButton) {
@@ -282,6 +305,7 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         seat.configuration?.baseForegroundColor = .black
         if let index = selectedSeats.firstIndex(of: seat) {
             selectedSeats.remove(at: index)
+            print("Deselected seats: \(selectedSeats)")
         }
     }
     
@@ -296,16 +320,16 @@ class SeatBookingViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
-    func bookRide(ride: RidesHistory, seats: [Int]) async throws{
-        let updatedRide = RidesHistory(
-            source: ride.source,
-            destination: ride.destination,
-            serviceProvider: ride.serviceProvider,
-            date: ride.date,
-            fare: ride.fare,
-            seatNumber: seats
-        )
-        try await RidesDataController.shared.newRideHistory(with: updatedRide)
-    }
+//    func bookRide(ride: RidesHistory, seats: [Int]) async throws{
+//        let updatedRide = RidesHistory(
+//            source: ride.source,
+//            destination: ride.destination,
+//            serviceProvider: ride.serviceProvider,
+//            date: ride.date,
+//            fare: ride.fare,
+//            seatNumber: seats
+//        )
+//        try await RidesDataController.shared.newRideHistory(with: updatedRide)
+//    }
 
 }
