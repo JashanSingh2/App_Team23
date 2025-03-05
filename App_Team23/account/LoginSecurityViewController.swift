@@ -18,6 +18,7 @@ class LoginSecurityViewController: UIViewController {
         updateButton.clipsToBounds = true
         deactivateButton.layer.cornerRadius = 15
         deactivateButton.clipsToBounds = true
+        navigationController?.navigationBar.backgroundColor = .clear
     }
     
     

@@ -16,7 +16,9 @@ class RideViewController: UIViewController {
         loadPreferences()
         setupTextFieldIcons()
         setupTapGesture()
-    }    
+        
+        navigationController?.navigationBar.backgroundColor = .clear
+    }
     private func loadPreferences() {
             let defaults = UserDefaults.standard
             homeAddressTextField.text = defaults.string(forKey: "homeAddress")

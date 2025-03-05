@@ -12,6 +12,7 @@ class EmailOTPVerificationViewController: UIViewController {
         supabaseClient = SupabaseClient(supabaseURL: URL(string: "https://lazbodjuwncbuwovuyfy.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxhemJvZGp1d25jYnV3b3Z1eWZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0NjM2MTcsImV4cCI6MjA1NjAzOTYxN30.xSk0gmzaLWSLDZ7F3o_LhFH5cIyYzrmEnjwIldyDyrg")
         
         setupTapGesture()
+        
     }
 
     @IBAction func verifyOTP(_ sender: UIButton) {

@@ -18,6 +18,7 @@ class RatingFeedbackViewController: UIViewController, UITextViewDelegate {
         setupSubmitButton()
         
         setupTapGesture()
+        navigationController?.navigationBar.backgroundColor = .clear
     }
     private func setupStars() {
         for (index, button) in starButtons.enumerated() {

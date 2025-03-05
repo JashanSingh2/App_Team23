@@ -60,7 +60,7 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="EOD-Ki-oh7" secondAttribute="bottom" id="vjJ-ru-zB3"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Let'sGo" image="house" catalog="system" selectedImage="house.fill" id="7Qx-d5-2un"/>
+                    <tabBarItem key="tabBarItem" title=" " image="house" catalog="system" selectedImage="house.fill" id="7Qx-d5-2un"/>
                     <navigationItem key="navigationItem" title="Let'sGo" largeTitleDisplayMode="always" id="404-n3-9gB">
                         <barButtonItem key="rightBarButtonItem" image="qrcode" catalog="system" id="AXU-zD-YpM">
                             <connections>

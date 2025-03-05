@@ -12,6 +12,7 @@ class MailUsViewController: UIViewController {
     override func viewDidLoad() {
            super.viewDidLoad()
            self.title = "Mail Us"
+        navigationController?.navigationBar.backgroundColor = .clear
        }
        @IBAction func emailTapped(_ sender: UIButton) {
            if let url = URL(string: "mailto:support@example.com") {

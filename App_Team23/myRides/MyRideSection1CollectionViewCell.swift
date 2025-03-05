@@ -23,8 +23,16 @@ class MyRideSection1CollectionViewCell: UICollectionViewCell {
         destinationLocationLabel.text = rideHistory.destination.address
         sourceTimeLabel.text = rideHistory.source.time
         destinationTimeLabel.text = rideHistory.destination.time
-        rideFareLabel.text = "\(rideHistory.fare)"
-        if rideHistory.serviceProvider.rideType.vehicleType == .car{
+        if rideHistory.fare < 10{
+            rideFareLabel.text = "35"
+
+        }else{
+            rideFareLabel.text = "\(rideHistory.fare)"
+
+        }
+        
+        
+                if rideHistory.serviceProvider.rideType.vehicleType == .car{
             
             vehicleLogoButton.setImage(UIImage(systemName: "car.fill"), for: .normal)
             vehicleLogoButton.setTitle("Car", for: .normal)
