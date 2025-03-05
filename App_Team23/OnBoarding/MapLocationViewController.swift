@@ -63,13 +63,13 @@ class MapLocationViewController: UIViewController {
         view.addSubview(stackView)
         
         // Current Location Button
-        let useCurrentLocationButton = UIButton(type: .system)
-        useCurrentLocationButton.setTitle("Use Current Location", for: .normal)
-        useCurrentLocationButton.backgroundColor = .systemBlue
-        useCurrentLocationButton.setTitleColor(.white, for: .normal)
-        useCurrentLocationButton.layer.cornerRadius = 20
-        useCurrentLocationButton.addTarget(self, action: #selector(useCurrentLocation), for: .touchUpInside)
-        
+//        let useCurrentLocationButton = UIButton(type: .system)
+//        useCurrentLocationButton.setTitle("Use Current Location", for: .normal)
+//        useCurrentLocationButton.backgroundColor = .systemBlue
+//        useCurrentLocationButton.setTitleColor(.white, for: .normal)
+//        useCurrentLocationButton.layer.cornerRadius = 20
+//        useCurrentLocationButton.addTarget(self, action: #selector(useCurrentLocation), for: .touchUpInside)
+//        
         // Confirm Button
         let confirmButton = UIButton(type: .system)
         confirmButton.setTitle("Confirm Location", for: .normal)
@@ -79,7 +79,7 @@ class MapLocationViewController: UIViewController {
         confirmButton.addTarget(self, action: #selector(confirmLocation), for: .touchUpInside)
         
         // Add buttons to stack view
-        stackView.addArrangedSubview(useCurrentLocationButton)
+       // stackView.addArrangedSubview(useCurrentLocationButton)
         stackView.addArrangedSubview(confirmButton)
         
         // Constraints
@@ -87,7 +87,7 @@ class MapLocationViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            useCurrentLocationButton.heightAnchor.constraint(equalToConstant: 40),
+      //      useCurrentLocationButton.heightAnchor.constraint(equalToConstant: 40),
             confirmButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
