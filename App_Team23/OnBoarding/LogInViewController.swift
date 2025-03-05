@@ -37,6 +37,7 @@ class loginViewController: UIViewController,UITextFieldDelegate {
         enterEmailView.layer.borderWidth = 1
         enterEmailView.layer.borderColor = UIColor.systemGray.cgColor
         enterEmailView.layer.cornerRadius = 8
+        
         let horizontalLine = UIView()
         horizontalLine.backgroundColor = UIColor.gray // Set the color of the line
         horizontalLine.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +58,7 @@ class loginViewController: UIViewController,UITextFieldDelegate {
         Google.layer.borderWidth = 1
         Google.layer.borderColor = UIColor.black.cgColor
         Google.layer.cornerRadius = 8
+        setupPasswordTextField()
     }
     
     
@@ -77,7 +79,7 @@ class loginViewController: UIViewController,UITextFieldDelegate {
                 )
                 
                 let user = authResponse.user
-                print("✅ User authenticated successfully. User ID: \(user.id)")
+                print(" User authenticated successfully. User ID: \(user.id)")
 
                 // Step 2: Fetch user details from Supabase Database
                 let response: PostgrestResponse<[User]> = try await supabase.database
@@ -87,7 +89,7 @@ class loginViewController: UIViewController,UITextFieldDelegate {
                     .execute()
                 
                 if let userData = response.value.first {
-                    print("✅ User data from database: \(userData)")
+                    print(" User data from database: \(userData)")
                     navigateToHome()
                 } else {
                     // Create user record if it doesn't exist
@@ -164,7 +166,23 @@ class loginViewController: UIViewController,UITextFieldDelegate {
             UIApplication.shared.open(googleURL)
         }
     }
-    
-    
+    private func setupPasswordTextField() {
+            let eyeButton = UIButton(type: .system)
+            eyeButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            eyeButton.tintColor = .gray
+            eyeButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        eyeButton.addTarget(self, action: #selector(togglePasswordVisibility), for: .touchUpInside)
+
+            passwordTextField.rightView = eyeButton
+            passwordTextField.rightViewMode = .always
+            passwordTextField.isSecureTextEntry = true
+            passwordTextField.layer.cornerRadius = 16
+
+        }
+    @objc private func togglePasswordVisibility(_ sender: UIButton) {
+            passwordTextField.isSecureTextEntry.toggle()
+            let imageName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
+            sender.setImage(UIImage(systemName: imageName), for: .normal)
+        }
     
 }
