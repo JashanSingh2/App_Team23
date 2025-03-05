@@ -97,6 +97,7 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate, Map
 
         // Update the text field
         workTimeTextField.text = "\(fromTimeString) - \(toTimeString)"
+        workTimeTextField.textColor = .black
     }
 
           
