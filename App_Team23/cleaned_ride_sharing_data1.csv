@@ -1,0 +1,8 @@
+Name;VehicleNumber;VehicleModel;VehicleType;Facility;MaxSeats;Fare_x;Rating;Source;Source Time;Destination;DestinationTime
+Anuj;A1035;Force Traveller;bus;nonAc;35;55,0;3,5;Sector 62;7:50 AM;Pari Chowk;9:20 AM
+Aryan;B1035;Suzuki Dzire;car;nonAc;3;85,0;4,6;Pari Chowk;8:00 AM;Botanical Garden;9:00 AM
+Firdosh;A9999;Volvo;bus;ac;90;65,0;4,5;Mayur Vihar ;8:00 AM;Noida Sector 51;9:00 AM
+Firdosh;A9999;Volvo;bus;ac;90;65,0;4,5;Knowledge Park - II;8:05 AM;Okhla Bird Sanctuary;9:15 AM
+Jashan;B5911;XL6;car;ac;5;135,0;3,9;Sector 62;7:50 AM;Pari Chowk;9:20 AM
+Lakshay;B0101;Nexon;car;ac;4;150,0;4,6;Pari Chowk;8:00 AM;Botanical Garden;9:00 AM
+Vishal;C9099;Volvo;bus;ac;40;90,0;4,8;Mayur Vihar ;8:00 AM;Noida Sector 51;9:00 AM

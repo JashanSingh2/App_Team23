@@ -45,6 +45,8 @@ class SignupTableViewController: UITableViewController, UITextFieldDelegate, Map
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        navigationController?.navigationBar.backgroundColor = view.backgroundColor
         // Find text fields in the table view cells
         if let pickupCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) {
             pickupLocationTextField = pickupCell.viewWithTag(1) as? UITextField
