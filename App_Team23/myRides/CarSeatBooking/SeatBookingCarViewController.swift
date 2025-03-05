@@ -94,11 +94,11 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
                 }
                 
                 
-            cell.layer.cornerRadius = 14
+            cell.layer.cornerRadius = 12.0
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = 5
-            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.shadowRadius = 2.5
+            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
             cell.layer.masksToBounds = false
             
             
@@ -112,12 +112,11 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
                 }
                 
                 
-                
-            cell.layer.cornerRadius = 14
+            cell.layer.cornerRadius = 12.0
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = 5
-            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.shadowRadius = 2.5
+            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
             cell.layer.masksToBounds = false
             
                         
@@ -126,13 +125,12 @@ class SeatBookingCarViewController: UIViewController, UICollectionViewDelegate, 
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Third", for: indexPath) as! PassengersCollectionViewCell
             
-            cell.layer.cornerRadius = 14
+            cell.layer.cornerRadius = 12.0
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
-            cell.layer.shadowRadius = 5
-            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.shadowRadius = 2.5
+            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
             cell.layer.masksToBounds = false
-            
             return cell
             
         case 3:

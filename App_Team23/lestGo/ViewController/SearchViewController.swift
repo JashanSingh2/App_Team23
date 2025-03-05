@@ -199,6 +199,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let address = RidesDataController.shared.rideHistoryAddress(At: indexPath.row)
         cell.updateCell(With: address)
         
+        cell.layer.cornerRadius = 12.0
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOpacity = 0.5
+        cell.layer.shadowRadius = 2.5
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.layer.masksToBounds = false
+        
         return cell
     }
     

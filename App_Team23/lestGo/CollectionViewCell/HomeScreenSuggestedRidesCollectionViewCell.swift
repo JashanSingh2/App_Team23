@@ -17,7 +17,7 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dropOffTimeLabel: UILabel!
     
-    @IBOutlet weak var seatsAvailableLabel: UILabel!
+//    @IBOutlet weak var seatsAvailableLabel: UILabel!
     
     @IBOutlet weak var fareLabel: UILabel!
     

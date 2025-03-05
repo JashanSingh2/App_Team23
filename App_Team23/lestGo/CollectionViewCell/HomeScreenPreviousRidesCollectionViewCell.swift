@@ -14,7 +14,8 @@ class HomeScreenPreviousRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var reBookButton: UIButton!
     
-    @IBOutlet weak var vehicleTypeImageView: UIImageView!
+    @IBOutlet weak var vehicleTypeButton: UIButton!
+    //    @IBOutlet weak var vehicleTypeImageView: UIImageView!
     
     @IBOutlet weak var dateLabel: UILabel!
     

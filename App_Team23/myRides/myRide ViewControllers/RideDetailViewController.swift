@@ -46,7 +46,16 @@ class RideDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cardView.layer.cornerRadius = 10
+        cardView.layer.cornerRadius = 12.0
+        cardView.layer.shadowColor = UIColor.black.cgColor
+        cardView.layer.shadowOpacity = 0.5
+        cardView.layer.shadowRadius = 2.5
+        cardView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cardView.layer.masksToBounds = false
+        
+        vehicleNumberLabel.layer.borderColor = view.backgroundColor?.cgColor
+        vehicleNumberLabel.layer.borderWidth = 1
+        vehicleNumberLabel.layer.cornerRadius = 5
         
         if RideDetailViewController.sender == 1 {
             cancelRideButton.isHidden = true

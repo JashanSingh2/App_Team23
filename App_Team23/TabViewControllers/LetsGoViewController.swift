@@ -107,7 +107,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 2.5
-            cell.layer.shadowOffset = CGSize(width: 2, height: 2)
+            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
             cell.layer.masksToBounds = false
                 return cell
             case 1:
@@ -191,10 +191,10 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(245), heightDimension: .absolute(245))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(245), heightDimension: .absolute(220))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
         //group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 11, bottom: 8, trailing: 5)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 0)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         return section
@@ -210,7 +210,7 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
         
         //group.interItemSpacing = .fixed(8)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 11, bottom: 0, trailing: 11)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16)
         
         let section = NSCollectionLayoutSection(group: group)
         return section

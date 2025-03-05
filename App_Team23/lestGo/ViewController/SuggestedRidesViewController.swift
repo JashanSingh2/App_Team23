@@ -73,7 +73,14 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
             let fare = rides[indexPath.row].3
         
             cell.updateAllSuggestedRidesCell(with: ride, source: source, destination: destination, fare: fare)
-            cell.layer.cornerRadius = 10
+        
+            cell.layer.cornerRadius = 12.0
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.5
+            cell.layer.shadowRadius = 2.5
+            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+            cell.layer.masksToBounds = false
+        
             return cell
         }
         
@@ -88,7 +95,7 @@ class SuggestedRidesViewController: UIViewController, UICollectionViewDelegate, 
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
             
             group.interItemSpacing = .fixed(8)
-            group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 6, bottom: 0, trailing: 6)
+            group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16)
             
             
             section = NSCollectionLayoutSection(group: group)

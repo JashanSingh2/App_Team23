@@ -90,7 +90,7 @@
                     <constraint firstItem="uJe-He-9FV" firstAttribute="leading" secondItem="dSv-pa-aqG" secondAttribute="leading" constant="15" id="cgl-AD-CJv"/>
                 </constraints>
             </collectionViewCellContentView>
-            <color key="backgroundColor" red="0.98039215800000001" green="0.88235294819999999" blue="0.54901963470000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color key="backgroundColor" red="0.97647058959999999" green="0.85882353779999998" blue="0.5176470876" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <connections>
                 <outlet property="passengerNameLabel" destination="BDQ-R6-sxa" id="MqO-Ff-ei5"/>
                 <outlet property="passengerRatingLabel" destination="XQo-TZ-fzF" id="zbv-M7-Qe8"/>
