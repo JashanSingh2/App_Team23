@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import Supabase
-import App_Team23
 
 protocol DataController {
     func rideHistoryAddress(At index: Int) -> String

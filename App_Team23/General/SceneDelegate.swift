@@ -20,11 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         
-        let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
-        if let letsGoVC = storyboard.instantiateViewController(withIdentifier: "letsGoVC") as? LetsGoViewController {
-            print("Hello VC")
-            letsGoVC.dataController = ridesDataController
-        }
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

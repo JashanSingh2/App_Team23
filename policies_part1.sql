@@ -1,0 +1,1 @@
+ALTER TABLE "passenger_details_id" ENABLE ROW LEVEL SECURITY; CREATE POLICY "Enable insert for authenticated users only" ON "passenger_details_id" FOR INSERT WITH CHECK (auth.role() = 'authenticated'); CREATE POLICY "Enable read access for authenticated users" ON "passenger_details_id" FOR SELECT USING (auth.role() = 'authenticated');

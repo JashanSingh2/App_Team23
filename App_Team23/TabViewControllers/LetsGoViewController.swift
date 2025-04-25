@@ -10,74 +10,71 @@ import UIKit
 class LetsGoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchControllerDelegate {
     
     @IBOutlet var letsGoCollectionView: UICollectionView!
-  
-    
     let searchController = UISearchController()
+    let supabase = SupabaseDataController2.shared
     
-    var dataController: DataController?
-
     private let letsGoSectionHeaderTitles: [String] = ["Recent Rides", "Suggested Rides"]
-    
-    var suggestedRides: [(RideAvailable,Schedule,Schedule, Int)]?
+    private var recentRides: [RidesHistory2] = []
+    private var suggestedRides: [(provider: ServiceProviderDetails2, history: RidesHistory2)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        //print(dataController!.numberOfBusRidesInHistory())
-        if let dataController{
-            print(dataController.numberOfBusRidesInHistory())
-        }else{
-            print("Not Found")
-        }
-        
-        
-        
-        
-        
-        
         searchController.searchBar.placeholder = "Where are you going?"
-        
-        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        //Adding xib files to collection view
+        
+        // Adding xib files to collection view
         let firstNib = UINib(nibName: "PreviousRides", bundle: nil)
         let secondNib = UINib(nibName: "SuggestedRides", bundle: nil)
         
         letsGoCollectionView.register(firstNib, forCellWithReuseIdentifier: "First")
-        
         letsGoCollectionView.register(secondNib, forCellWithReuseIdentifier: "Second")
-        
         letsGoCollectionView.register(LetsGoCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "LetsGoCollectionReusableView")
         
         letsGoCollectionView.setCollectionViewLayout(generateLayout(), animated: true)
-        
         letsGoCollectionView.delegate = self
         letsGoCollectionView.dataSource = self
-        
         searchController.delegate = self
         
-        
-        }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        //letsGoCollectionView.reloadData()
-        if let dataController{
-            print(dataController.numberOfBusRidesInHistory())
-        }
-        
-        suggestedRides = RidesDataController.shared.rideSuggestion() 
+        loadData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        letsGoCollectionView.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
+    }
+    
+    private func loadData() {
+        Task {
+            do {
+                // Get logged in user
+                guard let userId = UserDefaults.standard.string(forKey: "userId"),
+                      let userUUID = UUID(uuidString: userId) else {
+                    return
+                }
+                
+                // Load recent rides
+                recentRides = try await supabase.getRecentRides(userId: userUUID)
+                
+                // Load suggested rides for today
+                let today = supabase.getTodayDate()
+                suggestedRides = try await supabase.getSuggestedRides(source: "", destination: "")
+                
+                DispatchQueue.main.async {
+                    self.letsGoCollectionView.reloadData()
+                }
+            } catch {
+                print("Error loading data: \(error)")
+            }
+        }
     }
     
     func willPresentSearchController(_ searchController: UISearchController) {
         performSegue(withIdentifier: "searchBar", sender: self)
     }
     
+    // MARK: - Collection View Data Source
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return letsGoSectionHeaderTitles.count
@@ -85,92 +82,92 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-            case 0:
-                return RidesDataController.shared.numberOfBusRidesInHistory()
-            case 1:
-            return RidesDataController.shared.numberOfRidesAvailable()
-            default:
-                return 1
+        case 0:
+            return recentRides.count
+        case 1:
+            return suggestedRides.count
+        default:
+            return 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
-            case 0:
-                let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
-                let RideHistory = RidesDataController.shared.rideHistoryOfBus(At: indexPath.row)
-                
-                cell.reBookButton.tag = indexPath.row
-                cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped), for: .touchUpInside)
-                cell.updatePreviousRideCell(with: RideHistory)
+        case 0:
+            let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
+            let rideHistory = recentRides[indexPath.row]
+            
+            cell.reBookButton.tag = indexPath.row
+            cell.reBookButton.addTarget(self, action: #selector(reBookButtonTapped), for: .touchUpInside)
+            cell.updatePreviousRideCell(with: rideHistory)
+            
             cell.layer.cornerRadius = 12.0
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 2.5
             cell.layer.shadowOffset = CGSize(width: 0, height: 2)
             cell.layer.masksToBounds = false
-                return cell
-            case 1:
-                let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! HomeScreenSuggestedRidesCollectionViewCell
-                
-                cell.selectButton.tag = indexPath.row
-                cell.selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
-            print(indexPath.row)
-            let rideSuggestion = RidesDataController.shared.rideSuggestion(At: indexPath.row)
             
-                cell.updateSuggestedRideCell(with: rideSuggestion)
+            return cell
+            
+        case 1:
+            let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "Second", for: indexPath) as! HomeScreenSuggestedRidesCollectionViewCell
+            let rideSuggestion = suggestedRides[indexPath.row]
+            
+            cell.selectButton.tag = indexPath.row
+            cell.selectButton.addTarget(self, action: #selector(selectButtonTapped), for: .touchUpInside)
+            cell.updateSuggestedRideCell(with: rideSuggestion)
+            
             cell.layer.cornerRadius = 12.0
             cell.layer.shadowColor = UIColor.black.cgColor
             cell.layer.shadowOpacity = 0.5
             cell.layer.shadowRadius = 2.5
             cell.layer.shadowOffset = CGSize(width: 2, height: 2)
             cell.layer.masksToBounds = false
-
-                return cell
-            default:
-                let cell = letsGoCollectionView.dequeueReusableCell(withReuseIdentifier: "First", for: indexPath) as! HomeScreenPreviousRidesCollectionViewCell
-                let RideHistory = RidesDataController.shared.rideHistoryOfBus(At: indexPath.item)
-                cell.updatePreviousRideCell(with: RideHistory)
-                cell.layer.cornerRadius = 14
-                return cell
+            
+            return cell
+            
+        default:
+            return UICollectionViewCell()
         }
     }
+    
+    // MARK: - Collection View Header
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
-            case UICollectionView.elementKindSectionHeader:
-                let header = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: "LetsGoCollectionReusableView",
-                    for: indexPath
-                ) as! LetsGoCollectionReusableView
-                
-                header.headerLabel.text = letsGoSectionHeaderTitles[indexPath.section]
-                header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-                
-                if indexPath.section == 1 {
-                    header.button.isHidden = false  // Ensure button is visible
-                    header.button.setTitle("See All", for: .normal)
-                    header.button.tag = indexPath.section
-                    header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
-                    header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-                    header.button.semanticContentAttribute = .forceRightToLeft
-                } else {
-                    header.button.isHidden = true
-                    header.button.removeTarget(nil, action: nil, for: .allEvents)
-                }
-                
-                return header
-
-            default:
-                return UICollectionReusableView()
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "LetsGoCollectionReusableView",
+                for: indexPath
+            ) as! LetsGoCollectionReusableView
+            
+            header.headerLabel.text = letsGoSectionHeaderTitles[indexPath.section]
+            header.headerLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+            
+            if indexPath.section == 1 {
+                header.button.isHidden = false
+                header.button.setTitle("See All", for: .normal)
+                header.button.tag = indexPath.section
+                header.button.addTarget(self, action: #selector(sectionButtonTapped(_:)), for: .touchUpInside)
+                header.button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+                header.button.semanticContentAttribute = .forceRightToLeft
+            } else {
+                header.button.isHidden = true
+                header.button.removeTarget(nil, action: nil, for: .allEvents)
+            }
+            
+            return header
+            
+        default:
+            return UICollectionReusableView()
         }
     }
     
+    // MARK: - Layout
     
-    
-    
-    func generateLayout()-> UICollectionViewLayout {
+    func generateLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout{
             (sectionIndex, environment)-> NSCollectionLayoutSection? in let section: NSCollectionLayoutSection
                 switch sectionIndex{
@@ -217,112 +214,80 @@ class LetsGoViewController: UIViewController, UICollectionViewDataSource, UIColl
         
     }
     
-    
-    @IBAction func unwindToLetsGo(_ unwindSegue: UIStoryboardSegue) {
-        
-    }
-
+    // MARK: - Actions
     
     @objc func sectionButtonTapped(_ sender: UIButton) {
         if sender.tag == 1 {
-//            let storyboard = UIStoryboard(name: "LetsGo", bundle: nil)
-//            let viewController = storyboard.instantiateViewController(identifier: "SuggestedRidesViewController") as! SuggestedRidesViewController
-//            navigationController?.pushViewController(viewController, animated: true)
-            
             performSegue(withIdentifier: "SRVC", sender: self)
         }
-        
     }
     
+    @objc func selectButtonTapped(_ button: UIButton) {
+        let selectedRide = suggestedRides[button.tag]
+        if selectedRide.provider.vehicleType == .bus {
+            performSegue(withIdentifier: "seatReBooking", sender: selectedRide)
+        } else if selectedRide.provider.vehicleType == .car {
+            performSegue(withIdentifier: "carBookingSegue", sender: selectedRide)
+        }
+    }
     
-    
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let busVC = segue.destination as? SeatBookingViewController{
-            
-            if let selectedRide{
-                busVC.selectedRide = selectedRide
-                print("Source: \n \(source) \n Destination: \n \(destination)")
+    @objc func reBookButtonTapped(_ button: UIButton) {
+        let selectedRecentRide = recentRides[button.tag]
+        
+        Task {
+            do {
+                let availableRides = try await supabase.searchRides(
+                    source: selectedRecentRide.source,
+                    destination: selectedRecentRide.destination,
+                    date: supabase.getTodayDate()
+                )
                 
-                busVC.source = source
-                busVC.destination = destination
-            }
-        }
-        
-        
-        if let carVC = segue.destination as? SeatBookingCarViewController{
-            //print(selectedRide!)
-            carVC.selectedRide = selectedRide
-            
-           
-        }
-        
-        if let suggestedRidesVC = segue.destination as? SuggestedRidesViewController{
-            
-            for ride in RidesDataController.shared.allRidesAvailable(){
-                suggestedRides?.append((ride, ride.serviceProvider.route.first!, ride.serviceProvider.route.last!,ride.serviceProvider.fare))
-            }
-            print("suggestedRides?.count \(suggestedRides?.count)")
-            
-            suggestedRidesVC.rides = suggestedRides ?? []
-            
-//            if let suggestedRides{
-//                suggestedRidesVC.rides = suggestedRides
-//            }
-            
-        }
-    }
-     
-    var selectedRide: RideAvailable?
-    
-    @objc func selectButtonTapped(_ button : UIButton) {
-        selectedRide = RidesDataController.shared.rideSuggestion(At: button.tag)
-        print(button.tag)
-        if selectedRide?.serviceProvider.rideType.vehicleType == .bus{
-            performSegue(withIdentifier: "seatReBooking", sender: self)
-        }else if selectedRide?.serviceProvider.rideType.vehicleType == .car{
-            performSegue(withIdentifier: "carBookingSegue", sender: self)
-        }
-    }
-    
-    var selectedRecentRide: RidesHistory?
-    var source: Schedule?
-    var destination: Schedule?
-    
-    @objc func reBookButtonTapped(_ button : UIButton) {
-        selectedRecentRide = RidesDataController.shared.rideHistoryOfBus(At: button.tag)
-        
-        print("selectedRecentRide:         \(selectedRecentRide!)")
-        
-        if let selectedRecentRide {
-            if let availableRides = RidesDataController.shared.ride(
-                from: selectedRecentRide.source.address, 
-                to: selectedRecentRide.destination.address, 
-                on: RidesDataController.shared.today),
-                !availableRides.isEmpty {
-                selectedRide = availableRides[0].0
-                source = availableRides[0].1
-                destination = availableRides[0].2
-                performSegue(withIdentifier: "seatReBooking", sender: self)
-            } else {
-                showAlert()
+                if !availableRides.isEmpty {
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "seatReBooking", sender: availableRides[0])
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.showAlert()
+                    }
+                }
+            } catch {
+                print("Error searching rides: \(error)")
+                DispatchQueue.main.async {
+                    self.showAlert()
+                }
             }
         }
     }
     
+    // MARK: - Navigation
     
-    func showAlert(){
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let busVC = segue.destination as? SeatBookingViewController,
+//           let selectedRide = sender as? (ride: RidesAvailable2, provider: ServiceProviderDetails2) {
+//            busVC.selectedRide = selectedRide
+//            busVC.source = selectedRide.provider.routeId // You'll need to fetch route details
+//            busVC.destination = selectedRide.provider.routeId // You'll need to fetch route details
+//        }
+//        
+//        if let carVC = segue.destination as? SeatBookingCarViewController,
+//           let selectedRide = sender as? (ride: RidesAvailable2, provider: ServiceProviderDetails2) {
+//            carVC.selectedRide = selectedRide
+//        }
+//        
+//        if let suggestedRidesVC = segue.destination as? SuggestedRidesViewController {
+//            suggestedRidesVC.rides = suggestedRides
+//        }
+//    }
+    
+    func showAlert() {
         let alert = UIAlertController(
-        title: "No Rides Available",
-        message: "No ride are available for today. Please try again later",
-        preferredStyle: .alert
+            title: "No Rides Available",
+            message: "No rides are available for today. Please try again later",
+            preferredStyle: .alert
         )
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
-    
 }
 

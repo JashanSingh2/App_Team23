@@ -27,34 +27,48 @@ class HomeScreenSuggestedRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var seatAvailableButton: UIButton!
     
-    func updateSuggestedRideCell(with rideSuggestion: RideAvailable){
+    private let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter
+    }()
+    
+    func updateSuggestedRideCell(with ride: (provider: ServiceProviderDetails2, history: RidesHistory2)) {
+        sourceAddressLabel.text = ride.history.source
+        destinationAddressLabel.text = ride.history.destination
         
-
-        sourceAddressLabel.text = rideSuggestion.serviceProvider.route.first?.address
-        //print(rideSuggestion.serviceProvider.route.first?.address ?? "No Address")
-        destinationAddressLabel.text = rideSuggestion.serviceProvider.route.last?.address
+        // Using the ride date for both pickup and dropoff times
+        pickUpTimeLabel.text = timeFormatter.string(from: ride.history.date)
+        dropOffTimeLabel.text = timeFormatter.string(from: ride.history.date)
         
-        pickUpTimeLabel.text = rideSuggestion.serviceProvider.route.first?.time
-        //print(rideSuggestion.serviceProvider.route.first?.time ?? "No Time")
-        dropOffTimeLabel.text = rideSuggestion.serviceProvider.route.last?.time
-        
-        if rideSuggestion.serviceProvider.rideType.vehicleType == .bus{
-            let config = UIImage.SymbolConfiguration(scale: .medium) // Set symbol size to medium
+        // Set vehicle type icon and text
+        let config = UIImage.SymbolConfiguration(scale: .medium)
+        if ride.provider.vehicleType == .bus {
             let image = UIImage(systemName: "bus.fill", withConfiguration: config)
             busOrCarButton.setImage(image, for: .normal)
             busOrCarButton.setTitle("Bus", for: .normal)
-            //busOrCarButton.set
-        }else {
-            let config = UIImage.SymbolConfiguration(scale: .medium) 
+        } else {
             let image = UIImage(systemName: "car.fill", withConfiguration: config)
             busOrCarButton.setImage(image, for: .normal)
             busOrCarButton.setTitle("Car", for: .normal)
         }
         
-        seatAvailableButton.setTitle("\(rideSuggestion.seatsAvailable) Seats", for: .normal)
+        // You'll need to implement getAvailableSeats in SupabaseDataController2
+        Task {
+            do {
+                let seatsAvailable = try await SupabaseDataController2.shared.getAvailableSeats(for: ride.provider.id)
+                DispatchQueue.main.async {
+                    self.seatAvailableButton.setTitle("\(seatsAvailable) Seats", for: .normal)
+                }
+            } catch {
+                print("Error fetching available seats: \(error)")
+                DispatchQueue.main.async {
+                    self.seatAvailableButton.setTitle("-- Seats", for: .normal)
+                }
+            }
+        }
         
-        fareLabel.text = "\(rideSuggestion.serviceProvider.fare)"
-    
+        fareLabel.text = "₹\(ride.provider.fare)"
     }
     
 }

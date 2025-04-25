@@ -7,13 +7,9 @@
 
 import UIKit
 
-
-
-
 class HomeScreenPreviousRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var reBookButton: UIButton!
-    
     @IBOutlet weak var vehicleTypeButton: UIButton!
     //    @IBOutlet weak var vehicleTypeImageView: UIImageView!
     
@@ -29,13 +25,28 @@ class HomeScreenPreviousRidesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dropOffTimeLabel: UILabel!
     
-    func updatePreviousRideCell(with rideHistory: RidesHistory){
-        dateLabel.text = rideHistory.date
-        fareLabel.text = "\(rideHistory.fare)"
-        sourceAddress.text = rideHistory.source.address
-        destinationAddress.text = rideHistory.destination.address
-        pickUpTimeLabel.text = rideHistory.source.time
-        dropOffTimeLabel.text = rideHistory.destination.time
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }()
+    
+    private let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter
+    }()
+    
+    func updatePreviousRideCell(with rideHistory: RidesHistory2) {
+        dateLabel.text = dateFormatter.string(from: rideHistory.date)
+        fareLabel.text = "₹\(rideHistory.fare)"
+        sourceAddress.text = rideHistory.source
+        destinationAddress.text = rideHistory.destination
+        
+        // Since we don't have separate time fields in the new model,
+        // we'll just use the date for now
+        pickUpTimeLabel.text = timeFormatter.string(from: rideHistory.date)
+        dropOffTimeLabel.text = timeFormatter.string(from: rideHistory.date)
     }
     
     

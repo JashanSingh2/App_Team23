@@ -50,7 +50,6 @@ struct PassengerDetails2: Codable, Identifiable {
     let destinationAdd: String
     let destinationTime: Date
     let preferredVehicle: String
-    let workTime: String  // Added missing field
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -60,7 +59,6 @@ struct PassengerDetails2: Codable, Identifiable {
         case destinationAdd = "destination_add"
         case destinationTime = "destination_time"
         case preferredVehicle = "preferred_vehicle"
-        case workTime = "work_time"
     }
 }
 
